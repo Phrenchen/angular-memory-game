@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { StepsModule } from 'primeng/steps';
 import { MenuItem } from 'primeng/api';
 
 
@@ -10,8 +9,8 @@ import { MenuItem } from 'primeng/api';
 })
 export class MenuComponent implements OnInit {
 
-  items: MenuItem[];
-  activeIndex = 0;
+  public items: MenuItem[];
+  public activeIndex = 0;
 
   constructor() { }
 

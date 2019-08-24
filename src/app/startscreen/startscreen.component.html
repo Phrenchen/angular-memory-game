@@ -1,8 +1,15 @@
-<h2>Wählt Fotos, mit denen ihr Memory spielen wollt</h2>
+<h3>Wählt die Anzahl der Karten</h3>
+<div class="board-size-container">
+    <p-radioButton name="boardSize" value="small" label="4x4" [(ngModel)]="selectedBoardSize" (onClick)="boardSizeSelected($event)"></p-radioButton>
+    <p-radioButton name="boardSize" value="medium" label="6x6" [(ngModel)]="selectedBoardSize" (onClick)="boardSizeSelected($event)"></p-radioButton>
+    <p-radioButton name="boardSize" value="large" label="10x10" [(ngModel)]="selectedBoardSize" (onClick)="boardSizeSelected($event)"></p-radioButton>
+</div>
 
-<input #file type="file" accept="image/*" (change)="imageSelected(file.files)">
+<h3>Wählt Fotos, mit denen ihr Memory spielen wollt</h3>
+<input #file type="file" accept="image/*" (change)="imageSelected(file.files)" multiple>
 
-
-<div *ngIf="images.length > 0">
-    <img *ngFor="let imageUrl of images" [src]="imageUrl" height="200">
+<div class="image-list" *ngIf="images.length > 0">
+    <p-card *ngFor="let imageUrl of images" >
+        <img [src]="imageUrl" height="200">
+    </p-card>
 </div>

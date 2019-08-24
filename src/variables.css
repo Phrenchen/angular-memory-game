@@ -1,0 +1,18 @@
+:root {
+    --main-background-color: coral;
+    --main-border-color: coral;
+    
+    --main-primary-color: coral;
+    --main-secondary-color: coral;
+    
+    /* dialogs */
+    --main-confirm-color: #82E898;
+    --main-cancel-color: #FF878E;
+    
+    
+    /* ranking */
+    --main-first-place-color: coral;
+    --main-second-place-color: coral;
+    --main-third-place-color: coral;
+  }
+  

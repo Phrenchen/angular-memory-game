@@ -9,6 +9,10 @@ import { GameoverComponent } from './gameover/gameover.component';
 import { MenuComponent } from './menu/menu.component';
 
 import { StepsModule } from 'primeng/steps';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import { FormsModule } from '@angular/forms';
+
+import {CardModule} from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,10 @@ import { StepsModule } from 'primeng/steps';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StepsModule
+    StepsModule,
+    RadioButtonModule,
+    FormsModule,
+    CardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
