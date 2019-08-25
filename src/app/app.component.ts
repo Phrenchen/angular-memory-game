@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { MatchConfig } from './model/MatchConfig';
+import { Store } from '@ngrx/store';
+import { AppState } from './app.state';
 
 
 @Component({
@@ -8,4 +12,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'memory-game';
+
+
+  private match: Observable<MatchConfig[]>;
+
+  constructor(private store: Store<AppState>) {
+    this.store.select('match').subscribe(stats => this.match = stats);
+    // console.log(store);
+    // console.log(this.allMatchStats);
+  }
 }
