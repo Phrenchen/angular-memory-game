@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class StartscreenComponent implements OnInit {
 
-  public selectedHumanPlayerCount = 1;
+  public selectedHumanPlayerCount = 0;
 
 
 
@@ -21,10 +21,16 @@ export class StartscreenComponent implements OnInit {
   }
 
   public startMatch() {
-    console.log('startMatch', this.selectedHumanPlayerCount);
-    this.store.dispatch(new Actions.SetHumanPlayerCount(this.selectedHumanPlayerCount));
+    // this.store.select('match')
+    //   .subscribe(stats => {
+    //     console.log(stats);
+    //     // start game
+    //   });
+
+    this.store.dispatch(new Actions.CreateMatch(this.selectedHumanPlayerCount));
 
     this.router.navigate(['/memory']);
+
   }
 
 

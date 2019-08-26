@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 
 import { CardModule } from 'primeng/card';
+import { PlayerInfoComponent } from './components/ingame/player-info/player-info.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CardModule } from 'primeng/card';
     StartscreenComponent,
     IngameComponent,
     GameoverComponent,
-    MenuComponent
+    MenuComponent,
+    PlayerInfoComponent
   ],
   imports: [
     BrowserModule,

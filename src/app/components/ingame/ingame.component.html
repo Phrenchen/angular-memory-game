@@ -1,3 +1,20 @@
-<p>
-  ingame works!
-</p>
+<!-- player-info-header -->
+<div class="stats-panel">
+  <app-player-info [player]="getPlayer(0)"></app-player-info>
+  <app-player-info [player]="getPlayer(1)"></app-player-info>
+</div>
+
+<!-- grid with cards -> the 'board' -->
+<div class="board" *ngIf="matchConfig">
+  <div *ngFor="let card of cards"
+    class="card"
+    [ngStyle]="{'background': card.color}"
+    (click)="cardClicked($event, card)"
+  >
+    <p>{{card.partnerId}}</p>
+  </div>
+</div>
+
+<div *ngIf="!matchConfig">
+  <p>...loading match...</p>
+</div>
