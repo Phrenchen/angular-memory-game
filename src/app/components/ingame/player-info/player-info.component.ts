@@ -9,11 +9,12 @@ import { Player } from 'src/app/model/Player';
 export class PlayerInfoComponent implements OnInit {
 
   @Input() player: Player;
+  @Input() isActive: boolean;
 
   constructor() { }
 
   ngOnInit() {
-    console.log(this.player);
+    // console.log(this.player);
   }
 
 }

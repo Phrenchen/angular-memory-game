@@ -14,5 +14,12 @@
     --main-first-place-color: coral;
     --main-second-place-color: coral;
     --main-third-place-color: coral;
+
+
+    --card-width: 100px;
+    --card-height: 100px;
+
+    --card-count-x: 4;
+    --card-count-y: 4;
   }
   

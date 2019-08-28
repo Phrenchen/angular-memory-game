@@ -27,11 +27,10 @@ export class GameService {
     return players;
   }
 
-  public static createCards(gridDimensionX: number, gridDimensionY: number): MemoryCard[] {
-    const cards = new Array<MemoryCard>();
+  public static createCards(gridDimensionX: number, gridDimensionY: number, shuffle: boolean): MemoryCard[] {
+    let cards = new Array<MemoryCard>();
     let card: MemoryCard;
-    let pairs: number[] = GameService.createPairs((gridDimensionX * gridDimensionY) * .5);
-    pairs = MathHelper.shuffleArray(pairs);
+    const pairs: number[] = GameService.createPairs((gridDimensionX * gridDimensionY) * .5);
 
     for (let x = 0; x < gridDimensionX; x++) {
       for (let y = 0; y < gridDimensionY; y++) {
@@ -39,6 +38,11 @@ export class GameService {
         cards.push(card);
       }
     }
+
+    if (shuffle) {
+      cards = MathHelper.shuffleArray(cards);
+    }
+
     return cards;
   }
 

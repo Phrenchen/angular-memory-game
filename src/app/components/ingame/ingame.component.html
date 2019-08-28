@@ -1,16 +1,21 @@
 <!-- player-info-header -->
-<div class="stats-panel">
-  <app-player-info [player]="getPlayer(0)"></app-player-info>
-  <app-player-info [player]="getPlayer(1)"></app-player-info>
+<div class="top-bar">
+  <button class="btn-start-screen" (click)="gotoStartScreen()">Back</button>
+  
+  <div class="stats-panel">
+    <app-player-info [player]="getPlayer(0)" [isActive]="isActivePlayer(0)"></app-player-info>
+    <app-player-info [player]="getPlayer(1)" [isActive]="isActivePlayer(1)"></app-player-info>
+  </div>
+  
+  <div class="game-over-container" *ngIf="matchConfig.isGameOver">
+    <h2>Game over!</h2>
+  </div>
 </div>
 
 <!-- grid with cards -> the 'board' -->
 <div class="board" *ngIf="matchConfig">
-  <div *ngFor="let card of cards"
-    class="card"
-    [ngStyle]="{'background': card.color}"
-    (click)="cardClicked($event, card)"
-  >
+  <div *ngFor="let card of cards" class="card" [ngStyle]="{'background': card.color}"
+    (click)="cardClicked($event, card)">
     <p>{{card.partnerId}}</p>
   </div>
 </div>

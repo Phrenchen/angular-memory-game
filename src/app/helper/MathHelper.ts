@@ -5,10 +5,13 @@ export class MathHelper {
     }
 
     public static shuffleArray(array: any[]): any[] {
-        array = array.sort(() => {
-            return .5 - Math.random();
-        });
+        const shuffleCount = 20;
 
+        for (let i = 0; i < shuffleCount; i++) {
+            array = array.sort(() => {
+                return .5 - Math.random();
+            });
+        }
         return array;
     }
 }

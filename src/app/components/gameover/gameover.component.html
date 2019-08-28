@@ -1,3 +1,9 @@
-<p>
-  gameover works!
-</p>
+<div>
+  <h2>Game over!</h2>
+  <p>
+    {{winnerPlayer.name}} has won with {{winnerPlayer.pairsWon}} pairs!
+  </p>
+
+  <button (click)="playAgain()">Play again</button>
+
+</div>

@@ -1,14 +1,23 @@
 @import url('./../../../variables.css');
 
+.btn-start-screen {
+    margin: 0 auto;
+}
+
 .board {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
     grid-gap: 1em;
+
+    justify-items: center;
+    align-items: center;
+
+
     // border: 1 px solid black;
 
     width: 100%;
-    // height: 80%;
+    height: 100%;
 }
 
 .card {
@@ -35,9 +44,30 @@
     background: white;
 }
 
+.disabled-card {
+    // user-select: none;
+    cursor: move;
+}
+
+.top-bar {
+    display: flex;
+    flex-direction: column;
+}
+
 .stats-panel {
-    border: 1px solid black;
-    width: 100%;
-    height: 20vh;
-    min-height: 50px;
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 1em;
+    // border: 1px solid red;
+    // width: 100%;
+    // height: 10%;
+    // min-height: 50px;
+}
+
+.btn-start-screen {
+    margin-bottom: 10px;
 }

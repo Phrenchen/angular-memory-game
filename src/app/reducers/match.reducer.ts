@@ -3,6 +3,8 @@ import { MatchConfig } from '../model/MatchConfig';
 import * as MatchActions from './../actions/match.actions';
 import { GameService } from '../services/game.service';
 import { GameConsts } from '../model/GameConsts';
+import { MemoryCard, MemoryCardState } from '../model/MemoryCard';
+import { MathHelper } from '../helper/MathHelper';
 
 
 const initialState: MatchConfig = {
@@ -11,23 +13,49 @@ const initialState: MatchConfig = {
     humanPlayerCount: 1,
     totalPlayerCount: 2,
     players: GameService.createPlayers(1, 2),
-    cards: GameService.createCards(4, 4)
+    cards: GameService.createCards(4, 4, true),
+    activePlayer: 0,
+    firstSelectedCard: null,
+    isGameOver: false
 };
 
 export function reducer(state: MatchConfig = initialState, action: MatchActions.Actions) {
-    // console.log(state, action);
+    // console.log(action, state);
 
 
     switch (action.type) {
         case MatchActions.CREATE_MATCH:
-            // TODO: add players
+            let resetCards: MemoryCard[] = state.cards.slice();
+            resetCards.forEach(card => {
+                card.state = MemoryCardState.COVERED;
+            });
+
+            resetCards = MathHelper.shuffleArray(resetCards);
+
             return {
+                ...state,
                 humanPlayerCount: action.payload,
-                players: GameService.createPlayers(action.payload, GameConsts.TOTAL_PLAYER_COUNT)
+                cards: resetCards,
+                players: GameService.createPlayers(action.payload, GameConsts.TOTAL_PLAYER_COUNT),
+                isGameOver: false
             };
 
-            // return [...state, action.payload];  // clone
-            // return state;  // clone
+        case MatchActions.SET_NEXT_PLAYER:
+            // const nextState = { activeplayer: 1 - state.activePlayer };
+            // return {
+            //     ...state, nextState
+            // }
+            return { ...state, activePlayer: (state.activePlayer + 1) % 2 };
+
+        case MatchActions.ACTIVE_PLAYER_WINS_PAIR:
+            const localPlayers = state.players.slice();  // clone player array (shallow copy)
+            localPlayers[state.activePlayer].pairsWon++;
+
+            return {
+                ...state,
+                players: localPlayers,
+                isGameOver: state.cards.length / 2 <= (state.players[0].pairsWon + state.players[1].pairsWon)
+            };
 
         default:
             // console.log(state, action);
