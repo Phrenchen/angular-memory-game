@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # MemoryGame
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.3.
@@ -29,4 +28,3 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 =======
 # memory-game
 Angular + ngrx
->>>>>>> 9bcc63c6889a0a046e8cd2acb57b0e6b3c32e560
