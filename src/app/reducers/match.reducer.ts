@@ -39,14 +39,10 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                 players: GameService.createPlayers(action.payload, GameConsts.TOTAL_PLAYER_COUNT),
                 isGameOver: false
             };
-
         case MatchActions.SET_NEXT_PLAYER:
-            // const nextState = { activeplayer: 1 - state.activePlayer };
-            // return {
-            //     ...state, nextState
-            // }
             return { ...state, activePlayer: (state.activePlayer + 1) % 2 };
-
+        case MatchActions.SET_FIRST_SELECTED_CARD:
+            return { ...state, firstSelectedCard: action.payload};
         case MatchActions.ACTIVE_PLAYER_WINS_PAIR:
             const localPlayers = state.players.slice();  // clone player array (shallow copy)
             localPlayers[state.activePlayer].pairsWon++;

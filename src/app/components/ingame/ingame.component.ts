@@ -14,9 +14,8 @@ import * as Actions from './../../actions/match.actions';
 })
 export class IngameComponent implements OnInit, OnDestroy {
 
-  public matchConfig: MatchConfig;
+  public matchConfig: MatchConfig;  	// from store
 
-  private firstCard: MemoryCard;
   private storeSubscription: any;
 
   constructor(private router: Router, private store: Store<AppState>) { }
@@ -38,13 +37,13 @@ export class IngameComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.storeSubscription) {
-      console.log('unsubscribing');
+      console.log('unsubscribing store');
       this.storeSubscription.unsubscribe();
     }
 
   }
-
   // lifecycle end
+
   public gotoStartScreen(): void {
     this.router.navigate(['/start']);
   }
@@ -61,43 +60,34 @@ export class IngameComponent implements OnInit, OnDestroy {
     // console.log(cardIsSelected);
 
     if (!cardIsSelected) {
-      this.firstCard = null;
+      this.store.dispatch(new Actions.SetFirstSelectedCard(null));
     }
 
     if (cardIsSelected) {
       // no other card is selected
-      if (!this.firstCard) {
+      if (!this.matchConfig.firstSelectedCard) {
         // select currend card as firstSelected
-        this.firstCard = card;
+        this.store.dispatch(new Actions.SetFirstSelectedCard(card));
       } else {
         // compare cards
-        if (this.firstCard.matches(card)) {
+        if (this.matchConfig.firstSelectedCard.matches(card)) {
           // win
           // equal partnerId -> current player wins a point
-          console.log('win');
-
+          this.resetCards([this.matchConfig.firstSelectedCard, card], 500, MemoryCardState.REMOVED);
           this.store.dispatch(new Actions.ActivePlayerWinsPair());
-
-          this.resetCards([this.firstCard, card], 500, MemoryCardState.REMOVED);
-          this.firstCard = null;
+          this.store.dispatch(new Actions.SetFirstSelectedCard(null));
         } else {
           // miss
           // unequal partnerId -> next player
-          console.log('miss');
-
-          this.resetCards([this.firstCard, card], 500, MemoryCardState.COVERED);
-          this.firstCard = null;
-
-          // increase score for successful player
-
-
+          this.resetCards([this.matchConfig.firstSelectedCard, card], 500, MemoryCardState.COVERED);
+          this.store.dispatch(new Actions.SetFirstSelectedCard(null));
           this.setNextPlayer();
         }
-
         // always: after timeout, hide (no success) or remove (success) selected cards
       }
     }
   }
+
   private setNextPlayer() {
     this.store.dispatch(new Actions.SetNextPlayer());
   }
