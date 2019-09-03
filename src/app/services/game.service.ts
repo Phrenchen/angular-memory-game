@@ -7,8 +7,15 @@ import { MathHelper } from '../helper/MathHelper';
 
 // Static service class / helper
 export class GameService {
-
+  
   constructor() { }
+  
+  public static activePlayer(players: Player[], activePlayer: number) {
+    if(activePlayer >= 0 && activePlayer < players.length) {
+      return players[activePlayer];
+    }
+    return null;
+  }
 
   public static createPlayers(humanPlayerCount: number, totalPlayerCount: number): Player[] {
     const players: Player[] = [];

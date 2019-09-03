@@ -40,11 +40,18 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                 isGameOver: false
             };
         case MatchActions.SET_NEXT_PLAYER:
-            return { ...state, activePlayer: (state.activePlayer + 1) % 2 };
+            const newState = { ...state, activePlayer: (state.activePlayer + 1) % 2 };
+            const activePlayer = GameService.activePlayer(state.players, state.activePlayer);
+            
+            // activate turn. enabling user input for human players and starting wait for AI (to randomly select a card)
+            // apply strategy on player
+            // activePlayer.play();
+
+            return newState;
         case MatchActions.SET_FIRST_SELECTED_CARD:
             return { ...state, firstSelectedCard: action.payload};
         case MatchActions.ACTIVE_PLAYER_WINS_PAIR:
-            const localPlayers = state.players.slice();  // clone player array (shallow copy)
+            const localPlayers = state.players.slice();         // clone player array (shallow copy)
             localPlayers[state.activePlayer].pairsWon++;
 
             return {
