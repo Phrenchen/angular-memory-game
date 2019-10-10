@@ -1,6 +1,6 @@
 <div class="player-container">
     <span>{{player.isHuman ? 'Human' : 'Computer'}}: {{player.pairsWon}}</span>
     
-    <div *ngIf="isActive" class="active-indicator">
+    <div class="active-indicator" [ngClass]="{'active': isActive}">
     </div>
 </div>

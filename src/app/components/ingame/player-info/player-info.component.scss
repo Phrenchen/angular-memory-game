@@ -8,10 +8,14 @@
 
 .active-indicator {
     // border: 2px dotted black;
-
+    opacity: 0;
     width: 1em;
     height: 1em;
     background: wheat;
 
     border-radius: 50%;
+}
+
+.active {
+    opacity: 1;
 }
