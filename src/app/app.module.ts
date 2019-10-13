@@ -20,6 +20,10 @@ import { ButtonModule } from 'primeng/button';
 
 import { CardModule } from 'primeng/card';
 import { PlayerInfoComponent } from './components/ingame/player-info/player-info.component';
+import { TutorialComponent } from './tutorial/tutorial.component';
+import { TutHowToPlayComponent } from './tutorial/tut-how-to-play/tut-how-to-play.component';
+import { TutEmptyComponent } from './tutorial/tut-empty/tut-empty.component';
+import { TutGameRulesComponent } from './tutorial/tut-game-rules/tut-game-rules.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,11 @@ import { PlayerInfoComponent } from './components/ingame/player-info/player-info
     IngameComponent,
     GameoverComponent,
     MenuComponent,
-    PlayerInfoComponent
+    PlayerInfoComponent,
+    TutorialComponent,
+    TutHowToPlayComponent,
+    TutEmptyComponent,
+    TutGameRulesComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Player } from 'src/app/model/Player';
+import { IPlayer } from 'src/app/model/IPlayer';
 
 @Component({
   selector: 'app-player-info',
@@ -8,7 +8,7 @@ import { Player } from 'src/app/model/Player';
 })
 export class PlayerInfoComponent implements OnInit {
 
-  @Input() player: Player;
+  @Input() player: IPlayer;
   @Input() isActive: boolean;
 
   constructor() { }

@@ -1,6 +1,8 @@
 <div class="player-container">
-    <span>{{player.isHuman ? 'Human' : 'Computer'}}: {{player.pairsWon}}</span>
-    
-    <div class="active-indicator" [ngClass]="{'active': isActive}">
-    </div>
+    <div class="active-indicator" [ngClass]="{'active': isActive}"></div>
+    <span>
+        {{player.name}}: {{player.pairsWon}} pairs
+        <br/>
+        total time: {{player.totalTime}} seconds
+    </span>
 </div>

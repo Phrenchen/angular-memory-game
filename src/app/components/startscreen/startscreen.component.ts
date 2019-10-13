@@ -34,7 +34,10 @@ export class StartscreenComponent implements OnInit {
   }
 
 
-
+  public get tutorialName(): string {
+    // return TutorialEnum.howToPlay;
+    return 'tut-game-rules';
+  }
 
   // ----------------------------------------------------
   // TODO: MOVE TO Helper class!

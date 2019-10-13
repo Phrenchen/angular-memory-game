@@ -1,9 +1,15 @@
 <div>
   <h2>Game over!</h2>
-  <p>
-    {{winnerPlayer.name}} has won with {{winnerPlayer.pairsWon}} pairs!
-  </p>
+  <ol>
+    <li *ngFor="let player of matchConfig.players; index as i; trackBy: name">
+        <p>
+            {{player.name}} has won with {{player.pairsWon}} pairs in {{player.totalTime}} seconds!
+          </p>
+    </li>
+  </ol>
+
 
   <button (click)="playAgain()">Play again</button>
 
+  
 </div>

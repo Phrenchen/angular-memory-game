@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { MatchConfig } from 'src/app/model/MatchConfig';
 import { MemoryCard, MemoryCardState } from 'src/app/model/MemoryCard';
-import { Player } from 'src/app/model/Player';
+import { IPlayer } from 'src/app/model/IPlayer';
 import * as Actions from './../../actions/match.actions';
 
 @Component({
@@ -17,6 +17,9 @@ export class IngameComponent implements OnInit, OnDestroy {
   public matchConfig: MatchConfig;  	// from store
 
   private storeSubscription: any;
+
+  private currentMatchDurationSeconds = 0;
+  private gameTickIntervalId;
 
   constructor(private router: Router, private store: Store<AppState>) { }
 
@@ -33,12 +36,22 @@ export class IngameComponent implements OnInit, OnDestroy {
           }, 1000);
         }
       });
+
+    // ticks every second
+    this.gameTickIntervalId = setInterval(() => {
+      this.currentMatchDurationSeconds++;
+    }, 1000);
   }
 
   ngOnDestroy(): void {
     if (this.storeSubscription) {
       console.log('unsubscribing store');
       this.storeSubscription.unsubscribe();
+
+      if (this.gameTickIntervalId) {
+        clearInterval(this.gameTickIntervalId);
+        this.gameTickIntervalId = null;
+      }
     }
 
   }
@@ -100,7 +113,7 @@ export class IngameComponent implements OnInit, OnDestroy {
     }, delay);
   }
 
-  public getPlayer(id: number): Player {
+  public getPlayer(id: number): IPlayer {
     return this.matchConfig.players[id];
   }
 
@@ -110,5 +123,14 @@ export class IngameComponent implements OnInit, OnDestroy {
 
   public get cards(): MemoryCard[] {
     return this.matchConfig ? this.matchConfig.cards : null;
+  }
+
+  public get tutorialName(): string {
+    // return TutorialEnum.howToPlay;
+    return 'tut-how-to-play';
+  }
+
+  public get currentMatchDurationTime(): string {
+    return this.currentMatchDurationSeconds + ' seconds';
   }
 }

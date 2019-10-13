@@ -5,6 +5,7 @@
   <div class="stats-panel">
     <app-player-info [player]="getPlayer(0)" [isActive]="isActivePlayer(0)"></app-player-info>
     <app-player-info [player]="getPlayer(1)" [isActive]="isActivePlayer(1)"></app-player-info>
+    <p>match time: {{currentMatchDurationTime}}</p>
   </div>
   
   <div class="game-over-container" *ngIf="matchConfig.isGameOver">
@@ -23,3 +24,5 @@
 <div *ngIf="!matchConfig">
   <p>...loading match...</p>
 </div>
+
+<!-- <app-tutorial [tutorial]="tutorialName"></app-tutorial> -->

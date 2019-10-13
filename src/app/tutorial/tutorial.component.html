@@ -1,0 +1,22 @@
+<div class="tutorial-container">
+  <svg>
+    <g inkscape:label="Ebene 1" inkscape:groupmode="layer" id="layer1">
+      <rect style="opacity:1;
+                    fill:#000000;
+                    fill-opacity:0.7;
+                    stroke:none;
+                    stroke-width:1;
+                    stroke-miterlimit:4;
+                    stroke-dasharray:none;
+                    stroke-opacity:1" id="tutorial-transparent-background" width="100%" height="100%" x="0" y="0" />
+      <ellipse id="tut-mask" style="fill:#ff0000;fill-opacity:.2;fill-rule:evenodd;stroke-width:1" cx="50%" cy="50%"
+        rx="50" ry="50" />
+    </g>
+  </svg>
+
+  <div class="tutorial-content">
+    <app-tut-empty *ngIf="isActive('tut-empty')"></app-tut-empty>
+    <app-tut-how-to-play *ngIf="isActive('tut-how-to-play')"></app-tut-how-to-play>
+    <app-tut-game-rules *ngIf="isActive('tut-game-rules')"></app-tut-game-rules>
+  </div>
+</div>

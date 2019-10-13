@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Player } from '../model/Player';
+import { IPlayer } from '../model/IPlayer';
 import { AiPlayer } from '../model/AiPlayer';
 import { HumanPlayer } from '../model/HumanPlayer';
 import { MemoryCard } from '../model/MemoryCard';
@@ -10,17 +10,17 @@ export class GameService {
   
   constructor() { }
   
-  public static activePlayer(players: Player[], activePlayer: number) {
+  public static activePlayer(players: IPlayer[], activePlayer: number) {
     if(activePlayer >= 0 && activePlayer < players.length) {
       return players[activePlayer];
     }
     return null;
   }
 
-  public static createPlayers(humanPlayerCount: number, totalPlayerCount: number): Player[] {
-    const players: Player[] = [];
+  public static createPlayers(humanPlayerCount: number, totalPlayerCount: number): IPlayer[] {
+    const players: IPlayer[] = [];
     const aiPlayerCount = Math.max(0, totalPlayerCount - humanPlayerCount);
-    let player: Player;
+    let player: IPlayer;
 
     for (let i = 0; i < humanPlayerCount; i++) {
       player = new HumanPlayer();

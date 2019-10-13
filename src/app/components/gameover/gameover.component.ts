@@ -3,7 +3,7 @@ import { MatchConfig } from 'src/app/model/MatchConfig';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
-import { Player } from 'src/app/model/Player';
+import { IPlayer } from 'src/app/model/IPlayer';
 
 @Component({
   selector: 'app-gameover',
@@ -13,6 +13,8 @@ import { Player } from 'src/app/model/Player';
 export class GameoverComponent implements OnInit, OnDestroy {
 
   public matchConfig: MatchConfig;
+  
+  private sortedPlayers: IPlayer [];
   private storeSubscription: any;
 
   constructor(private router: Router, private store: Store<AppState>) { }
@@ -22,6 +24,13 @@ export class GameoverComponent implements OnInit, OnDestroy {
       .subscribe(stats => {
         console.log('store update ', stats.isGameOver);
         this.matchConfig = stats;
+        
+        let sortedPlayers = this.matchConfig.players.sort((a, b) => {
+          return a.pairsWon - b.pairsWon;
+        });
+        
+        this.sortedPlayers = sortedPlayers.reverse();
+        console.log('sortedPlayers: ', this.sortedPlayers);
 
       });
   }
@@ -39,13 +48,7 @@ export class GameoverComponent implements OnInit, OnDestroy {
     this.router.navigate(['/start']);
   }
 
-  public get winnerPlayer(): Player {
-    let sortedPlayers = this.matchConfig.players.sort((a, b) => {
-      return a.pairsWon - b.pairsWon;
-    });
-
-    sortedPlayers = sortedPlayers.reverse();
-    console.log(sortedPlayers);
-    return sortedPlayers[0];
+  public get winnerPlayer(): IPlayer {
+    return this.sortedPlayers[0];
   }
 }

@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { MatchConfig } from '../model/MatchConfig';
-import { Player } from '../model/Player';
+import { IPlayer } from '../model/IPlayer';
 import { MemoryCard } from '../model/MemoryCard';
 
 export const CREATE_MATCH = '[MATCH] Create';
