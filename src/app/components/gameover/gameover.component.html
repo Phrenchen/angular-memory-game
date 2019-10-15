@@ -3,7 +3,7 @@
   <ol>
     <li *ngFor="let player of matchConfig.players; index as i; trackBy: name">
         <p>
-            {{player.name}} has won with {{player.pairsWon}} pairs in {{player.totalTime}} seconds!
+            {{player.name}} has won with {{player.pairsWon}} pairs in {{player.totalTime()}} seconds!
           </p>
     </li>
   </ol>

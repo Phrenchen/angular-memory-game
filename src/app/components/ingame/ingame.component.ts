@@ -39,6 +39,9 @@ export class IngameComponent implements OnInit, OnDestroy {
 
     // ticks every second
     this.gameTickIntervalId = setInterval(() => {
+      
+      this.store.dispatch(new Actions.GameTick());
+
       this.currentMatchDurationSeconds++;
     }, 1000);
   }

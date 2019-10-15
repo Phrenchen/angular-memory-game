@@ -5,9 +5,10 @@ import { GameService } from '../services/game.service';
 import { GameConsts } from '../model/GameConsts';
 import { MemoryCard, MemoryCardState } from '../model/MemoryCard';
 import { MathHelper } from '../helper/MathHelper';
+import { IPlayer } from '../model/IPlayer';
 
-const gridX = 2;
-const gridY = 2;
+const gridX = 4;
+const gridY = 4;
 
 const initialState: MatchConfig = {
     gridDimensionX: gridX,
@@ -23,7 +24,7 @@ const initialState: MatchConfig = {
 
 export function reducer(state: MatchConfig = initialState, action: MatchActions.Actions) {
     // console.log(action, state);
-
+    let currentPlayer: IPlayer;
 
     switch (action.type) {
         case MatchActions.CREATE_MATCH:
@@ -41,9 +42,20 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                 players: GameService.createPlayers(action.payload, GameConsts.TOTAL_PLAYER_COUNT),
                 isGameOver: false
             };
+        case MatchActions.GAME_TICK:
+            // update match time to store
+            // requires new Action and update MatchConfig in reducer
+            currentPlayer = GameService.activePlayer(state.players, state.activePlayer);
+            currentPlayer.playTime.totalTime++;
+            // currentPlayer.playTime = {...currentPlayer.playTime.to, currentPlayer.playTime.totalTime + 1}
+
+            return {
+                ...state,
+
+            };
         case MatchActions.SET_NEXT_PLAYER:
             // end current player´s turn
-            const currentPlayer = GameService.activePlayer(state.players, state.activePlayer);
+            currentPlayer = GameService.activePlayer(state.players, state.activePlayer);
             currentPlayer.playTime.turnEnd = new Date();
             currentPlayer.playTime.totalTime += currentPlayer.playTime.turnEnd.getTime() - 
                                                     currentPlayer.playTime.turnStart.getTime();

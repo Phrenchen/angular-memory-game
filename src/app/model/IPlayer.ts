@@ -5,7 +5,8 @@ export interface IPlayer {
     
 
     playTime: PlayTime;    // time spent at player´s turn
-    totalTime: number;
+    // totalTime: number;
+    totalTime(): number;
     
     avatarUrl: string;
 

@@ -13,9 +13,13 @@ export class Player implements IPlayer {
         totalTime: 0
     };
 
-    public get totalTime(): number {
-        const tt = Math.floor( (this.playTime.turnEnd.getTime() - this.playTime.turnStart.getTime() ) / 1000);
-        console.log(this.name + ': ' + tt + ':: ' + this.playTime.totalTime);
-        return Math.round(this.playTime.totalTime / 1000) + tt;  // seconds
+    public totalTime(): number {
+        const tt = Math.floor((this.playTime.turnEnd.getTime() - this.playTime.turnStart.getTime()) / 1000);
+
+        if (this.name === 'Spieler') {
+            // console.log(this.name + ': ' + tt + ':: ' + this.playTime.totalTime);
+
+        }
+        return Math.round(this.playTime.totalTime / 1000) ;  // seconds
     }
 }
