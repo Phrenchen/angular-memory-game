@@ -21,5 +21,10 @@
 
     --card-count-x: 4;
     --card-count-y: 4;
+
+    /* card */
+    /* TODO: check */
+    --card-hover-fontsize: 18;
+    /* card end */
   }
   

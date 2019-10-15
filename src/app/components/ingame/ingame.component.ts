@@ -6,6 +6,7 @@ import { MatchConfig } from 'src/app/model/MatchConfig';
 import { MemoryCard, MemoryCardState } from 'src/app/model/MemoryCard';
 import { IPlayer } from 'src/app/model/IPlayer';
 import * as Actions from './../../actions/match.actions';
+import { TweenMax } from 'gsap';
 
 @Component({
   selector: 'app-ingame',
@@ -39,7 +40,7 @@ export class IngameComponent implements OnInit, OnDestroy {
 
     // ticks every second
     this.gameTickIntervalId = setInterval(() => {
-      
+
       this.store.dispatch(new Actions.GameTick());
 
       this.currentMatchDurationSeconds++;
@@ -64,6 +65,51 @@ export class IngameComponent implements OnInit, OnDestroy {
     this.router.navigate(['/start']);
   }
 
+  public cardMouseOver(event: MouseEvent, card: MemoryCard) {
+    // animate target card 
+    // animate neighbouring cards with a small delay, "spreading out the effect"
+    const targets = [];
+    const cards = this.matchConfig.cards;
+    const targetIndex = cards.indexOf(card);
+    const effectRadius = 2;
+    const minIndex = Math.max(0, targetIndex - effectRadius);
+    const maxIndex = Math.min(targetIndex + effectRadius, cards.length - 1) + 1;    // +1 => make the target card center
+    
+    console.log('hovered index: ' + targetIndex);
+    console.log('minIndex, maxIndex: ', minIndex, maxIndex);
+
+    // *** TODO: next: add css class with animation***
+
+
+
+    // *** set style directly ***
+    let red = 255;
+    let green = 255;
+    let blue = 255;
+    let alpha = 1;
+    
+    for (let i = minIndex; i < maxIndex; i++) {
+      // targets.push(cards[i]);
+      const element: HTMLElement = document.getElementById('card-' + i);
+      const distanceToTarget = Math.abs(targetIndex - i);
+      console.log('distance to target: ' + distanceToTarget);
+      
+      if(element) {
+        // targets.push(element);
+        // element.style.backgroundColor = colors[elementCounter];
+        const channelRed = red;
+        const channelGreen = green - distanceToTarget * 150;
+        const channelBlue = green - distanceToTarget * (255 / 2);
+        const channelAlpha = alpha;
+        
+        element.style.backgroundColor = 'rgba(' + channelRed + ', ' + channelGreen + ', ' + channelBlue + ', ' + channelAlpha + ')';
+      }
+    }
+    console.log('cards effected count: ', (maxIndex-minIndex));
+    // *** set style directly end ***
+
+    // TweenMax.staggerFromTo( targets, 1, { width: }, toVars:Object, stagger:Number | Object | Function, onCompleteAll:Function, onCompleteAllParams:Array, onCompleteAllScope:* ) : Array
+  }
 
   public cardClicked(event: MouseEvent, card: MemoryCard) {
     // console.log(MemoryCardState.REMOVED, card.state);
