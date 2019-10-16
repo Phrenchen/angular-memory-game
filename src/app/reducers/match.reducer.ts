@@ -7,8 +7,8 @@ import { MemoryCard, MemoryCardState } from '../model/MemoryCard';
 import { MathHelper } from '../helper/MathHelper';
 import { IPlayer } from '../model/IPlayer';
 
-const gridX = 4;
-const gridY = 4;
+const gridX = 2;
+const gridY = 2;
 
 const initialState: MatchConfig = {
     gridDimensionX: gridX,

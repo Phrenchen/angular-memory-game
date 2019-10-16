@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
@@ -13,39 +13,62 @@ import { TweenMax } from 'gsap';
   templateUrl: './ingame.component.html',
   styleUrls: ['./ingame.component.scss']
 })
-export class IngameComponent implements OnInit, OnDestroy {
-
+export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
+  
   public matchConfig: MatchConfig;  	// from store
-
+  
   private storeSubscription: any;
-
+  
   private currentMatchDurationSeconds = 0;
   private gameTickIntervalId;
-
+  private hasBeenInitialized = false;
+  
   constructor(private router: Router, private store: Store<AppState>) { }
-
+  
   ngOnInit() {
-
+    
     this.storeSubscription = this.store.select('match')
-      .subscribe(stats => {
-        // console.log('store update ', stats.isGameOver);
-        this.matchConfig = stats;
+    .subscribe(stats => {
+      // console.log('store update ', stats.isGameOver);
+      this.matchConfig = stats;
+      
+      if (!this.hasBeenInitialized) {
+        this.hasBeenInitialized = true;
+        this.setupCards(this.matchConfig.cards);
+      }
+      
+      if (this.matchConfig.isGameOver) {
+        clearInterval(this.gameTickIntervalId);
 
-        if (this.matchConfig.isGameOver) {
-          setTimeout(() => {
-            this.router.navigate(['/gameover']);
-          }, 1000);
-        }
-      });
+        const gameOverStateDelay = 100000;
+        // console.log('game over: ', this.matchConfig.cards[0]);
+        this.hideCards(this.matchConfig.cards);
 
+        // setTimeout(() => {
+        //   this.router.navigate(['/gameover']);
+        // }, gameOverStateDelay);
+      }
+    });
+    
     // ticks every second
     this.gameTickIntervalId = setInterval(() => {
-
+      
       this.store.dispatch(new Actions.GameTick());
-
+      
       this.currentMatchDurationSeconds++;
     }, 1000);
   }
+
+  
+  
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.introduceCards(this.matchConfig.cards);
+
+    }, 1000);
+  }
+
+  
 
   ngOnDestroy(): void {
     if (this.storeSubscription) {
@@ -65,50 +88,149 @@ export class IngameComponent implements OnInit, OnDestroy {
     this.router.navigate(['/start']);
   }
 
+  public cardMouseOut(event: MouseEvent, card: MemoryCard) {
+    if(!this.matchConfig.isGameOver){
+      this.setCardColor([card], MemoryCardState.COVERED);
+    }
+  }
+
+  private setCardColor(cards: MemoryCard[], state: MemoryCardState, color: string = 'white'): void {
+    cards.forEach(card => {
+      if (card.state === MemoryCardState.COVERED) {
+        const element: HTMLElement = document.querySelector(card.cardSelector);
+        if (element && card.state === state) {
+          element.style.backgroundColor = color;
+        }
+      }
+    });
+  }
+
+
+  private introduceCards(cards: MemoryCard[]) {
+    const elements: HTMLElement[] = [];
+
+    cards.forEach((card, index) => {
+      const element: HTMLElement = document.getElementById(card.cardSelector);
+      
+      if (element) {
+        elements.push(element);
+      }
+    });
+
+    const duration = .3;
+    const stagger: number = .05; // delay
+    const fromVars = {
+      width: '0',
+      height: '0',
+      opacity: 0.0
+    };
+    const toVars = {
+      width: '100%',
+      height: '100%',
+      opacity: 1
+    };
+    TweenMax.staggerFromTo(elements, duration, fromVars, toVars, stagger, () => {
+      // on complete all
+      elements.forEach(ele => {
+        ele.style.pointerEvents = 'all';
+      });
+
+     }, [], null);
+  }
+
+  private hideCards(cards: MemoryCard[]): void {
+    cards.forEach((card, index) => {
+      // if (card.state === MemoryCardState.COVERED) {
+        const duration = 0.6;
+        const fromVars = {
+          width: '100%',
+          height: '100%',
+          opacity: 1.0,
+          backgroundColor: 'white'
+        };
+        const toVars = {
+          width: '0',
+          height: '0',
+          opacity: 0.0,
+          backgroundColor: '#000000',
+          onComplete: () => {
+            console.log('card ' + card.cardPosition + ' hidden');
+            if(card.cardPosition === cards.length - 1) {
+              console.log('last card hidden');
+              const gameOverStateDelay = 700; // ms
+              // NAVIGATE TO GAME OVER ROUTE
+              setTimeout(() => {
+                this.router.navigate(['/gameover']);
+              }, gameOverStateDelay);
+            }
+          }
+        };
+        const element = document.getElementById(card.cardSelector);
+        element.style.pointerEvents = 'none';
+        TweenMax.fromTo(element, duration, fromVars, toVars, );
+    
+        console.log('tweening mouse over: ' + card.cardSelector);
+  
+      // }
+
+    });
+
+  }
+
+
+
+  private setupCards(cards: MemoryCard[]): void {
+    if (!cards) {
+      return;
+    }
+    cards.forEach((card, index) => {
+      card.cardPosition = index;  // assign DOM id selector to MemoryCard
+    });
+  }
+
+
+
+
+
   public cardMouseOver(event: MouseEvent, card: MemoryCard) {
     // animate target card 
     // animate neighbouring cards with a small delay, "spreading out the effect"
     const targets = [];
     const cards = this.matchConfig.cards;
-    const targetIndex = cards.indexOf(card);
-    const effectRadius = 2;
+    const targetIndex = card.cardPosition;
+    const effectRadius = 0;
     const minIndex = Math.max(0, targetIndex - effectRadius);
     const maxIndex = Math.min(targetIndex + effectRadius, cards.length - 1) + 1;    // +1 => make the target card center
-    
+
     console.log('hovered index: ' + targetIndex);
     console.log('minIndex, maxIndex: ', minIndex, maxIndex);
 
-    // *** TODO: next: add css class with animation***
+    // *** set style directly. this currently breaks displaying the front side of the card -> same property. next: add image to front ***
+    this.setCardColor(cards, MemoryCardState.COVERED, 'white');
 
 
-
-    // *** set style directly ***
-    let red = 255;
-    let green = 255;
-    let blue = 255;
-    let alpha = 1;
-    
-    for (let i = minIndex; i < maxIndex; i++) {
-      // targets.push(cards[i]);
-      const element: HTMLElement = document.getElementById('card-' + i);
-      const distanceToTarget = Math.abs(targetIndex - i);
-      console.log('distance to target: ' + distanceToTarget);
-      
-      if(element) {
-        // targets.push(element);
-        // element.style.backgroundColor = colors[elementCounter];
-        const channelRed = red;
-        const channelGreen = green - distanceToTarget * 150;
-        const channelBlue = green - distanceToTarget * (255 / 2);
-        const channelAlpha = alpha;
-        
-        element.style.backgroundColor = 'rgba(' + channelRed + ', ' + channelGreen + ', ' + channelBlue + ', ' + channelAlpha + ')';
-      }
+    if (card.state === MemoryCardState.COVERED) {
+      const duration = 0.1;
+      const fromVars = {
+        yoyo: true,
+        repeat: 1,
+        width: '100%',
+        height: '100%',
+        opacity: 1.0,
+        backgroundColor: 'white'
+      };
+      const toVars = {
+        yoyo: true,
+        repeat: 1,
+        width: '110%',
+        height: '110%',
+        opacity: 1.0,
+        backgroundColor: '#DDDDDD'
+      };
+      TweenMax.fromTo(document.getElementById(card.cardSelector), duration, fromVars, toVars);
+  
+      console.log('tweening mouse over: ' + card.cardSelector);
     }
-    console.log('cards effected count: ', (maxIndex-minIndex));
-    // *** set style directly end ***
-
-    // TweenMax.staggerFromTo( targets, 1, { width: }, toVars:Object, stagger:Number | Object | Function, onCompleteAll:Function, onCompleteAllParams:Array, onCompleteAllScope:* ) : Array
   }
 
   public cardClicked(event: MouseEvent, card: MemoryCard) {

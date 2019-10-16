@@ -17,6 +17,7 @@
 <div class="board" *ngIf="matchConfig">
   <div *ngFor="let card of cards; index as i;" class="card" [ngStyle]="{'background': card.color}" [id]="'card-' + i"
     (mouseover)="cardMouseOver($event, card)"
+    (mouseout)="cardMouseOut($event, card)"
     (click)="cardClicked($event, card)">
     <p>{{card.partnerId}}</p>
   </div>

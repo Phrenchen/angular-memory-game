@@ -13,7 +13,12 @@ export class MemoryCard {
     private colors: Map<MemoryCardState, string> = new Map<MemoryCardState, string>();
 
     public state: MemoryCardState = MemoryCardState.COVERED;
+    private selector: string = 'card-'; // used by document.querySelector(selector) 
+    public cardPosition: number = 0;
 
+    public get cardSelector(): string {
+        return this.selector + this.cardPosition;
+    }
 
     constructor(public x: number, public y: number, public partnerId: number) {
         this.id = ++MemoryCard.cardCounter;
