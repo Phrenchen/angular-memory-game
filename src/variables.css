@@ -26,5 +26,7 @@
     /* TODO: check */
     --card-hover-fontsize: 18;
     /* card end */
+
+      --board-column-count: 4;
   }
   

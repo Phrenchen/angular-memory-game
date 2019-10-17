@@ -1,7 +1,7 @@
 <div>
   <h2>Game over!</h2>
   <ol>
-    <li *ngFor="let player of matchConfig.players; index as i; trackBy: name">
+    <li *ngFor="let player of matchConfig.players; index as i;">
         <p>
             {{player.name}} has won with {{player.pairsWon}} pairs in {{player.totalTime()}} seconds!
           </p>

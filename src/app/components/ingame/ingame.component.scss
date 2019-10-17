@@ -1,5 +1,7 @@
 @import url('./../../../variables.css');
 
+
+
 .btn-start-screen {
     margin: 0 auto;
 }
@@ -8,8 +10,10 @@
     display: grid;
 
     // TODO: use variables and set to values from MatchConfig!
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    // grid-template-columns: repeat(8, 1fr);
+    // grid-template-rows: repeat(4, 1fr);
+
+    grid-template-columns: repeat(var(--board-column-count), 1fr);
     grid-gap: 1em;
 
     justify-items: center;
@@ -17,6 +21,8 @@
 
 
     // border: 1 px solid black;
+
+    padding: 2vmin;
 
     width: 100vw;
     height: 80vh;
@@ -52,6 +58,9 @@
 
     text-align: center;
 
+    p {
+        pointer-events: none;
+    }
 }
 
 .card:hover {
@@ -94,4 +103,17 @@
 
 .btn-start-screen {
     margin-bottom: 10px;
+}
+
+.game-over-container {
+    position: absolute;
+    
+    width: 50vw;
+    height: 50vh;
+    
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    border: 3px dotted black;
 }
