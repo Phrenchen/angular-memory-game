@@ -25,7 +25,8 @@ export class MemoryCard {
 
         this.colors.set(MemoryCardState.COVERED, 'white');
         this.colors.set(MemoryCardState.OPEN, ColorConsts.cardColors[this.partnerId]);
-        this.colors.set(MemoryCardState.REMOVED, 'grey');
+        // this.colors.set(MemoryCardState.REMOVED, 'grey');
+        this.colors.set(MemoryCardState.REMOVED, ColorConsts.cardColors[this.partnerId]);
     }
 
     // returns: is selected

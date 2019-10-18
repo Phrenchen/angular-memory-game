@@ -22,6 +22,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
   private currentMatchDurationSeconds = 0;
   private gameTickIntervalId;
   private hasBeenInitialized = false;
+  private outroComplete = false;
 
   constructor(private router: Router, private store: Store<AppState>) { }
 
@@ -41,7 +42,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
           clearInterval(this.gameTickIntervalId);
 
           const gameOverStateDelay = 1000;
-          // console.log('game over: ', this.matchConfig.cards[0]);
+          // console.log('game over! ');
           
           
           setTimeout(() => {
@@ -86,6 +87,10 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public gotoStartScreen(): void {
     this.router.navigate(['/start']);
+  }
+  
+  public continueToGameOver(): void {
+    this.router.navigate(['/gameover']);
   }
 
 
@@ -142,7 +147,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('card ' + card.cardPosition + ' hidden');
           if (card.cardPosition === cards.length - 1) {
             console.log('last card in Array hidden');
-            
+            this.outroComplete = true;
             
             // NAVIGATE TO GAME OVER ROUTE
             // const gameOverStateDelay = 700; // ms
@@ -300,6 +305,10 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
         // always: after timeout, hide (no success) or remove (success) selected cards
       }
     }
+  }
+
+  public get showGameOver(): boolean {
+    return this.matchConfig.isGameOver && this.outroComplete;
   }
   
   private setNextPlayer() {

@@ -8,9 +8,9 @@
     <p>match time: {{currentMatchDurationTime}}</p>
   </div>
   
-  <div class="game-over-container" *ngIf="matchConfig.isGameOver">
+  <div class="game-over-container" *ngIf="showGameOver">
     <h2>Game over!</h2>
-    <button>continue to result screen</button>
+    <button (click)="continueToGameOver()">continue to result screen</button>
   </div>
 </div>
 

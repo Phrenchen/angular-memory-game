@@ -1,3 +1,6 @@
+@import url('./../../../../variables.css');
+
+
 .player-container {
     // border: 1px solid white;
     // width: 50vw;
@@ -8,8 +11,11 @@
     text-align: center;
 }
 
-.player-container span {
-    
+.player-container h2 {
+    font-size: 4rem;
+
+    padding: 0;
+    margin: 0;
 }
 
 .active-indicator {
@@ -17,7 +23,7 @@
     opacity: 0;
     width: 1em;
     height: 1em;
-    background: wheat;
+    background: var(--main-primary-color);
 
     border-radius: 50%;
 
