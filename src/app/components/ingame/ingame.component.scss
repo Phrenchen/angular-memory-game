@@ -14,7 +14,7 @@
     // grid-template-rows: repeat(4, 1fr);
 
     grid-template-columns: repeat(var(--board-column-count), 1fr);
-    grid-gap: 1em;
+    grid-gap: 5vmin;
 
     justify-items: center;
     align-items: center;
@@ -22,6 +22,7 @@
 
     // border: 1 px solid black;
 
+    margin: 1vmin;
     padding: 2vmin;
 
     width: 100vw;
