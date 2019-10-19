@@ -95,33 +95,6 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-
-
-  // private animateCards(cards: MemoryCard[], config: AnimationConfig, completeCallback: Function, delay: number = 500): any {
-  //   let counter = 0;
-
-  //   const interval = setInterval(() => {
-  //     if (counter === cards.length - 1) {
-  //       AnimationHelper.tween(cards[counter].htmlElement, config, () => {
-  //         if (completeCallback) {
-  //           completeCallback();
-  //         }
-  //       });
-  //     }
-  //     else {
-  //       AnimationHelper.tween(cards[counter].htmlElement, config);
-  //     }
-
-  //     counter++;
-  //     if (counter === cards.length) {
-  //       clearInterval(interval);
-  //     }
-  //   }, delay);
-
-  //   return interval;
-  // }
-
-
   private introduceCards(cards: MemoryCard[]) {
     AnimationHelper.animateCards(cards, AnimationConfig.getConfig(AnimationEnum.FADE_IN), () => {
       console.log('finished introducing cards: enable interaction');
@@ -148,6 +121,10 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public cardMouseOver(event: MouseEvent, card: MemoryCard) {
     if (card.state === MemoryCardState.COVERED) {
+      // AnimationHelper.tween(card.htmlElement, AnimationConfig.getConfig(AnimationEnum.FADE_IN), () => {
+      //   console.log('card out complete');
+      // });
+
       const duration = 0.6;
       const target: HTMLElement = event.target as HTMLElement;
       const fromVars = {
@@ -164,27 +141,33 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
       };
       TweenMax.killChildTweensOf(card.htmlElement);
       TweenMax.fromTo(card.htmlElement, duration, fromVars, toVars);
+
+
     }
   }
 
   public cardMouseOut(event: MouseEvent, card: MemoryCard) {
     if (card.state === MemoryCardState.COVERED) {
-      const duration = 0.6;
-      const target: HTMLElement = event.target as HTMLElement;
-      const fromVars = {
-        width: target.style.width,
-        height: target.style.height,
-        opacity: target.style.opacity,
-        ease: Power3.easeInOut
-      };
-      const toVars = {
-        width: '100%',
-        height: '100%',
-        opacity: 1,
-        ease: Power3.easeInOut
-      };
-      TweenMax.killChildTweensOf(card.htmlElement);
-      TweenMax.fromTo(card.htmlElement, duration, fromVars, toVars);
+      AnimationHelper.tween(card.htmlElement, AnimationConfig.getConfig(AnimationEnum.TO_DEFAULT), () => {
+        console.log('card out complete');
+      });
+      
+      // const duration = 0.6;
+      // const target: HTMLElement = event.target as HTMLElement;
+      // const fromVars = {
+      //   width: target.style.width,
+      //   height: target.style.height,
+      //   opacity: target.style.opacity,
+      //   ease: Power3.easeInOut
+      // };
+      // const toVars = {
+      //   width: '100%',
+      //   height: '100%',
+      //   opacity: 1,
+      //   ease: Power3.easeInOut
+      // };
+      // TweenMax.killChildTweensOf(card.htmlElement);
+      // TweenMax.fromTo(card.htmlElement, duration, fromVars, toVars);
     }
   }
 
@@ -194,31 +177,22 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     const cardIsSelected = card.toggleSelected();
 
-    AnimationHelper.tween(card.htmlElement, AnimationConfig.getConfig(AnimationEnum.FADE_IN));
+    AnimationHelper.tween(card.htmlElement, AnimationConfig.getConfig(AnimationEnum.TO_DEFAULT));
 
     if (!cardIsSelected) {
-      // de-select card
-      this.store.dispatch(new Actions.SetFirstSelectedCard(null));
+      this.store.dispatch(new Actions.SetFirstSelectedCard(null));  // de-select card
     }
     else {
       // no other card is selected
       if (!this.matchConfig.firstSelectedCard) {
-        // select currend card as firstSelected
-        this.store.dispatch(new Actions.SetFirstSelectedCard(card));
+        this.store.dispatch(new Actions.SetFirstSelectedCard(card));  // select currend card as firstSelected
       } else {
-        // compare cards
-        if (this.matchConfig.firstSelectedCard.matches(card)) {
-          // win
-          // equal partnerId -> current player wins a point
-          this.resetCards([this.matchConfig.firstSelectedCard, card], 500, MemoryCardState.REMOVED);
-
+        if (this.matchConfig.firstSelectedCard.matches(card)) { // compare cards
+          this.resetCards([this.matchConfig.firstSelectedCard, card], 500, MemoryCardState.REMOVED);  // win: equal partnerId -> current player wins a point
           this.store.dispatch(new Actions.ActivePlayerWinsPair());
           this.store.dispatch(new Actions.SetFirstSelectedCard(null));
         } else {
-          // miss
-          // unequal partnerId -> next player
-          this.resetCards([this.matchConfig.firstSelectedCard, card], 500, MemoryCardState.COVERED);
-
+          this.resetCards([this.matchConfig.firstSelectedCard, card], 500, MemoryCardState.COVERED);  // miss: unequal partnerId -> next player
           this.store.dispatch(new Actions.SetFirstSelectedCard(null));    // reset card when miss
           this.setNextPlayer();                                           // set next player
         }
