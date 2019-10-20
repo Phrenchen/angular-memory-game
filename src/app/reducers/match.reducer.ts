@@ -8,7 +8,7 @@ import { MathHelper } from '../helper/MathHelper';
 import { IPlayer } from '../model/IPlayer';
 
 const gridX = 1;
-const gridY = 8;
+const gridY = 4;
 
 const initialState: MatchConfig = {
     gridDimensionX: gridX,

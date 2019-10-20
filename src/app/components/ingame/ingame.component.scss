@@ -1,7 +1,6 @@
 @import url('./../../../variables.css');
 
 
-
 .btn-start-screen {
     margin: 0 auto;
 }
@@ -52,12 +51,12 @@
     // height: calc(20vh - 1em);
     
     // width: calc(100% / 8);
-    width: 100px;
-    min-width: 50px;
+    // width: 100px;
+    // min-width: 50px;
     
     // height: calc(100% / 4);
-    height: 100px;
-    min-height: 50px;
+    // height: 100px;
+    // min-height: 50px;
 
 
     cursor: pointer;
@@ -84,6 +83,7 @@
 
     // width: 100%;
     // height: 50px;
+    opacity: 0;
 }
 
 .stats-panel {
@@ -112,6 +112,9 @@
 }
 
 .game-over-container {
+    opacity: 0;
+    pointer-events: none;
+
     position: absolute;
     
     width: 50vw;

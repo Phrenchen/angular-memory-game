@@ -1,18 +1,19 @@
 <!-- player-info-header -->
-<div class="top-bar" id="top-bar-id">
+<div class="top-bar" id="top-bar">
   <button class="btn-start-screen" (click)="gotoStartScreen()">Back</button>
   
-  <div class="stats-panel">
+  <div class="stats-panel" id="stats-panel">
     <app-player-info [player]="getPlayer(0)" [isActive]="isActivePlayer(0)"></app-player-info>
     <app-player-info [player]="getPlayer(1)" [isActive]="isActivePlayer(1)"></app-player-info>
     <p>match time: {{currentMatchDurationTime}}</p>
   </div>
   
-  <div class="game-over-container" *ngIf="showGameOver">
+</div>
+  <!-- <div class="game-over-container" id="game-over-notice" *ngIf="showGameOver"> -->
+  <div class="game-over-container" id="game-over-notice" >
     <h2>Game over!</h2>
     <button (click)="continueToGameOver()">continue to result screen</button>
   </div>
-</div>
 
 <!-- grid with cards -> the 'board' -->
 <div class="board" *ngIf="matchConfig">

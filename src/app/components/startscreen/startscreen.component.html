@@ -1,14 +1,14 @@
-<div class="container">
+<div class="container" id="container-startscreen">
     <!-- <h2>Fancy a game of</h2> -->
     <h1>Memory!</h1>
 
-    <span>
-        <p-radioButton name="start-match" value="1" label="1 Player" [(ngModel)]="selectedHumanPlayerCount"
-            (onClick)="startMatch()"></p-radioButton>
+    <div>
+        <button name="start-match" 
+            (click)="startMatch(1)">1 Player</button>
         <span>choose</span>
-        <p-radioButton name="start-match" value="2" label="2 Players" [(ngModel)]="selectedHumanPlayerCount"
-            (onClick)="startMatch()"></p-radioButton>
-    </span>
+        <button name="start-match"
+            (click)="startMatch(2)">2 Players</button>
+    </div>
 
 </div>
 

@@ -9,11 +9,9 @@ export class AnimationHelper {
         const interval = setInterval(() => {
             // set start values to current state
             const htmlElement: HTMLElement = cards[counter].htmlElement;
-            config.fromVars['width'] = htmlElement.style.width;
-            config.fromVars['height'] = htmlElement.style.height;
-            config.fromVars['opacity'] = htmlElement.style.opacity;
-
-            console.log(config.fromVars);
+            // config.fromVars['width'] = htmlElement.style.width;
+            // config.fromVars['height'] = htmlElement.style.height;
+            // config.fromVars['opacity'] = htmlElement.style.opacity;
 
             if (counter === cards.length - 1) {
                 AnimationHelper.tween(htmlElement, config, () => {
@@ -35,10 +33,22 @@ export class AnimationHelper {
         return interval;
     }
 
-    public static tween(element: HTMLElement, config: AnimationConfig, completeCallback: Function = null): void {
+    public static tween(element: HTMLElement, config: AnimationConfig, completeCallback: Function = null): boolean {
+        if(!element) {
+            console.log('AnimationHelper.tween: received no element. aborting.');
+            return false;
+        }
+
         const fromVars = config.fromVars;
         let toVars = config.toVars;
         let duration = config.duration;
+
+        config.fromVars['width'] = element.style.width ? element.style.width : '100%';
+        config.fromVars['height'] = element.style.height ? element.style.height : '100%';
+        config.fromVars['opacity'] = element.style.opacity ? element.style.opacity : '0';
+        
+        // console.log('element.style: ', element.style.width, element.style.height, element.style.opacity);
+        // console.log(config);
 
         if (completeCallback) {
             toVars['onComplete'] = completeCallback;
@@ -50,23 +60,25 @@ export class AnimationHelper {
         }
 
         TweenMax.fromTo(element, duration, fromVars, toVars);
+        return true;
     }
 }
 
 export enum AnimationEnum {
     FADE_IN = 'fade-in',
     FADE_OUT = 'fade-out',
-    TO_DEFAULT = 'default',
+    TO_DEFAULT = 'to-default',
     HIGHLIGHT = 'highlight'
 }
 
 
 export class AnimationConfig {
+    private static defaultTweenDuration = 0.3;
+
     private static fadeIn: AnimationConfig = {
-        duration: .3,
+        name: 'fade in',
+        duration: AnimationConfig.defaultTweenDuration,
         fromVars: {
-            // width: 0,
-            // height: 0,
             opacity: 0,
             ease: Power3.easeInOut,
         },
@@ -79,41 +91,47 @@ export class AnimationConfig {
     }
 
     private static fadeOut: AnimationConfig = {
-        duration: .3,
+        name: 'fade out',
+        duration: AnimationConfig.defaultTweenDuration,
         fromVars: {
             opacity: 1,
             ease: Power3.easeOut,
         },
         toVars: {
             opacity: 0,
-            // width: '30%',
-            // height: '30%',
             ease: Power3.easeOut,
         }
     }
 
     private static toDefault: AnimationConfig = {
-        duration: .3,
+        name: 'to default',
+        duration: AnimationConfig.defaultTweenDuration,
         fromVars: {
             ease: Power3.easeOut,
         },
         toVars: {
             opacity: 1,
-            width: '100%',
-            height: '100%',
+            // width: '100%',
+            // height: '100%',
             ease: Power3.easeOut,
         }
     }
 
     private static highlight: AnimationConfig = {
-        duration: .3,
+        name: 'highlight',
+        duration: AnimationConfig.defaultTweenDuration,
         fromVars: {
+            yoyo: true,
+            repeat: 1,
+            opacity: 1,
             ease: Power3.easeOut,
         },
         toVars: {
-            opacity: 1,
-            width: '110%',
-            height: '110%',
+            yoyo: true,
+            repeat: 1,
+            opacity: .5,
+            width: '105%',
+            height: '105%',
             ease: Power3.easeOut,
         }
     }
@@ -131,17 +149,16 @@ export class AnimationConfig {
 
     public static getConfig(configType: AnimationEnum): AnimationConfig {
         const config = AnimationConfig.animationMap.get(configType);
-        console.log(config);
+        if(!config) {
+            console.log('no config found for: ', configType);
+        }
         return config;
     }
 
+    public name: string;
     public fromVars: Object;
     public toVars: Object;
     public duration: number = .3;
 
     constructor() { }
-
-
 }
-
-

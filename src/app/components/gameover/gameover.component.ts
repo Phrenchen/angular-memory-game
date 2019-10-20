@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { IPlayer } from 'src/app/model/IPlayer';
+import { AnimationHelper, AnimationConfig, AnimationEnum } from 'src/app/helper/AnimationHelper';
 
 @Component({
   selector: 'app-gameover',
@@ -22,7 +23,7 @@ export class GameoverComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.storeSubscription = this.store.select('match')
       .subscribe(stats => {
-        console.log('store update ', stats.isGameOver);
+        // console.log('store update ', stats.isGameOver);
         this.matchConfig = stats;
         
         let sortedPlayers = this.matchConfig.players.sort((a, b) => {
@@ -30,9 +31,11 @@ export class GameoverComponent implements OnInit, OnDestroy {
         });
         
         this.sortedPlayers = sortedPlayers.reverse();
-        console.log('sortedPlayers: ', this.sortedPlayers);
+        // console.log('sortedPlayers: ', this.sortedPlayers);
 
       });
+
+      AnimationHelper.tween(document.getElementById('game-over-container'), AnimationConfig.getConfig(AnimationEnum.FADE_IN));
   }
 
   ngOnDestroy(): void {
@@ -44,8 +47,10 @@ export class GameoverComponent implements OnInit, OnDestroy {
   }
 
   public playAgain(): void {
-    console.log('play again');
-    this.router.navigate(['/start']);
+    AnimationHelper.tween(document.getElementById('game-over-container'), AnimationConfig.getConfig(AnimationEnum.FADE_OUT), () => {
+      // console.log('intro complete');
+      this.router.navigate(['/start']);
+    });
   }
 
   public get winnerPlayer(): IPlayer {

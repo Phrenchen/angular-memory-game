@@ -47,9 +47,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
           setTimeout(() => {
-            this.hideCards(this.matchConfig.cards);
-
-            //   this.router.navigate(['/gameover']);
+            this.hideCards(this.matchConfig.cards);             // hide cards -> game over
 
           }, gameOverStateDelay);
         }
@@ -65,6 +63,8 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
+      AnimationHelper.tween(document.getElementById('top-bar'), AnimationConfig.getConfig(AnimationEnum.FADE_IN));
+
       this.introduceCards(this.matchConfig.cards);
 
     }, 300);  // milliseconds
@@ -91,7 +91,11 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public continueToGameOver(): void {
-    this.router.navigate(['/gameover']);
+    document.getElementById('game-over-notice').style.pointerEvents = 'none';
+    AnimationHelper.tween(document.getElementById('game-over-notice'), AnimationConfig.getConfig(AnimationEnum.FADE_OUT), () => {
+
+      this.router.navigate(['/gameover']);
+    });
   }
 
 
@@ -112,65 +116,38 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
     cards.forEach(card => {
       card.htmlElement.style.pointerEvents = 'none';
     });
-
+    
     AnimationHelper.animateCards(cards, AnimationConfig.getConfig(AnimationEnum.FADE_OUT), () => {
-      console.log('completed hiding cards');
+      // console.log('completed hiding cards');
       this.outroComplete = true; // shows game over quick info
+      const element: HTMLElement = document.getElementById('game-over-notice');
+      AnimationHelper.tween(element, AnimationConfig.getConfig(AnimationEnum.FADE_IN), () => {
+        element.style.pointerEvents = 'all';
+
+
+        // AnimationHelper.tween(document.getElementById('top-bar'), AnimationConfig.getConfig(AnimationEnum.FADE_OUT));
+      });
+
     }, 0);
   }
 
   public cardMouseOver(event: MouseEvent, card: MemoryCard) {
     if (card.state === MemoryCardState.COVERED) {
-      // AnimationHelper.tween(card.htmlElement, AnimationConfig.getConfig(AnimationEnum.FADE_IN), () => {
-      //   console.log('card out complete');
-      // });
-
-      const duration = 0.6;
-      const target: HTMLElement = event.target as HTMLElement;
-      const fromVars = {
-        width: target.style.width,
-        height: target.style.height,
-        opacity: target.style.opacity,
-        ease: Power3.easeOut
-      };
-      const toVars = {
-        width: '105%',
-        height: '105%',
-        opacity: .3,
-        ease: Power3.easeOut
-      };
-      TweenMax.killChildTweensOf(card.htmlElement);
-      TweenMax.fromTo(card.htmlElement, duration, fromVars, toVars);
-
-
+      AnimationHelper.tween(card.htmlElement, AnimationConfig.getConfig(AnimationEnum.HIGHLIGHT), () => {
+        console.log('card out complete');
+      });
     }
   }
 
   public cardMouseOut(event: MouseEvent, card: MemoryCard) {
     if (card.state === MemoryCardState.COVERED) {
-      AnimationHelper.tween(card.htmlElement, AnimationConfig.getConfig(AnimationEnum.TO_DEFAULT), () => {
-        console.log('card out complete');
-      });
-      
-      // const duration = 0.6;
-      // const target: HTMLElement = event.target as HTMLElement;
-      // const fromVars = {
-      //   width: target.style.width,
-      //   height: target.style.height,
-      //   opacity: target.style.opacity,
-      //   ease: Power3.easeInOut
-      // };
-      // const toVars = {
-      //   width: '100%',
-      //   height: '100%',
-      //   opacity: 1,
-      //   ease: Power3.easeInOut
-      // };
-      // TweenMax.killChildTweensOf(card.htmlElement);
-      // TweenMax.fromTo(card.htmlElement, duration, fromVars, toVars);
+      // AnimationHelper.tween(card.htmlElement, AnimationConfig.getConfig(AnimationEnum.TO_DEFAULT), () => {
+      //   console.log('card out complete');
+      // });
     }
   }
 
+  // *** CARD CLICKED ***
   public cardClicked(event: MouseEvent, card: MemoryCard) {
     if (card.state === MemoryCardState.REMOVED) {
       return;
