@@ -74,7 +74,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.storeSubscription) {
-      console.log('unsubscribing store');
+      // console.log('unsubscribing store');
       this.storeSubscription.unsubscribe();
 
       if (this.gameTickIntervalId) {
@@ -101,7 +101,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private introduceCards(cards: MemoryCard[]) {
     AnimationHelper.animateCards(cards, AnimationConfig.getConfig(AnimationEnum.FADE_IN), () => {
-      console.log('finished introducing cards: enable interaction');
+      // console.log('finished introducing cards: enable interaction');
       let htmlElement;
 
       cards.forEach(card => {
@@ -134,7 +134,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
   public cardMouseOver(event: MouseEvent, card: MemoryCard) {
     if (card.state === MemoryCardState.COVERED) {
       AnimationHelper.tween(card.htmlElement, AnimationConfig.getConfig(AnimationEnum.HIGHLIGHT), () => {
-        console.log('card out complete');
+        // console.log('card out complete');
       });
     }
   }
