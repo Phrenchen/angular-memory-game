@@ -8,6 +8,7 @@ import { IPlayer } from 'src/app/model/IPlayer';
 import * as Actions from './../../actions/match.actions';
 import { TweenMax, Power3, Power1, Power4 } from 'gsap';
 import { AnimationHelper, AnimationConfig, AnimationEnum } from 'src/app/helper/AnimationHelper';
+import { GameService } from 'src/app/services/game.service';
 
 @Component({
   selector: 'app-ingame',
@@ -154,38 +155,12 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
     if (card.state === MemoryCardState.REMOVED) {
       return;
     }
-    const cardIsSelected = card.toggleSelected();
 
-    AnimationHelper.tween(card.htmlElement, AnimationEnum.TO_DEFAULT);
-
-    if (!cardIsSelected) {
-      this.store.dispatch(new Actions.SetFirstSelectedCard(null));  // de-select card
-    }
-    else {
-      // no other card is selected
-      if (!this.matchConfig.firstSelectedCard) {
-        this.store.dispatch(new Actions.SetFirstSelectedCard(card));  // select currend card as firstSelected
-      } else {
-        if (this.matchConfig.firstSelectedCard.matches(card)) { // compare cards
-          this.resetCards([this.matchConfig.firstSelectedCard, card], 500, MemoryCardState.REMOVED);  // win: equal partnerId -> current player wins a point
-          this.store.dispatch(new Actions.ActivePlayerWinsPair());
-          this.store.dispatch(new Actions.SetFirstSelectedCard(null));
-        } else {
-          this.resetCards([this.matchConfig.firstSelectedCard, card], 500, MemoryCardState.COVERED);  // miss: unequal partnerId -> next player
-          this.store.dispatch(new Actions.SetFirstSelectedCard(null));    // reset card when miss
-          this.setNextPlayer();                                           // set next player
-        }
-        // always: after timeout, hide (no success) or remove (success) selected cards
-      }
-    }
+    this.store.dispatch(new Actions.SelectedCard(card));  // de-select card
   }
 
   public get showGameOver(): boolean {
     return this.matchConfig.isGameOver && this.outroComplete;
-  }
-
-  private setNextPlayer() {
-    this.store.dispatch(new Actions.SetNextPlayer());
   }
 
   private setupCards(cards: MemoryCard[]): void {

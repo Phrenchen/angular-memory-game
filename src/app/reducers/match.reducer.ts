@@ -45,50 +45,50 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
         case MatchActions.GAME_TICK:
             // update match time to store
             // requires new Action and update MatchConfig in reducer
-            currentPlayer = GameService.activePlayer(state.players, state.activePlayer);
-            currentPlayer.playTime.totalTime++;
+            // currentPlayer = GameService.activePlayer(state.players, state.activePlayer);
+            // currentPlayer.playTime.totalTime++;
             // currentPlayer.playTime = {...currentPlayer.playTime.to, currentPlayer.playTime.totalTime + 1}
+            return state;
+        case MatchActions.SELECTED_CARD:
+            const selectedCard: MemoryCard = action.payload;
+            const newState2 = { ...state};
+            selectedCard.toggleSelected();
 
-            return {
-                ...state,
+            if (selectedCard.isSelected) {
+                if (!newState2.firstSelectedCard) {
+                    newState2.firstSelectedCard = selectedCard;
+                }
+                else {
+                    // 2 cards selected
+                    if(newState2.firstSelectedCard.matches(selectedCard)) {
+                        currentPlayer = GameService.activePlayer(newState2.players, newState2.activePlayer);
+                        currentPlayer.pairsWon++;
 
-            };
-        case MatchActions.SET_NEXT_PLAYER:
-            // end current player´s turn
-            currentPlayer = GameService.activePlayer(state.players, state.activePlayer);
-            currentPlayer.playTime.turnEnd = new Date();
-            currentPlayer.playTime.totalTime += currentPlayer.playTime.turnEnd.getTime() - 
-                                                    currentPlayer.playTime.turnStart.getTime();
+                        newState2.firstSelectedCard = null;
+                        
+                        const isGameOver = (newState2.players[0].pairsWon + newState2.players[1].pairsWon) >= newState2.cards.length / 2;
+                        if(isGameOver) {
+                            currentPlayer.playTime.turnEnd = new Date();
+                            newState2.isGameOver = isGameOver;
+                        }
+                    }
+                    else {
+                        newState2.firstSelectedCard.toggleSelected();
+                        selectedCard.toggleSelected();
+                        newState2.firstSelectedCard = null;
+                        newState2.activePlayer = (newState2.activePlayer + 1) % 2;
 
-            // switch active player
-            const newState = { ...state, activePlayer: (state.activePlayer + 1) % 2 };
-            
-            // start next player´s turn
-            const nextPlayer = GameService.activePlayer(newState.players, newState.activePlayer);
-            nextPlayer.playTime.turnStart = new Date();
-            nextPlayer.playTime.turnEnd = new Date();
-            // activate turn. enabling user input for human players and starting wait for AI (to randomly select a card)
-            // apply strategy on player
-            // activePlayer.play();
-
-            return newState;
-        case MatchActions.SET_FIRST_SELECTED_CARD:
-            return { ...state, firstSelectedCard: action.payload};
-        case MatchActions.ACTIVE_PLAYER_WINS_PAIR:
-            const localPlayers = state.players.slice();         // clone player array (shallow copy)
-            localPlayers[state.activePlayer].pairsWon++;
-            const isGameOver = state.cards.length / 2 <= (state.players[0].pairsWon + state.players[1].pairsWon);
-
-            if(isGameOver) {
-                localPlayers[state.activePlayer].playTime.turnEnd = new Date();
+                        const nextPlayer2 = GameService.activePlayer(newState2.players, newState2.activePlayer);
+                        nextPlayer2.playTime.turnStart = new Date();
+                        nextPlayer2.playTime.turnEnd = new Date();
+                    }
+                }
+            }
+            else {
+                newState2.firstSelectedCard = null;
             }
 
-            return {
-                ...state,
-                players: localPlayers,
-                isGameOver: isGameOver
-            };
-
+            return newState2;
         default:
             // console.log(state, action);
             return state;

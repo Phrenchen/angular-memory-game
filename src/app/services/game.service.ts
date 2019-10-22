@@ -10,7 +10,7 @@ export class GameService {
   
   constructor() { }
   
-  public static activePlayer(players: IPlayer[], activePlayer: number) {
+  public static activePlayer(players: IPlayer[], activePlayer: number): IPlayer {
     if(activePlayer >= 0 && activePlayer < players.length) {
       return players[activePlayer];
     }

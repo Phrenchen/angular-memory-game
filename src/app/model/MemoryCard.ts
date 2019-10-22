@@ -29,11 +29,18 @@ export class MemoryCard {
         this.colors.set(MemoryCardState.REMOVED, ColorConsts.cardColors[this.partnerId]);
     }
 
-    // returns: is selected
+    /**
+     * - writes state
+     * - returns: is selected
+    */
     public toggleSelected(): boolean {
         this.state = this.state === MemoryCardState.COVERED ?
             MemoryCardState.OPEN : MemoryCardState.COVERED;
 
+        return this.isSelected;
+    }
+
+    public get isSelected(): boolean {
         return this.state === MemoryCardState.OPEN;
     }
 

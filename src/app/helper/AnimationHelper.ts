@@ -3,6 +3,23 @@ import { MemoryCard } from '../model/MemoryCard';
 
 export class AnimationHelper {
 
+    // a) global switch for all devices
+    // or b) skip tweens on mobile devices
+    // currently, animations will be skipped, targetValues immediatly assigned and callback triggered, if any.
+    private static animationsAreEnabled = true;
+
+
+    public static get isMobile(): boolean {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+
+
+    public static get enableAnimations(): boolean {
+        // return true;
+        return AnimationHelper.isMobile && AnimationHelper.animationsAreEnabled;
+    }
+
     public static animateCards(cards: MemoryCard[], animationType: AnimationEnum, completeCallback: Function, delay: number = 500): any {
         let counter = 0;
 
@@ -33,16 +50,22 @@ export class AnimationHelper {
         return interval;
     }
 
-    // public static tween(element: HTMLElement, config: AnimationConfig, completeCallback: Function = null): boolean {
+    /**
+     * - animations will be skipped on mobile
+     * Skipping animations will cause:
+     *  - targetValues immediatly assigned
+     *  - callback triggered, if any
+     */
     public static tween(element: HTMLElement, animationType: AnimationEnum, completeCallback: Function = null): boolean {
-        if(!element) {
+
+        if (!element) {
             console.log('AnimationHelper.tween: received no element. aborting.');
             return false;
         }
-        
+
         const config: AnimationConfig = AnimationConfig.getConfig(animationType);
 
-        if(!config) {
+        if (!config) {
             console.log('no animation config found for: ', animationType);
             return;
         }
@@ -54,7 +77,7 @@ export class AnimationHelper {
         config.fromVars['width'] = element.style.width ? element.style.width : '100%';
         config.fromVars['height'] = element.style.height ? element.style.height : '100%';
         config.fromVars['opacity'] = element.style.opacity ? element.style.opacity : '0';
-        
+
         // console.log('element.style: ', element.style.width, element.style.height, element.style.opacity);
         // console.log(config);
 
@@ -64,6 +87,34 @@ export class AnimationHelper {
 
         if (!fromVars || !toVars) {
             console.log('missing arguments for Tweening: ', config, fromVars, toVars);
+            return;
+        }
+
+        if (AnimationHelper.enableAnimations) {
+            // assign all to-values
+            console.log('skipping animation -> assigning values: ', toVars);
+
+            element.style.width = toVars['width'] ? toVars['width'] : element.style.width;
+            element.style.height = toVars['height'] ? toVars['height'] : element.style.height;
+            element.style.opacity = toVars['opacity'] ? toVars['opacity'] : element.style.opacity;
+
+            console.log('element.style.width: ' + element.style.width);
+            console.log('element.style.height: ' + element.style.height);
+            console.log('element.style.opacity: ' + element.style.opacity);
+
+            if (completeCallback) {
+                completeCallback();
+            }
+
+
+            // for (let key in toVars) {
+            //     console.log('key: ' + key);
+            //     console.log('value: ' + toVars[key]);
+            //     console.log('element.style[key]: ' + element.style[key]);
+
+            //     element.style[key] = toVars[key];
+            // }
+
             return;
         }
 
@@ -157,7 +208,7 @@ export class AnimationConfig {
 
     public static getConfig(configType: AnimationEnum): AnimationConfig {
         const config = AnimationConfig.animationMap.get(configType);
-        if(!config) {
+        if (!config) {
             console.log('no config found for: ', configType);
         }
         return config;
