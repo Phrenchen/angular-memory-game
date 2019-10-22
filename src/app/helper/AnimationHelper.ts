@@ -3,7 +3,7 @@ import { MemoryCard } from '../model/MemoryCard';
 
 export class AnimationHelper {
 
-    public static animateCards(cards: MemoryCard[], config: AnimationConfig, completeCallback: Function, delay: number = 500): any {
+    public static animateCards(cards: MemoryCard[], animationType: AnimationEnum, completeCallback: Function, delay: number = 500): any {
         let counter = 0;
 
         const interval = setInterval(() => {
@@ -14,14 +14,14 @@ export class AnimationHelper {
             // config.fromVars['opacity'] = htmlElement.style.opacity;
 
             if (counter === cards.length - 1) {
-                AnimationHelper.tween(htmlElement, config, () => {
+                AnimationHelper.tween(htmlElement, animationType, () => {
                     if (completeCallback) {
                         completeCallback();
                     }
                 });
             }
             else {
-                AnimationHelper.tween(htmlElement, config);
+                AnimationHelper.tween(htmlElement, animationType);
             }
 
             counter++;
@@ -33,10 +33,18 @@ export class AnimationHelper {
         return interval;
     }
 
-    public static tween(element: HTMLElement, config: AnimationConfig, completeCallback: Function = null): boolean {
+    // public static tween(element: HTMLElement, config: AnimationConfig, completeCallback: Function = null): boolean {
+    public static tween(element: HTMLElement, animationType: AnimationEnum, completeCallback: Function = null): boolean {
         if(!element) {
             console.log('AnimationHelper.tween: received no element. aborting.');
             return false;
+        }
+        
+        const config: AnimationConfig = AnimationConfig.getConfig(animationType);
+
+        if(!config) {
+            console.log('no animation config found for: ', animationType);
+            return;
         }
 
         const fromVars = config.fromVars;

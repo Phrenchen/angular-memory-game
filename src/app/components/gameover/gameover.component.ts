@@ -35,7 +35,7 @@ export class GameoverComponent implements OnInit, OnDestroy {
 
       });
 
-      AnimationHelper.tween(document.getElementById('game-over-container'), AnimationConfig.getConfig(AnimationEnum.FADE_IN));
+      AnimationHelper.tween(document.getElementById('game-over-container'), AnimationEnum.FADE_IN);
   }
 
   ngOnDestroy(): void {
@@ -47,7 +47,7 @@ export class GameoverComponent implements OnInit, OnDestroy {
   }
 
   public playAgain(): void {
-    AnimationHelper.tween(document.getElementById('game-over-container'), AnimationConfig.getConfig(AnimationEnum.FADE_OUT), () => {
+    AnimationHelper.tween(document.getElementById('game-over-container'), AnimationEnum.FADE_OUT, () => {
       // console.log('intro complete');
       this.router.navigate(['/start']);
     });

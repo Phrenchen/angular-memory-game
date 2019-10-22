@@ -111,18 +111,37 @@
     margin-bottom: 10px;
 }
 
-.game-over-container {
+
+#game-over-notice {
+    // border: 3px dotted var(--main-border-color);
+
     opacity: 0;
     pointer-events: none;
 
     position: absolute;
-    
-    width: 50vw;
-    height: 50vh;
-    
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    
+    // somehow overriden with 100% which i don´t want here
+    width: 25vw !important;
+    height: 50vh !important;
 
-    border: 3px dotted var(--main-border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    // width: 50vw;
+    // height: 50vh;
+    // width: min-content;
+    // height: min-content;
+    // width: auto;
+
+
+    
+    // left: 50%;
+    // top: 50%;
+    // transform: translate(-50%, -50%);
+
 }

@@ -20,7 +20,7 @@ export class StartscreenComponent implements OnInit, AfterContentChecked, AfterV
     // console.log('***** INIT START SCREEN *****');
   }
   ngAfterViewInit(): void {
-    AnimationHelper.tween(document.getElementById('container-startscreen'), AnimationConfig.getConfig(AnimationEnum.FADE_IN), () => {
+    AnimationHelper.tween(document.getElementById('container-startscreen'), AnimationEnum.FADE_IN, () => {
       // console.log('intro complete');
     });
 
@@ -41,7 +41,7 @@ export class StartscreenComponent implements OnInit, AfterContentChecked, AfterV
   // LIFE CYCLE end
 
   public startMatch(humanPlayerCount) {
-    AnimationHelper.tween(document.getElementById('container-startscreen'), AnimationConfig.getConfig(AnimationEnum.FADE_OUT), () => {
+    AnimationHelper.tween(document.getElementById('container-startscreen'), AnimationEnum.FADE_OUT, () => {
       // console.log('start screen outro complete');
       this.store.dispatch(new Actions.CreateMatch(humanPlayerCount));
       this.router.navigate(['/memory']);

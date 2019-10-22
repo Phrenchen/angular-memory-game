@@ -63,7 +63,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      AnimationHelper.tween(document.getElementById('top-bar'), AnimationConfig.getConfig(AnimationEnum.FADE_IN));
+      AnimationHelper.tween(document.getElementById('top-bar'), AnimationEnum.FADE_IN);
 
       this.introduceCards(this.matchConfig.cards);
 
@@ -92,7 +92,9 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public continueToGameOver(): void {
     document.getElementById('game-over-notice').style.pointerEvents = 'none';
-    AnimationHelper.tween(document.getElementById('game-over-notice'), AnimationConfig.getConfig(AnimationEnum.FADE_OUT), () => {
+    
+    AnimationHelper.tween(document.getElementById('top-bar'), AnimationEnum.FADE_OUT);
+    AnimationHelper.tween(document.getElementById('game-over-notice'), AnimationEnum.FADE_OUT, () => {
 
       this.router.navigate(['/gameover']);
     });
@@ -100,7 +102,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   private introduceCards(cards: MemoryCard[]) {
-    AnimationHelper.animateCards(cards, AnimationConfig.getConfig(AnimationEnum.FADE_IN), () => {
+    AnimationHelper.animateCards(cards, AnimationEnum.FADE_IN, () => {
       // console.log('finished introducing cards: enable interaction');
       let htmlElement;
 
@@ -117,15 +119,15 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
       card.htmlElement.style.pointerEvents = 'none';
     });
     
-    AnimationHelper.animateCards(cards, AnimationConfig.getConfig(AnimationEnum.FADE_OUT), () => {
+    AnimationHelper.animateCards(cards, AnimationEnum.FADE_OUT, () => {
       // console.log('completed hiding cards');
       this.outroComplete = true; // shows game over quick info
       const element: HTMLElement = document.getElementById('game-over-notice');
-      AnimationHelper.tween(element, AnimationConfig.getConfig(AnimationEnum.FADE_IN), () => {
+      AnimationHelper.tween(element, AnimationEnum.FADE_IN, () => {
         element.style.pointerEvents = 'all';
 
 
-        // AnimationHelper.tween(document.getElementById('top-bar'), AnimationConfig.getConfig(AnimationEnum.FADE_OUT));
+        // AnimationHelper.tween(document.getElementById('top-bar'), AnimationEnum.FADE_OUT));
       });
 
     }, 0);
@@ -133,7 +135,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public cardMouseOver(event: MouseEvent, card: MemoryCard) {
     if (card.state === MemoryCardState.COVERED) {
-      AnimationHelper.tween(card.htmlElement, AnimationConfig.getConfig(AnimationEnum.HIGHLIGHT), () => {
+      AnimationHelper.tween(card.htmlElement, AnimationEnum.HIGHLIGHT, () => {
         // console.log('card out complete');
       });
     }
@@ -141,7 +143,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public cardMouseOut(event: MouseEvent, card: MemoryCard) {
     if (card.state === MemoryCardState.COVERED) {
-      // AnimationHelper.tween(card.htmlElement, AnimationConfig.getConfig(AnimationEnum.TO_DEFAULT), () => {
+      // AnimationHelper.tween(card.htmlElement, AnimationEnum.TO_DEFAULT), () => {
       //   console.log('card out complete');
       // });
     }
@@ -154,7 +156,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     const cardIsSelected = card.toggleSelected();
 
-    AnimationHelper.tween(card.htmlElement, AnimationConfig.getConfig(AnimationEnum.TO_DEFAULT));
+    AnimationHelper.tween(card.htmlElement, AnimationEnum.TO_DEFAULT);
 
     if (!cardIsSelected) {
       this.store.dispatch(new Actions.SetFirstSelectedCard(null));  // de-select card
