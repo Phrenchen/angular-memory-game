@@ -1,9 +1,9 @@
 :root {
-    --main-background-color: rgb(127, 209, 230);
-    --main-border-color: rgb(121, 33, 33);
+    --main-background-color: #7fd1e6;
+    --main-border-color: #792121;
     
-    --main-primary-color: rgb(121, 33, 33);
-    --main-secondary-color: coral;
+    --main-primary-color: #46d2f5;
+    --main-secondary-color: #0a5a6e;
     
     --main-text-color: #ffffff;
     --main-text-color-dark: #000000;

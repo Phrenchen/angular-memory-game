@@ -4,6 +4,7 @@ import { AppState } from '../../app.state';
 import * as Actions from './../../actions/match.actions';
 import { Router } from '@angular/router';
 import { AnimationConfig, AnimationEnum, AnimationHelper } from 'src/app/helper/AnimationHelper';
+import { SVGHelper } from 'src/app/helper/SVGHelper';
 
 @Component({
   selector: 'app-startscreen',
@@ -22,6 +23,13 @@ export class StartscreenComponent implements OnInit, AfterContentChecked, AfterV
     AnimationHelper.tween(document.getElementById('container-startscreen'), AnimationConfig.getConfig(AnimationEnum.FADE_IN), () => {
       // console.log('intro complete');
     });
+
+    // add generated svg to background. position absolute (centered?)
+    // const bodyStyle = getComputedStyle(document.body);
+    // const stopColor1 = bodyStyle.getPropertyValue('--main-primary-color');
+    // const stopColor2 = bodyStyle.getPropertyValue('--main-secondary-color');
+    // const svg = SVGHelper.createSVG(stopColor1, stopColor2);
+    // document.getElementById('background-container').appendChild(svg);
   }
 
   ngAfterViewChecked(): void {
