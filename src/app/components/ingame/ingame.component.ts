@@ -83,22 +83,28 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
         this.gameTickIntervalId = null;
       }
     }
-
   }
   // lifecycle end
 
   public gotoStartScreen(): void {
-    this.router.navigate(['/start']);
+    this.exitPageTo('start');
   }
 
   public continueToGameOver(): void {
+    this.exitPageTo('gameover');
+  }
+  
+  private exitPageTo(targetPage: string): void {
+    console.log('exitPage to: ' + targetPage);
     document.getElementById('game-over-notice').style.pointerEvents = 'none';
     
     AnimationHelper.tween(document.getElementById('top-bar'), AnimationEnum.FADE_OUT);
     AnimationHelper.tween(document.getElementById('game-over-notice'), AnimationEnum.FADE_OUT, () => {
-
-      this.router.navigate(['/gameover']);
+      setTimeout(() => {
+        this.router.navigate(['/' + targetPage]);
+      }, 500);
     });
+
   }
 
 
