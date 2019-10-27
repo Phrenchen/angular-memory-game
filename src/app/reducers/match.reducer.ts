@@ -19,6 +19,7 @@ const initialState: MatchConfig = {
     cards: GameService.createCards(gridX, gridY, true),
     activePlayer: 0,
     firstSelectedCard: null,
+    currentPlayerHasPaired: false,
     isGameOver: false,
 };
 
@@ -43,6 +44,9 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                 isGameOver: false
             };
         case MatchActions.GAME_TICK:
+            if (state.currentPlayerHasPaired) {    // reset "has-won-a-pair" state. )
+
+            }
             // update match time to store
             // requires new Action and update MatchConfig in reducer
             // currentPlayer = GameService.activePlayer(state.players, state.activePlayer);
@@ -51,7 +55,7 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
             return state;
         case MatchActions.SELECTED_CARD:
             const selectedCard: MemoryCard = action.payload;
-            const newState2 = { ...state};
+            const newState2 = { ...state };
             selectedCard.toggleSelected();
 
             if (selectedCard.isSelected) {
@@ -60,21 +64,30 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                 }
                 else {
                     // 2 cards selected
-                    if(newState2.firstSelectedCard.matches(selectedCard)) {
+                    if (newState2.firstSelectedCard.matches(selectedCard)) {
+                        // is a match!
+                        console.log('is a match!');
                         currentPlayer = GameService.activePlayer(newState2.players, newState2.activePlayer);
                         currentPlayer.pairsWon++;
 
                         newState2.firstSelectedCard = null;
-                        
+
                         const isGameOver = (newState2.players[0].pairsWon + newState2.players[1].pairsWon) >= newState2.cards.length / 2;
-                        if(isGameOver) {
+                        if (isGameOver) {
                             currentPlayer.playTime.turnEnd = new Date();
                             newState2.isGameOver = isGameOver;
                         }
+                        else {
+                            // continue with same player
+                            newState2.currentPlayerHasPaired = true;
+                        }
                     }
                     else {
-                        newState2.firstSelectedCard.toggleSelected();
-                        selectedCard.toggleSelected();
+                        // no match :(
+                        console.log('no match :(');
+                        newState2.firstSelectedCard.state = MemoryCardState.COVERED;
+                        selectedCard.state = MemoryCardState.COVERED;
+
                         newState2.firstSelectedCard = null;
                         newState2.activePlayer = (newState2.activePlayer + 1) % 2;
 

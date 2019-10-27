@@ -5,9 +5,9 @@ import * as Actions from './../actions/match.actions';
 import { MemoryCard, MemoryCardState } from './MemoryCard';
 import { MathHelper } from '../helper/MathHelper';
 import { MatchConfig } from './MatchConfig';
+import { GameService } from '../services/game.service';
 
 export class AiPlayer extends Player {
-
 
     constructor() {
         super();
@@ -24,42 +24,58 @@ export class AiPlayer extends Player {
 
         const delayMsFirstCard = 1000;
         const delayMsSecondCard = 2000;
-
+        
+        console.log('*** calling AI to play ***');
+        
         // TODO: horrible! try async & await?
-        // setTimeout(() => {
-        //     console.log('play first card');
-        //     let firstCardIndex = MathHelper.getRandomInt(0, matchConfig.cards.length - 1);
-        //     let secondCardIndex = MathHelper.getRandomInt(0, matchConfig.cards.length - 1);
-        //     let firstCard = matchConfig.cards[firstCardIndex];
-        //     let secondCard = matchConfig.cards[secondCardIndex];
+        setTimeout(() => {
+            console.log('play first card');
+            let firstCardIndex = MathHelper.getRandomInt(0, matchConfig.cards.length - 1);
+            const coveredCardIds: number[] = GameService.getCoveredCardIds(matchConfig.cards);
+            let secondCardIndex = MathHelper.getRandomIntFrom(0, matchConfig.cards.length - 1, coveredCardIds);
 
-        //     console.log('first card id: ' + firstCardIndex);
-        //     console.log('first card: ', firstCard);
-        //     console.log('second card id: ' + secondCardIndex);
-        //     console.log('second card: ', secondCard);
+            if(!matchConfig.cards[secondCardIndex]) {
+                console.log('no second card at position: ' + secondCardIndex);
+            }
 
+            if(matchConfig.cards[secondCardIndex].state !== MemoryCardState.COVERED) {
+                console.log('AI Player wants to see an unavailable card: ', coveredCardIds, secondCardIndex);
+            }
+            
+            
+            let firstCard = matchConfig.cards[firstCardIndex];
+            let secondCard = matchConfig.cards[secondCardIndex];
+            
+            setTimeout(() => {
+                store.dispatch(new Actions.SelectedCard(firstCard));
+            });
 
+            console.log('first card id: ' + firstCardIndex);
+            // console.log('first card: ', firstCard);
+            // console.log('second card id: ' + secondCardIndex);
+            // console.log('second card: ', secondCard);
+            
+            setTimeout(() => {
+                console.log('play second card', secondCardIndex);
+                setTimeout(() => {
+                    store.dispatch(new Actions.SelectedCard(secondCard));
+                });
 
-        //     store.dispatch(new Actions.SelectedCard(firstCard));
+                // if (matchConfig.firstSelectedCard) {
+                //     // selectedCardIndex++;
+                //     if (matchConfig.firstSelectedCard.matches(firstCard)) {
+                //         store.dispatch(new Actions.ActivePlayerWinsPair());
+                //         store.dispatch(new Actions.SelectedCard(null));
+                //     }
+                //     else {
+                //         store.dispatch(new Actions.SelectedCard(null));
+                //     }
+                // }
+                // else {
+                //     console.log('wtf no first card?', matchConfig);
+                // }
+            }, delayMsSecondCard);
 
-        //     setTimeout(() => {
-        //         console.log('play second card');
-
-        //         if (matchConfig.firstSelectedCard) {
-        //             // selectedCardIndex++;
-        //             if (matchConfig.firstSelectedCard.matches(firstCard)) {
-        //                 store.dispatch(new Actions.ActivePlayerWinsPair());
-        //                 store.dispatch(new Actions.SelectedCard(null));
-        //             }
-        //             else {
-        //                 store.dispatch(new Actions.SelectedCard(null));
-        //             }
-        //         }
-        //         else {
-        //             console.log('wtf no first card?', matchConfig);
-        //         }
-        //     }, delayMsSecondCard);
-
-        // }, delayMsFirstCard);
+        }, delayMsFirstCard);
     }
 }

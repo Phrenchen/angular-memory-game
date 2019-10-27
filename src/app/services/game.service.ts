@@ -1,17 +1,28 @@
-import { Injectable } from '@angular/core';
-import { IPlayer } from '../model/IPlayer';
-import { AiPlayer } from '../model/AiPlayer';
 import { HumanPlayer } from '../model/HumanPlayer';
-import { MemoryCard } from '../model/MemoryCard';
+import { MemoryCard, MemoryCardState } from '../model/MemoryCard';
 import { MathHelper } from '../helper/MathHelper';
+import { AiPlayer } from '../model/AiPlayer';
+import { IPlayer } from '../model/IPlayer';
 
 // Static service class / helper
 export class GameService {
-  
+
   constructor() { }
-  
+
+  public static getCoveredCardIds(cards: MemoryCard[]): number[] {
+    const cardIds: number[] = [];
+
+    cards.forEach((card, index) => {
+      if (card.state === MemoryCardState.COVERED) {
+        cardIds.push(index);
+      }
+    });
+
+    return cardIds;
+  }
+
   public static activePlayer(players: IPlayer[], activePlayer: number): IPlayer {
-    if(activePlayer >= 0 && activePlayer < players.length) {
+    if (activePlayer >= 0 && activePlayer < players.length) {
       return players[activePlayer];
     }
     return null;

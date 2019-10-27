@@ -1,5 +1,6 @@
 <!-- player-info-header -->
 <div class="top-bar" id="top-bar">
+  
   <button class="btn-start-screen" (click)="gotoStartScreen()">Back</button>
 
   <div class="stats-panel" id="stats-panel">
@@ -12,7 +13,7 @@
 <!-- <div class="game-over-container" id="game-over-notice" *ngIf="showGameOver"> -->
 
 <!-- grid with cards -> the 'board' -->
-<div class="board" *ngIf="matchConfig">
+<div class="board" id="board" *ngIf="matchConfig">
   <div *ngFor="let card of cards; index as i;" class="card" [ngStyle]="{'background': card.color}" [id]="'card-' + i"
     (mouseover)="cardMouseOver($event, card)" (mouseout)="cardMouseOut($event, card)"
     (click)="cardClicked($event, card)">

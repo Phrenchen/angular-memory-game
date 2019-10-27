@@ -23,8 +23,10 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private currentMatchDurationSeconds = 0;
   private gameTickIntervalId;
+
   private hasBeenInitialized = false;
   private outroComplete = false;
+  private currentActivePlayerId = -1;
 
   constructor(private router: Router, private store: Store<AppState>) { }
 
@@ -38,6 +40,27 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!this.hasBeenInitialized) {
           this.hasBeenInitialized = true;
           this.setupCards(this.matchConfig.cards);
+        }
+
+        // if the player has changed... tell her to play!
+        if (this.matchConfig.activePlayer !== this.currentActivePlayerId || this.matchConfig.currentPlayerHasPaired) {
+          
+
+          if (!this.matchConfig.isGameOver) {
+            this.currentActivePlayerId = this.matchConfig.activePlayer;
+
+            const board = document.getElementById('board');
+
+            if(board) {
+              board.style.pointerEvents = GameService.activePlayer(this.matchConfig.players, this.matchConfig.activePlayer).isHuman ?
+                                            'all' : 'none';
+            }
+
+            setTimeout(() => {
+              GameService.activePlayer(this.matchConfig.players, this.matchConfig.activePlayer)
+                .play(this.store, this.matchConfig);
+            }, 1000);
+          }
         }
 
         if (this.matchConfig.isGameOver) {
@@ -93,11 +116,11 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
   public continueToGameOver(): void {
     this.exitPageTo('gameover');
   }
-  
+
   private exitPageTo(targetPage: string): void {
     console.log('exitPage to: ' + targetPage);
     document.getElementById('game-over-notice').style.pointerEvents = 'none';
-    
+
     AnimationHelper.tween(document.getElementById('top-bar'), AnimationEnum.FADE_OUT);
     AnimationHelper.tween(document.getElementById('game-over-notice'), AnimationEnum.FADE_OUT, () => {
       setTimeout(() => {
@@ -115,17 +138,18 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
 
       cards.forEach(card => {
         htmlElement = card.htmlElement;
-        htmlElement.style.pointerEvents = 'all';
+        htmlElement.style.pointerEvents = GameService.activePlayer(this.matchConfig.players, this.matchConfig.activePlayer).isHuman ?
+                                            'all' : 'none';;
       });
     },
-    0);
+      0);
   }
 
   private hideCards(cards: MemoryCard[]): void {
     cards.forEach(card => {
       card.htmlElement.style.pointerEvents = 'none';
     });
-    
+
     AnimationHelper.animateCards(cards, AnimationEnum.FADE_OUT, () => {
       // console.log('completed hiding cards');
       this.outroComplete = true; // shows game over quick info

@@ -1,9 +1,7 @@
 @import url('./../../../variables.css');
 
 
-.btn-start-screen {
-    margin: 0 auto;
-}
+
 
 .board {
     display: grid;
@@ -21,8 +19,8 @@
 
     // border: 1 px solid black;
 
-    margin: 1vmin;
-    padding: 2vmin;
+    // margin: 1vmin;
+    // padding: 2vmin;
 
     width: 100vw;
     height: 80vh;
@@ -108,7 +106,8 @@
 }
 
 .btn-start-screen {
-    margin-bottom: 10px;
+    margin: 20px;
+    // margin-bottom: 10px;
 }
 
 
