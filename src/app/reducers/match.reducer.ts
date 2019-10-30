@@ -11,6 +11,7 @@ const gridX = 4;
 const gridY = 3;
 
 const initialState: MatchConfig = {
+    
     gridDimensionX: gridX,
     gridDimensionY: gridY,
     humanPlayerCount: 1,
@@ -28,6 +29,8 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
     let currentPlayer: Player;
 
     switch (action.type) {
+        case MatchActions.SET_PLAYER_COUNT:
+            return {...state, humanPlayerCount: action.payload};
         case MatchActions.CREATE_MATCH:
             let resetCards: MemoryCard[] = state.cards.slice();
             resetCards.forEach(card => {

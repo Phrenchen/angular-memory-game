@@ -37,8 +37,13 @@ export class StartscreenComponent implements OnInit, AfterContentChecked, AfterV
   
   ngAfterContentChecked(): void {
   }
-
   // LIFE CYCLE end
+
+
+  public playerCount(playerCount: number): void {
+    console.log('player count change', playerCount);
+    this.store.dispatch(new Actions.SetPlayerCount(playerCount));
+  }
 
   public startMatch(humanPlayerCount) {
     AnimationHelper.tween(document.getElementById('container-startscreen'), AnimationEnum.FADE_OUT, () => {

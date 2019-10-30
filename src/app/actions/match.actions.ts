@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { MatchConfig } from '../model/MatchConfig';
 import { MemoryCard } from '../model/MemoryCard';
 
+export const SET_PLAYER_COUNT = '[MATCH] set player count';
 export const CREATE_MATCH = '[MATCH] Create';
 export const GAME_TICK = '[MATCH] Game Tick';
 export const SET_NEXT_PLAYER = '[MATCH] set next player';
@@ -9,6 +10,14 @@ export const SELECTED_CARD = '[MATCH] selected card';
 export const ACTIVE_PLAYER_WINS_PAIR = '[MATCH] active player wins pair';
 
 export const GAME_OVER = '[MATCH] Game Over';
+
+
+export class SetPlayerCount implements Action {
+    readonly type = SET_PLAYER_COUNT;
+
+    // player count
+    constructor(public payload: number) {}
+}
 
 export class CreateMatch implements Action {
     readonly type = CREATE_MATCH;
@@ -36,6 +45,7 @@ export class GameOver implements Action {
 }
 
 export type Actions = 
+    SetPlayerCount |
     CreateMatch |
     GameOver |
     SelectedCard |
