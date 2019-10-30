@@ -1,10 +1,12 @@
 <div class="player-container">
-    <div class="active-indicator" [ngClass]="{'active': isActive}"></div>
-    <!-- <span>
-        {{player.name}}: {{player.pairsWon}} pairs
-        <br/>
-        total time: {{player.totalTime()}} seconds
-    </span> -->
+    <div class="active-indicator" [ngClass]="{'active': isActive}">
 
-    <h2>{{player.pairsWon}}</h2>
+    </div>
+
+
+    <span>
+        <strong>{{player.pairsWon}}</strong>
+        <span *ngIf="isActive">{{player.status()}}</span>
+    </span>
+
 </div>

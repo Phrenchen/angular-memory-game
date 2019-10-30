@@ -10,4 +10,10 @@ export class HumanPlayer extends Player {
         this.matchActiveTime = 0;
         this.avatarUrl = '';
     }
+
+    public status(): string {
+        super.status();
+
+        return 'Player´s turn. Select 2 matching Cards';
+    }
 }

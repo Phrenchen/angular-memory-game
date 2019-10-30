@@ -31,5 +31,6 @@
     /* card end */
 
       --board-column-count: 4;
+      --board-row-count: 1;
   }
   

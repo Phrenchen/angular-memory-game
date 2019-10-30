@@ -3,7 +3,7 @@ import { MatchConfig } from 'src/app/model/MatchConfig';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
-import { IPlayer } from 'src/app/model/IPlayer';
+import { Player } from 'src/app/model/Player';
 import { AnimationHelper, AnimationConfig, AnimationEnum } from 'src/app/helper/AnimationHelper';
 
 @Component({
@@ -15,7 +15,7 @@ export class GameoverComponent implements OnInit, OnDestroy {
 
   public matchConfig: MatchConfig;
   
-  private sortedPlayers: IPlayer [];
+  private sortedPlayers: Player [];
   private storeSubscription: any;
 
   constructor(private router: Router, private store: Store<AppState>) { }
@@ -53,7 +53,7 @@ export class GameoverComponent implements OnInit, OnDestroy {
     });
   }
 
-  public get winnerPlayer(): IPlayer {
+  public get winnerPlayer(): Player {
     return this.sortedPlayers[0];
   }
 }

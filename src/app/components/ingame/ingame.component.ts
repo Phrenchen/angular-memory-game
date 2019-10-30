@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { MatchConfig } from 'src/app/model/MatchConfig';
 import { MemoryCard, MemoryCardState } from 'src/app/model/MemoryCard';
-import { IPlayer } from 'src/app/model/IPlayer';
+import { Player } from 'src/app/model/Player';
 import * as Actions from './../../actions/match.actions';
 import { TweenMax, Power3, Power1, Power4 } from 'gsap';
 import { AnimationHelper, AnimationConfig, AnimationEnum } from 'src/app/helper/AnimationHelper';
@@ -17,7 +17,7 @@ import { GameService } from 'src/app/services/game.service';
 })
 export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  public matchConfig: MatchConfig;  	// from store
+  public matchConfig: MatchConfig = null;  	// from store
 
   private storeSubscription: any;
 
@@ -31,31 +31,34 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private router: Router, private store: Store<AppState>) { }
 
   ngOnInit() {
+    console.log('WTF?');
 
     this.storeSubscription = this.store.select('match')
       .subscribe(stats => {
         // console.log('store update ', stats.isGameOver);
+        const isInitialConfig = this.matchConfig === null;
         this.matchConfig = stats;
+        
+        if (isInitialConfig) {
+          // set CSS variable
+          document.documentElement.style.setProperty('--board-column-count', this.matchConfig.gridDimensionX + '');
+          document.documentElement.style.setProperty('--board-row-count', this.matchConfig.gridDimensionY + '');
+        }
 
         if (!this.hasBeenInitialized) {
           this.hasBeenInitialized = true;
           this.setupCards(this.matchConfig.cards);
         }
 
-        // if the player has changed... tell her to play!
+        // if the player has changed or a pair has been completed... tell the player to play!
         if (this.matchConfig.activePlayer !== this.currentActivePlayerId || this.matchConfig.currentPlayerHasPaired) {
-          
-
           if (!this.matchConfig.isGameOver) {
             this.currentActivePlayerId = this.matchConfig.activePlayer;
 
-            const board = document.getElementById('board');
+            // CSS: toggle user input enabled/disabled
+            this.updateUserInputEnabled(this.matchConfig.cards, GameService.activePlayer(this.matchConfig.players, this.matchConfig.activePlayer).isHuman);
 
-            if(board) {
-              board.style.pointerEvents = GameService.activePlayer(this.matchConfig.players, this.matchConfig.activePlayer).isHuman ?
-                                            'all' : 'none';
-            }
-
+            // start delay to start (AI)-turn
             setTimeout(() => {
               GameService.activePlayer(this.matchConfig.players, this.matchConfig.activePlayer)
                 .play(this.store, this.matchConfig);
@@ -82,6 +85,14 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
       this.store.dispatch(new Actions.GameTick());
       this.currentMatchDurationSeconds++;
     }, 1000);
+  }
+
+  private updateUserInputEnabled(cards: MemoryCard[], isHumanPlayer: boolean) {
+    cards.forEach(card => {
+      if (card.htmlElement) {
+        card.htmlElement.style.pointerEvents = isHumanPlayer ? 'all' : 'none';
+      }
+    });
   }
 
 
@@ -139,7 +150,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
       cards.forEach(card => {
         htmlElement = card.htmlElement;
         htmlElement.style.pointerEvents = GameService.activePlayer(this.matchConfig.players, this.matchConfig.activePlayer).isHuman ?
-                                            'all' : 'none';;
+          'all' : 'none';;
       });
     },
       0);
@@ -210,7 +221,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
     }, delay);
   }
 
-  public getPlayer(id: number): IPlayer {
+  public getPlayer(id: number): Player {
     return this.matchConfig.players[id];
   }
 

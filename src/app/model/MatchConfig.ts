@@ -1,4 +1,4 @@
-import { IPlayer } from './IPlayer';
+import { Player } from './Player';
 import { MemoryCard } from './MemoryCard';
 
 export interface MatchConfig {
@@ -9,7 +9,7 @@ export interface MatchConfig {
     humanPlayerCount: number;
     totalPlayerCount: number;
 
-    players: IPlayer[];
+    players: Player[];
     cards: MemoryCard[];
 
     activePlayer: number;

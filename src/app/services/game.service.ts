@@ -1,8 +1,8 @@
 import { HumanPlayer } from '../model/HumanPlayer';
 import { MemoryCard, MemoryCardState } from '../model/MemoryCard';
 import { MathHelper } from '../helper/MathHelper';
+import { Player } from '../model/Player';
 import { AiPlayer } from '../model/AiPlayer';
-import { IPlayer } from '../model/IPlayer';
 
 // Static service class / helper
 export class GameService {
@@ -21,24 +21,24 @@ export class GameService {
     return cardIds;
   }
 
-  public static activePlayer(players: IPlayer[], activePlayer: number): IPlayer {
+  public static activePlayer(players: Player[], activePlayer: number): Player {
     if (activePlayer >= 0 && activePlayer < players.length) {
       return players[activePlayer];
     }
     return null;
   }
 
-  public static createPlayers(humanPlayerCount: number, totalPlayerCount: number): IPlayer[] {
-    const players: IPlayer[] = [];
-    const aiPlayerCount = Math.max(0, totalPlayerCount - humanPlayerCount);
-    let player: IPlayer;
+  public static createPlayers(humanPlayerCount: number, totalPlayerCount: number): Player[] {
+    const players: Player[] = [];
+    const aPlayerCount = Math.max(0, totalPlayerCount - humanPlayerCount);
+    let player: Player;
 
     for (let i = 0; i < humanPlayerCount; i++) {
       player = new HumanPlayer();
       players.push(player);
     }
 
-    for (let j = 0; j < aiPlayerCount; j++) {
+    for (let j = 0; j < aPlayerCount; j++) {
       player = new AiPlayer();
       players.push(player);
     }

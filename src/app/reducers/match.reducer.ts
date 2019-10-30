@@ -5,10 +5,10 @@ import { GameService } from '../services/game.service';
 import { GameConsts } from '../model/GameConsts';
 import { MemoryCard, MemoryCardState } from '../model/MemoryCard';
 import { MathHelper } from '../helper/MathHelper';
-import { IPlayer } from '../model/IPlayer';
+import { Player } from '../model/Player';
 
-const gridX = 1;
-const gridY = 4;
+const gridX = 4;
+const gridY = 3;
 
 const initialState: MatchConfig = {
     gridDimensionX: gridX,
@@ -25,7 +25,7 @@ const initialState: MatchConfig = {
 
 export function reducer(state: MatchConfig = initialState, action: MatchActions.Actions) {
     // console.log(action, state);
-    let currentPlayer: IPlayer;
+    let currentPlayer: Player;
 
     switch (action.type) {
         case MatchActions.CREATE_MATCH:

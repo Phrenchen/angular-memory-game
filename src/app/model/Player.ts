@@ -1,11 +1,10 @@
-import { IPlayer, PlayTime } from './IPlayer';
 import { EventEmitter } from '@angular/core';
 import { AppState } from '../app.state';
 import { Store } from '@ngrx/store';
 import { MemoryCard } from './MemoryCard';
 import { MatchConfig } from './MatchConfig';
 
-export class Player implements IPlayer {
+export class Player  {
     public name = '';
     public isHuman = false;
     public pairsWon = 0;
@@ -19,6 +18,9 @@ export class Player implements IPlayer {
         totalTime: 0
     };
     
+    public status(): string {
+        return '';
+    }
     
     public play(store: Store<AppState>, matchConfig: MatchConfig): void {
         // do nothing. user will play
@@ -33,4 +35,11 @@ export class Player implements IPlayer {
         }
         return Math.round(this.playTime.totalTime / 1000) ;  // seconds
     }
+}
+
+export interface PlayTime {
+    turnStart: Date;
+    turnEnd: Date;
+
+    totalTime: number;
 }

@@ -24,6 +24,7 @@ import { TutorialComponent } from './tutorial/tutorial.component';
 import { TutHowToPlayComponent } from './tutorial/tut-how-to-play/tut-how-to-play.component';
 import { TutEmptyComponent } from './tutorial/tut-empty/tut-empty.component';
 import { TutGameRulesComponent } from './tutorial/tut-game-rules/tut-game-rules.component';
+import { MemoryCardComponent } from './components/ingame/memory-card/memory-card.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { TutGameRulesComponent } from './tutorial/tut-game-rules/tut-game-rules.
     TutorialComponent,
     TutHowToPlayComponent,
     TutEmptyComponent,
-    TutGameRulesComponent
+    TutGameRulesComponent,
+    MemoryCardComponent
   ],
   imports: [
     BrowserModule,
