@@ -30,7 +30,10 @@
     --card-hover-fontsize: 18;
     /* card end */
 
-      --board-column-count: 4;
-      --board-row-count: 1;
+    --board-column-count: 4;
+    --board-row-count: 1;
+
+    --background-blur: 0px;
+    --background-opacity: .9;
   }
   

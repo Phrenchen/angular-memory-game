@@ -31,8 +31,6 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private router: Router, private store: Store<AppState>) { }
 
   ngOnInit() {
-    console.log('WTF?');
-
     this.storeSubscription = this.store.select('match')
       .subscribe(stats => {
         // console.log('store update ', stats.isGameOver);
@@ -111,6 +109,9 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.storeSubscription) {
       // console.log('unsubscribing store');
       this.storeSubscription.unsubscribe();
+
+      const activePlayer: Player = GameService.activePlayer(this.matchConfig.players, this.matchConfig.activePlayer);
+      activePlayer.stop();
 
       if (this.gameTickIntervalId) {
         clearInterval(this.gameTickIntervalId);

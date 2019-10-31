@@ -1,5 +1,6 @@
-import { TweenMax, Power3 } from 'gsap';
+import { TweenMax, Power3, Sine, Power0 } from 'gsap';
 import { MemoryCard } from '../model/MemoryCard';
+import { Rectangle } from './model/Rectangle';
 
 export class AnimationHelper {
 
@@ -16,8 +17,8 @@ export class AnimationHelper {
 
 
     public static get enableAnimations(): boolean {
-        // return true;
-        return AnimationHelper.isMobile && AnimationHelper.animationsAreEnabled;
+        return true;
+        // return AnimationHelper.isMobile && AnimationHelper.animationsAreEnabled;
     }
 
     public static animateCards(cards: MemoryCard[], animationType: AnimationEnum, completeCallback: Function, delay: number = 500): any {
@@ -50,7 +51,37 @@ export class AnimationHelper {
         return interval;
     }
 
+    public static tweenSVGToPosition(svg: SVGSVGElement, x: number, y: number, duration: number, completeCallback: Function = null): void {
+        if (!AnimationHelper.enableAnimations) {
+            return;
+        }
+
+        const fromVars = {
+            // ease: Sine.easeInOut,
+            ease: Power0.easeNone,
+            left: svg.style.left,
+            top: svg.style.top,
+        };
+        
+        const toVars = {
+            ease: Sine.easeInOut,
+            // ease: Power0.easeNone,
+            left: x,
+            top: y,
+        };
+
+        if (completeCallback) {
+            toVars['onComplete'] = completeCallback;
+        }
+
+        console.log(fromVars, toVars);
+        TweenMax.fromTo(svg, duration, fromVars, toVars);
+
+
+    }
+
     /**
+     * - tweens to a statically defined state
      * - animations will be skipped on mobile
      * Skipping animations will cause:
      *  - targetValues immediatly assigned
@@ -92,15 +123,15 @@ export class AnimationHelper {
 
         if (AnimationHelper.enableAnimations) {
             // assign all to-values
-            console.log('skipping animation -> assigning values: ', toVars);
+            // console.log('skipping animation -> assigning values: ', toVars);
 
             element.style.width = toVars['width'] ? toVars['width'] : element.style.width;
             element.style.height = toVars['height'] ? toVars['height'] : element.style.height;
             element.style.opacity = toVars['opacity'] ? toVars['opacity'] : element.style.opacity;
 
-            console.log('element.style.width: ' + element.style.width);
-            console.log('element.style.height: ' + element.style.height);
-            console.log('element.style.opacity: ' + element.style.opacity);
+            // console.log('element.style.width: ' + element.style.width);
+            // console.log('element.style.height: ' + element.style.height);
+            // console.log('element.style.opacity: ' + element.style.opacity);
 
             if (completeCallback) {
                 completeCallback();

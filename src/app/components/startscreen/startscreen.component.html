@@ -5,28 +5,21 @@
     <!-- <h2>Fancy a game of</h2> -->
     <h1>Memory!</h1>
 
-    <div>
+    <div class="player-selection">
         <p-radioButton 
             name="boardSize" 
             value="1" 
             label="1P vs masterbrain" 
             [(ngModel)]="selectedBoardSize" 
             (onClick)="playerCount(1)"
+            
         >
         </p-radioButton>
 
         <p-radioButton name="boardSize" value="2" label="2 Players" [(ngModel)]="selectedBoardSize" (onClick)="playerCount(2)"></p-radioButton>
         <p-radioButton name="boardSize" value="0" label="watch 2 masterbrains fail" [(ngModel)]="selectedBoardSize" (onClick)="playerCount(0)"></p-radioButton>
-        
-        
-        <!-- <button name="start-match" (click)="startMatch(0)">Watch 2 fools (AI) play</button>
-        <span>choose</span>
-        <button name="start-match" (click)="startMatch(1)">1 Player</button>
-        <span>or</span>
-        <button name="start-match" (click)="startMatch(2)">2 Players</button> -->
-
-
     </div>
+    <button name="start-match" (click)="startMatch()">start match</button>
 
 </div>
 

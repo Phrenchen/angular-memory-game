@@ -41,9 +41,9 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
 
             return {
                 ...state,
-                humanPlayerCount: action.payload,
+                activePlayer: 0,
                 cards: resetCards,
-                players: GameService.createPlayers(action.payload, GameConsts.TOTAL_PLAYER_COUNT),
+                players: GameService.createPlayers(state.humanPlayerCount, GameConsts.TOTAL_PLAYER_COUNT),
                 isGameOver: false
             };
         case MatchActions.GAME_TICK:

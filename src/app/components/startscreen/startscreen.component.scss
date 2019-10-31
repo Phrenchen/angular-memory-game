@@ -23,17 +23,47 @@
 
     height: 25vh;
     min-height: 200px;
-}
 
-.container button {
-    border: 1px solid var(--main-border-color);
-    margin: 10px 10px;
-    padding: 10px 10px;
-}
+    // contains generated svgs. floats behind everything else. fancy stuff
+    #background-container {
+        // border: 3px dashed red;
 
-.container h1{
-    text-align: center;
-    margin: 0;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        // pointer-events: none;
+        overflow: hidden;
+
+        // display: flex;
+        opacity: var(--background-opacity);
+        filter: blur(var(--background-blur));
+
+        z-index: -1;
+    }
+
+    .player-selection {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button {
+        border: 1px solid var(--main-border-color);
+        margin: 10px 10px;
+        padding: 10px 10px;
+    }
+    
+    h1{
+        text-align: center;
+        margin: 0 0 10px 0;
+    }
+
+    p-radioButton {
+        margin: 10px;
+    }
 }
 
 // span span {

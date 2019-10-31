@@ -11,23 +11,21 @@ export class SVGHelper {
      * @param height 
      * @param complexity 
      */
-    // public static createPolygon(width: number, height: number, fillColor: string, complexity: number): Element {
-    //     const xmlns = "http://www.w3.org/2000/svg";
-    //     const container: Element = document.createElementNS(xmlns, 'svg');
-    //     container.appendChild(SVGHelper.getNode('rect', { width:width, height:height, fill:fillColor }));      
-    //     return container;
+    public static createPolygon(width: number, height: number, fillColor: string, complexity: number): Element {
+        const xmlns = "http://www.w3.org/2000/svg";
+        const container: Element = document.createElementNS(xmlns, 'svg');
+        container.appendChild(SVGHelper.getNode('rect', { width:width, height:height, fill:fillColor }));      
+        return container;
+    }
 
+    private static getNode(n, v) {
+        n = document.createElementNS("http://www.w3.org/2000/svg", n);
+        for (var p in v)
+          n.setAttributeNS(null, p, v[p]);
+        return n;
+      }
 
-    // }
-
-    // private static getNode(n, v) {
-    //     n = document.createElementNS("http://www.w3.org/2000/svg", n);
-    //     for (var p in v)
-    //       n.setAttributeNS(null, p, v[p]);
-    //     return n;
-    //   }
-
-      public static createSVG(stopColor1: string = "#ff0000", stopColor2: string = "#0000ff") {
+      public static createSVG(width: number, height: number, stopColor1: string = "#ff0000", stopColor2: string = "#0000ff") {
         const xmlns = "http://www.w3.org/2000/svg";
         let boxWidth = 300 + '';
         let boxHeight = 300 + '';
@@ -35,9 +33,11 @@ export class SVGHelper {
         // let stopColor2 = "#0000ff";
 
         // fullscreen
-        boxWidth = window.innerWidth + '';
-        boxHeight = window.innerHeight + '';
-        // boxHeight = '700';
+        // boxWidth = window.innerWidth + '';
+        // boxHeight = window.innerHeight + '';
+
+        boxWidth = width + '';
+        boxHeight = height + '';
     
         const svgElem = document.createElementNS(xmlns, "svg");
         svgElem.setAttributeNS(null, "viewBox", "0 0 " + boxWidth + " " + boxHeight);

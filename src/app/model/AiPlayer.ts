@@ -12,6 +12,7 @@ import { GameService } from '../services/game.service';
 export class AiPlayer extends Player {
 
     private state: TurnStateEnum = TurnStateEnum.firstCard;
+    private turnTimeout: any;
 
     constructor() {
         super();
@@ -23,47 +24,55 @@ export class AiPlayer extends Player {
         this.avatarUrl = '';
     }
 
+    public stop(): void {
+        if (this.turnTimeout) {
+            console.log('AiPlayer: clearing turn timeout ');
+            clearInterval(this.turnTimeout);
+            this.turnTimeout = null;
+        }
+    }
+
     public play(store: Store<AppState>, matchConfig: MatchConfig): void {
         super.play(store, matchConfig);
 
         const delayMsFirstCard = 1000;
         const delayMsSecondCard = 2000;
-        
+
         console.log('*** calling AI to play ***');
         this.state = TurnStateEnum.firstCard;
-        
+
         // TODO: horrible! try async & await?
-        setTimeout(() => {
+        this.turnTimeout = setTimeout(() => {
             console.log('play first card');
             let firstCardIndex = MathHelper.getRandomInt(0, matchConfig.cards.length - 1);
             const coveredCardIds: number[] = GameService.getCoveredCardIds(matchConfig.cards);
             let secondCardIndex = MathHelper.getRandomIntFrom(0, matchConfig.cards.length - 1, coveredCardIds);
-            
-            if(!matchConfig.cards[secondCardIndex]) {
+
+            if (!matchConfig.cards[secondCardIndex]) {
                 console.log('AiPlayer: no second card at position: ' + secondCardIndex);
                 return;
             }
-            
-            if(matchConfig.cards[secondCardIndex].state !== MemoryCardState.COVERED) {
+
+            if (matchConfig.cards[secondCardIndex].state !== MemoryCardState.COVERED) {
                 console.log('AiPlayer: wants to see an unavailable card: ', coveredCardIds, secondCardIndex);
             }
-            
+
             let firstCard = matchConfig.cards[firstCardIndex];
             let secondCard = matchConfig.cards[secondCardIndex];
-            
+
             setTimeout(() => {
                 console.log('first card id: ' + firstCardIndex);
                 this.state = TurnStateEnum.secondCard;
                 store.dispatch(new Actions.SelectedCard(firstCard));
             });
-            
-            
+
+
             setTimeout(() => {
                 setTimeout(() => {
                     console.log('play second card', secondCardIndex);
                     store.dispatch(new Actions.SelectedCard(secondCard));
                 });
-                
+
             }, delayMsSecondCard);
         }, delayMsFirstCard);
     }

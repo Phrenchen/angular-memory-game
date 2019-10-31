@@ -23,7 +23,7 @@ export class CreateMatch implements Action {
     readonly type = CREATE_MATCH;
 
     // player count
-    constructor(public payload: number) {}
+    constructor() {}
 }
 
 export class GameTick implements Action {
