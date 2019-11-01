@@ -74,7 +74,7 @@ export class AnimationHelper {
             toVars['onComplete'] = completeCallback;
         }
 
-        console.log(fromVars, toVars);
+        // console.log(fromVars, toVars);
         TweenMax.fromTo(svg, duration, fromVars, toVars);
 
 

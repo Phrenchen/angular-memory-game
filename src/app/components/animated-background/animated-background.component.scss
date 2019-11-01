@@ -1,0 +1,19 @@
+@import url('./../../../variables.css');
+
+#animated-background-container {
+    --padding-top: 50px;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    // height: calc(100vh - var(--padding-top));
+
+    pointer-events: none;
+
+    opacity: var(--background-opacity);
+    filter: blur(var(--background-blur));
+    // margin-top: var(--padding-top);
+    z-index: -1;
+}

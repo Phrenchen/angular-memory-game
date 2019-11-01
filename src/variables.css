@@ -33,7 +33,7 @@
     --board-column-count: 4;
     --board-row-count: 1;
 
-    --background-blur: 0px;
-    --background-opacity: .9;
+    --background-blur: 2px;
+    --background-opacity: .3;
   }
   

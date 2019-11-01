@@ -1,8 +1,9 @@
 <div class="container" id="container-startscreen">
-    <div id="background-container">
-        <!-- generated SVG is added here. DO NOT REMOVE, smartass :) -->
-    </div>
-    <!-- <h2>Fancy a game of</h2> -->
+    <!-- generated SVG is added here. DO NOT REMOVE, smartass :) -->
+    <!-- <div id="background-container">
+    </div> -->
+
+    <!-- <app-animated-background></app-animated-background> -->
     <h1>Memory!</h1>
 
     <div class="player-selection">
@@ -10,14 +11,14 @@
             name="boardSize" 
             value="1" 
             label="1P vs masterbrain" 
-            [(ngModel)]="selectedBoardSize" 
+            [(ngModel)]="selectedPlayerCount" 
             (onClick)="playerCount(1)"
             
         >
         </p-radioButton>
 
-        <p-radioButton name="boardSize" value="2" label="2 Players" [(ngModel)]="selectedBoardSize" (onClick)="playerCount(2)"></p-radioButton>
-        <p-radioButton name="boardSize" value="0" label="watch 2 masterbrains fail" [(ngModel)]="selectedBoardSize" (onClick)="playerCount(0)"></p-radioButton>
+        <p-radioButton name="boardSize" value="2" label="2 Players" [(ngModel)]="selectedPlayerCount" (onClick)="playerCount(2)"></p-radioButton>
+        <p-radioButton name="boardSize" value="0" label="masterbrain vs masterbrain" [(ngModel)]="selectedPlayerCount" (onClick)="playerCount(0)"></p-radioButton>
     </div>
     <button name="start-match" (click)="startMatch()">start match</button>
 

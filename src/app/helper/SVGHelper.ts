@@ -63,9 +63,14 @@ export class SVGHelper {
         stopTop.setAttributeNS(null, "stop-color", stopColor1);
         grad.appendChild(stopTop);
         
+        // const stopCenter = document.createElementNS(xmlns, "stop");
+        // stopCenter.setAttributeNS(null, "offset", "50%");
+        // stopCenter.setAttributeNS(null, "stop-color", stopColor2);
+        // grad.appendChild(stopCenter);
+
         const stopBottom = document.createElementNS(xmlns, "stop");
         stopBottom.setAttributeNS(null, "offset", "100%");
-        stopBottom.setAttributeNS(null, "stop-color", stopColor2);
+        stopBottom.setAttributeNS(null, "stop-color", stopColor1);
         grad.appendChild(stopBottom);
         
         defs.appendChild(grad);

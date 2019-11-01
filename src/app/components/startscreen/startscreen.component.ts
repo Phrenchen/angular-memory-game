@@ -17,7 +17,8 @@ import { Rectangle } from 'src/app/helper/model/Rectangle';
 })
 export class StartscreenComponent implements OnInit, AfterContentChecked, AfterViewChecked, AfterViewInit {
   
-  private fancySVGs: SVGSVGElement[] = [];
+  // private fancySVGs: SVGSVGElement[] = [];
+  public selectedPlayerCount = 1;
 
   // LIFE CYCLE
   constructor(private router: Router, private store: Store<AppState>) { }
@@ -31,7 +32,7 @@ export class StartscreenComponent implements OnInit, AfterContentChecked, AfterV
     });
     
 
-    this.addFancySVGs();
+    // this.addFancySVGs();
 
     // // add generated (fullscreen) svg to background. position absolute (centered?)
     // const bodyStyle = getComputedStyle(document.body);
@@ -40,70 +41,76 @@ export class StartscreenComponent implements OnInit, AfterContentChecked, AfterV
     // const svg = SVGHelper.createSVG(stopColor1, stopColor2);
     // document.getElementById('background-container').appendChild(svg);
   }
-  addFancySVGs() {
-    // add small rectangle
-    const bodyStyle = getComputedStyle(document.body);
-    let stopColor1 = bodyStyle.getPropertyValue('--main-primary-color');
-    let stopColor2 = bodyStyle.getPropertyValue('--main-secondary-color');
-    let svgCount = 10;
-    let svg: SVGSVGElement;
 
-    stopColor1 = '#ccc'
-    stopColor1 = '#888'
+  // addFancySVGs() {
+  //   // add small rectangle
+  //   const bodyStyle = getComputedStyle(document.body);
+  //   let stopColor1 = bodyStyle.getPropertyValue('--main-primary-color');
+  //   let stopColor2 = bodyStyle.getPropertyValue('--main-secondary-color');
+  //   let svgCount = 40;
+  //   let svg: SVGSVGElement;
 
-    let rangeX = CSSHelper.stageWidth() * .4;
-    let rangeY = CSSHelper.stageHeight() * .4;
+  //   let rangeX = CSSHelper.stageWidth() * .4;
+  //   let rangeY = CSSHelper.stageHeight() * .4;
 
-    let left = CSSHelper.stageCenterX() - rangeX;
-    let right = CSSHelper.stageCenterX() + rangeX;
+  //   let left = CSSHelper.stageCenterX() - rangeX;
+  //   let right = CSSHelper.stageCenterX() + rangeX;
 
-    let top = CSSHelper.stageCenterY() - rangeY;
-    let bottom = CSSHelper.stageCenterY() + rangeY;
-    
-    let svgWidth: number;
-    let svgHeight: number;
+  //   let top = CSSHelper.stageCenterY() - rangeY;
+  //   let bottom = CSSHelper.stageCenterY() + rangeY;
 
-    // for each svg
-    for(let i=0; i<svgCount; i++) {
-      svgWidth = MathHelper.getRandomInt(10, 200);
-      svgHeight = MathHelper.getRandomInt(10, 200);
+  //   // size
+  //   let minWidth = 100;
+  //   let maxWidth = 800;
+  //   let minHeight = 100;
+  //   let maxHeight = 600;
+  //   let svgWidth: number;
+  //   let svgHeight: number;
+  //   const backgroundContainer: HTMLElement = document.getElementById('background-container');
 
-      svg = SVGHelper.createSVG(svgWidth, svgHeight, stopColor1, stopColor2);
-      svg.style.position = 'fixed';
+  //   // for each svg
+  //   for(let i=0; i<svgCount; i++) {
+  //     svgWidth = MathHelper.getRandomInt(minWidth, maxWidth);
+  //     svgHeight = MathHelper.getRandomInt(minHeight, maxHeight);
 
-      console.log('svgWidth, svgHeight: ', svgWidth, svgHeight);
+  //     svg = SVGHelper.createSVG(svgWidth, svgHeight, stopColor1, stopColor2);
+  //     svg.style.position = 'fixed';
 
-      svg.style.left = MathHelper.getRandomInt(left, right) - svgWidth * .5 + 'px';
-      svg.style.top = MathHelper.getRandomInt(top, bottom) - svgHeight * .5 + 'px';
+  //     svg.style.left = MathHelper.getRandomInt(left, right) - svgWidth * .5 + 'px';
+  //     svg.style.top = MathHelper.getRandomInt(top, bottom) - svgHeight * .5 + 'px';
 
-      this.fancySVGs.push(svg);
-      document.getElementById('background-container').appendChild(svg);
+  //     this.fancySVGs.push(svg);
+  //     backgroundContainer.appendChild(svg);
 
-      // animate endlessly
-      this.animateSVG(svg, {
-        left: 0,
-        top: 0,
-        right: CSSHelper.stageWidth(),
-        bottom: CSSHelper.stageHeight()
-      });
-    }
-  }
+  //     // animate endlessly
+  //     this.animateSVG(svg, {
+  //       left: 0,
+  //       top: 0,
+  //       right: CSSHelper.stageWidth(),
+  //       bottom: CSSHelper.stageHeight()
+  //     });
+  //   }
+  // }
 
-  private animateSVG(svg: SVGSVGElement, viewport: Rectangle): void {
+  // /**
+  //  * - moves an SVG to a random position.
+  //  * - seeks new target upon arrival
+  //  * @param svg 
+  //  * @param viewport 
+  //  */
+  // private animateSVG(svg: SVGSVGElement, viewport: Rectangle): void {
+  //   const x = MathHelper.getRandomInt(viewport.left, viewport.right);
+  //   const y = MathHelper.getRandomInt(viewport.top, viewport.bottom);
+  //   const delay = MathHelper.getRandomInt(0, 3000);
+  //   const duration = MathHelper.getRandomInt(1, 30);
 
-    const x = MathHelper.getRandomInt(viewport.left, viewport.right);
-    const y = MathHelper.getRandomInt(viewport.top, viewport.bottom);
-    const delay = MathHelper.getRandomInt(0, 3000);
-    const duration = MathHelper.getRandomInt(1, 30);
-
-    setTimeout(() => {
-      AnimationHelper.tweenSVGToPosition(svg, x, y, duration, () => {
-        console.log('tween complete');
-        this.animateSVG(svg, viewport);
-      });
-    }, delay);
-
-  }
+  //   setTimeout(() => {
+  //     AnimationHelper.tweenSVGToPosition(svg, x, y, duration, () => {
+  //       console.log('tween complete');
+  //       this.animateSVG(svg, viewport);
+  //     });
+  //   }, delay);
+  // }
 
   ngAfterViewChecked(): void {
   }
