@@ -14,7 +14,9 @@ export class AnimationHelper {
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
-
+    public static get enableBackgroundAnimations() {
+        return false;
+    }
 
     public static get enableAnimations(): boolean {
         return true;

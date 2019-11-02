@@ -2,6 +2,18 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.3.
 
+## About
+### Start: 
+    * Select amount of human players
+    * start game
+### Game:
+    * Select 2 cards.
+    * Find pairs
+    * button: back to menue
+### Game Over
+    * view stats
+    * button: continue to Start
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
@@ -26,5 +38,4 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 =======
-# memory-game
-Angular + ngrx
+
