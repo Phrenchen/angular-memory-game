@@ -56,7 +56,7 @@ export class StartscreenComponent implements OnInit, AfterContentChecked, AfterV
   public startMatch() {
     AnimationHelper.tween(document.getElementById('container-startscreen'), AnimationEnum.FADE_OUT, () => {
       // console.log('start screen outro complete');
-      this.store.dispatch(new Actions.CreateMatch());
+      this.store.dispatch(new Actions.CreateMatch(this.selectedPlayerCount));
       this.router.navigate(['/memory']);
     });
   }
