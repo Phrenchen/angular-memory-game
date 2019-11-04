@@ -1,12 +1,12 @@
 <!-- player-info-header -->
 <div class="top-bar" id="top-bar">
-    <!-- <app-animated-background></app-animated-background> -->
-  <button class="btn-start-screen" (click)="gotoStartScreen()">Back</button>
+  <!-- <app-animated-background></app-animated-background> -->
 
   <div class="stats-panel" id="stats-panel">
+    <h2>match time: {{currentMatchDurationTime}}</h2>
+    <button class="btn-start-screen" (click)="gotoStartScreen()">Back</button>
     <app-player-info [player]="getPlayer(0)" [isActive]="isActivePlayer(0)"></app-player-info>
     <app-player-info [player]="getPlayer(1)" [isActive]="isActivePlayer(1)"></app-player-info>
-    <p>match time: {{currentMatchDurationTime}}</p>
   </div>
 
 </div>
@@ -14,11 +14,9 @@
 
 <!-- grid with cards -> the 'board' -->
 <div class="board" id="board" *ngIf="matchConfig">
-  
-  <app-memory-card *ngFor="let card of cards; index as i;" class="card" [ngStyle]="{'background': card.color}" [id]="'card-' + i"
-    [card]="card"
-    (mouseover)="cardMouseOver($event, card)"
-    (mouseout)="cardMouseOut($event, card)"
+
+  <app-memory-card *ngFor="let card of cards; index as i;" class="card" [ngStyle]="{'background': card.color}"
+    [id]="'card-' + i" [card]="card" (mouseover)="cardMouseOver($event, card)" (mouseout)="cardMouseOut($event, card)"
     (click)="cardClicked($event, card)">
   </app-memory-card>
 
@@ -32,8 +30,8 @@
 
 </div>
 
-<div class="game-over-container" id="game-over-notice" >
-<!-- <div class="game-over-container" id="game-over-notice" *ngIf="showGameOver"> -->
+<div class="game-over-container" id="game-over-notice">
+  <!-- <div class="game-over-container" id="game-over-notice" *ngIf="showGameOver"> -->
   <h2>Game over!</h2>
   <button (click)="continueToGameOver()">continue to result screen</button>
 </div>

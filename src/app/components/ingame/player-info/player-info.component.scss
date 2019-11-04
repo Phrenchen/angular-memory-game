@@ -1,36 +1,59 @@
 @import url('./../../../../variables.css');
 
-
 .player-container {
-    // border: 1px solid white;
+    // border: 1px solid red;
     // width: 50vw;
 
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     
-    padding: 10px;
+    // padding: 10px;
     text-align: center;
+
+    .playerinfo-title {
+        display: grid;
+        grid-template-columns: 1fr min-content max-content;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+        width: 100%;
+        // width: min-content;
+    }
+    
+    .active-indicator {
+        // border: 2px dotted black;
+        opacity: 0;
+        width: 10px;
+        height: 10px;
+        background: var(--main-primary-color);
+    
+        border-radius: 50%;
+    
+        // margin-right: 5px;
+    }
+    
+    .active {
+        opacity: 1;
+    }
+    
+    h2 {
+        // font-size: 4rem;
+        padding: 0;
+        margin: 0;
+        width: max-content;
+    }
+
+    p {
+        padding: 0;
+        margin: 0;
+    }
 }
 
-.player-container h2 {
-    font-size: 4rem;
+// .player-container .playerinfo-title:nth-child(1) {
+//     border: 2px dashed red;
+//     margin: 5px 10px;
+// }
 
-    padding: 0;
-    margin: 0;
-}
-
-.active-indicator {
-    // border: 2px dotted black;
-    opacity: 0;
-    width: 1em;
-    height: 1em;
-    background: var(--main-primary-color);
-
-    border-radius: 50%;
-
-    margin-right: 5px;
-}
-
-.active {
-    opacity: 1;
-}

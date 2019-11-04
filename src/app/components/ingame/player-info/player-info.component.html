@@ -1,12 +1,10 @@
 <div class="player-container">
-    <div class="active-indicator" [ngClass]="{'active': isActive}">
 
+    <div class="playerinfo-title">
+        <h2>{{player.name}}: {{player.pairsWon}}</h2>
+        <div class="active-indicator" [ngClass]="{'active': isActive}">
+        </div>
+        <p *ngIf="isActive">{{player.status()}}</p>
     </div>
-
-
-    <span>
-        <strong>{{player.pairsWon}}</strong>
-        <span *ngIf="isActive">{{player.status()}}</span>
-    </span>
 
 </div>
