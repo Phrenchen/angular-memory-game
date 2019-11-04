@@ -1,3 +1,4 @@
-<div *ngIf="card">
-  {{card.partnerId}}
+<div *ngIf="card" class="card-container">
+  <img [src]="imageUrl(card.partnerId)" alt="card.partnerId">
+  <!-- {{card.partnerId}} -->
 </div>

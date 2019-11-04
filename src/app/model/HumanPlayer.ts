@@ -1,4 +1,7 @@
 import { Player } from './Player';
+import { Store } from '@ngrx/store';
+import { AppState } from '../app.state';
+import { MatchConfig } from './MatchConfig';
 
 export class HumanPlayer extends Player {
     constructor() {
@@ -15,5 +18,14 @@ export class HumanPlayer extends Player {
         super.status();
 
         return 'Player´s turn. Select 2 matching Cards';
+    }
+
+    public play(store: Store<AppState>, matchConfig: MatchConfig): void {
+        console.log('play human turn');
+        super.play(store, matchConfig);
+    }
+
+    public stop(): void {
+        console.log('stopping human turn');
     }
 }
