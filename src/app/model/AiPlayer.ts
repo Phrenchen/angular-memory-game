@@ -12,7 +12,8 @@ import { GameService } from '../services/game.service';
 export class AiPlayer extends Player {
 
     private state: TurnStateEnum = TurnStateEnum.firstCard;
-    private turnTimeout: any;
+    private turnTimeout_1: any;
+    private turnTimeout_2: any;
 
     constructor() {
         super();
@@ -25,10 +26,16 @@ export class AiPlayer extends Player {
     }
 
     public stop(): void {
-        if (this.turnTimeout) {
-            console.log('AiPlayer: clearing turn timeout ');
-            clearInterval(this.turnTimeout);
-            this.turnTimeout = null;
+        if (this.turnTimeout_1) {
+            console.log('AiPlayer: clearing turn timeout 1');
+            clearInterval(this.turnTimeout_1);
+            this.turnTimeout_1 = null;
+        }
+
+        if (this.turnTimeout_2) {
+            console.log('AiPlayer: clearing turn timeout 2');
+            clearInterval(this.turnTimeout_2);
+            this.turnTimeout_2 = null;
         }
     }
 
@@ -42,7 +49,7 @@ export class AiPlayer extends Player {
         this.state = TurnStateEnum.firstCard;
 
         // TODO: horrible! try async & await?
-        this.turnTimeout = setTimeout(() => {
+        this.turnTimeout_1 = setTimeout(() => {
             console.log('play first card');
             let firstCardIndex = MathHelper.getRandomInt(0, matchConfig.cards.length - 1);
             const coveredCardIds: number[] = GameService.getCoveredCardIds(matchConfig.cards);
@@ -67,7 +74,7 @@ export class AiPlayer extends Player {
             });
 
 
-            setTimeout(() => {
+            this. turnTimeout_2 = setTimeout(() => {
                 setTimeout(() => {
                     console.log('play second card', secondCardIndex);
                     store.dispatch(new Actions.SelectedCard(secondCard));

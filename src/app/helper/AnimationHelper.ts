@@ -220,8 +220,8 @@ export class AnimationConfig {
         },
         toVars: {
             yoyo: true,
-            repeat: 1,
-            opacity: .5,
+            repeat: 2,
+            opacity: 1,
             width: '105%',
             height: '105%',
             ease: Power3.easeOut,

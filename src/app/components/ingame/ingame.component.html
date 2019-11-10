@@ -3,6 +3,7 @@
   <!-- <app-animated-background></app-animated-background> -->
 
   <div class="stats-panel" id="stats-panel">
+    <h1>Memory!</h1>
     <h2>match time: {{currentMatchDurationTime}}</h2>
     <button class="btn-start-screen" (click)="gotoStartScreen()">Back</button>
     <app-player-info [player]="getPlayer(0)" [isActive]="isActivePlayer(0)"></app-player-info>
@@ -14,8 +15,8 @@
 
 <!-- grid with cards -> the 'board' -->
 <div class="board" id="board" *ngIf="matchConfig">
-
-  <app-memory-card *ngFor="let card of cards; index as i;" class="card" [ngStyle]="{'background': card.color}"
+  <!-- [ngStyle]="{'background': card.color}" -->
+  <app-memory-card *ngFor="let card of cards; index as i;" class="card" 
     [id]="'card-' + i" [card]="card" (mouseover)="cardMouseOver($event, card)" (mouseout)="cardMouseOut($event, card)"
     (click)="cardClicked($event, card)">
   </app-memory-card>

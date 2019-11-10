@@ -14,9 +14,9 @@ const initialState: MatchConfig = {
     
     gridDimensionX: gridX,
     gridDimensionY: gridY,
-    humanPlayerCount: 1,
+    humanPlayerCount: 2,
     totalPlayerCount: 2,
-    players: GameService.createPlayers(1, 2),
+    players: GameService.createPlayers(2, 2),
     cards: GameService.createCards(gridX, gridY, true),
     activePlayer: 0,
     firstSelectedCard: null,

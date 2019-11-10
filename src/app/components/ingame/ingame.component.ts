@@ -9,6 +9,7 @@ import * as Actions from './../../actions/match.actions';
 import { TweenMax, Power3, Power1, Power4 } from 'gsap';
 import { AnimationHelper, AnimationConfig, AnimationEnum } from 'src/app/helper/AnimationHelper';
 import { GameService } from 'src/app/services/game.service';
+import { TimeHelper } from 'src/app/helper/TimeHelper';
 
 @Component({
   selector: 'app-ingame',
@@ -163,7 +164,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     AnimationHelper.animateCards(cards, AnimationEnum.FADE_OUT, () => {
-      // console.log('completed hiding cards');
+      console.log('completed hiding cards');
       this.outroComplete = true; // shows game over quick info
       const element: HTMLElement = document.getElementById('game-over-notice');
       AnimationHelper.tween(element, AnimationEnum.FADE_IN, () => {
@@ -177,19 +178,21 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public cardMouseOver(event: MouseEvent, card: MemoryCard) {
+    event.stopImmediatePropagation();
+
     if (card.state === MemoryCardState.COVERED) {
-      AnimationHelper.tween(card.htmlElement, AnimationEnum.HIGHLIGHT, () => {
+      AnimationHelper.tween(card.htmlElement, AnimationEnum.FADE_OUT, () => {
         // console.log('card out complete');
       });
     }
   }
 
   public cardMouseOut(event: MouseEvent, card: MemoryCard) {
-    if (card.state === MemoryCardState.COVERED) {
-      // AnimationHelper.tween(card.htmlElement, AnimationEnum.TO_DEFAULT), () => {
-      //   console.log('card out complete');
-      // });
-    }
+    // if (card.state === MemoryCardState.COVERED) {
+    //   AnimationHelper.tween(card.htmlElement, AnimationEnum.FADE_IN, () => {
+    //     console.log('card in complete');
+    //   });
+    // }
   }
 
   // *** CARD CLICKED ***
@@ -240,6 +243,7 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public get currentMatchDurationTime(): string {
+    return TimeHelper.printMatchDuration(this.currentMatchDurationSeconds * 1000);
     return this.currentMatchDurationSeconds + ' seconds';
   }
 }

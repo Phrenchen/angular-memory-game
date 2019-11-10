@@ -5,12 +5,18 @@ import { MemoryCard } from './MemoryCard';
 import { MatchConfig } from './MatchConfig';
 
 export class Player {
+    public id: number;
+    public static playerCounter = 0;
+
     public name = '';
     public isHuman = false;
     public pairsWon = 0;
     public matchActiveTime = 0;
     public avatarUrl = '';
 
+    constructor() {
+        this.id = ++Player.playerCounter;
+    }
 
     public playTime: PlayTime = {
         turnStart: new Date(),

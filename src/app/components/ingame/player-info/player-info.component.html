@@ -1,7 +1,7 @@
 <div class="player-container">
 
     <div class="playerinfo-title">
-        <h2>{{player.name}}: {{player.pairsWon}}</h2>
+        <h2>{{player.name}} {{player.id}}: {{player.pairsWon}}</h2>
         <div class="active-indicator" [ngClass]="{'active': isActive}">
         </div>
         <p *ngIf="isActive">{{player.status()}}</p>
