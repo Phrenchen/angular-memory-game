@@ -1,15 +1,38 @@
-<div id="game-over-container">
+<div id="game-over-container" *ngIf="matchConfig">
   <h2>Game over!</h2>
   <ol>
     <li *ngFor="let player of matchConfig.players; index as i;">
-        <p>
-            {{player.name}} has won with {{player.pairsWon}} pairs in {{player.totalTime()}} seconds!
-          </p>
+      <p>
+        {{player.name}} has won with {{player.pairsWon}} pairs in {{player.totalTime()}} seconds!
+      </p>
+
+
+    </li>
+  </ol>
+
+  <ol>
+    <li *ngFor="let player of matchConfig.players; index as i;">
+      <ol>
+        <li *ngFor="let cardEvent of player.choices" >
+          <div class="choices-container">
+            <span>At {{cardEvent.occuredAt | date: 'mm.ss.SSS'}}
+            </span>
+  
+            <span *ngIf="cardEvent.isMatch">
+              <span>a matching card was selected</span>
+              <div class="matched-marker"></div>
+            </span>
+  
+            <span *ngIf="cardEvent.isGameOver">
+              <span>::: GAME OVER! ::::</span>
+              <div class="game-over-marker"></div>
+            </span>
+          </div>
+        </li>
+      </ol>
     </li>
   </ol>
 
 
   <button (click)="playAgain()">Play again</button>
-
-  
 </div>

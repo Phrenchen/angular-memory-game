@@ -72,7 +72,8 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                 isSelected: selectedCard.isSelected,
                 isMatch: false,
                 isGameOver: false
-            }
+            };
+            
             const choices: CardSelectedEvent[] = currentPlayer.choices.slice();
             const lastChoice: CardSelectedEvent = choices.length > 1 ? choices[choices.length - 2] : null;
             choices.push(choice);

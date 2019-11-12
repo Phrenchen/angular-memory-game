@@ -1,4 +1,7 @@
 export class MathHelper {
+    public static get coinFlip(): boolean {
+        return Math.random() < 0.5;
+    }
 
     public static getRandomIntFrom(min: number, max: number, candidates: Array<number> = []): number {
         if (candidates) {
