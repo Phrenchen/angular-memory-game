@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MemoryCard } from 'src/app/model/MemoryCard';
+import { MemoryCard, MemoryCardState } from 'src/app/model/MemoryCard';
 import { ImageService } from 'src/app/services/image.service';
 
 @Component({
@@ -15,6 +15,17 @@ export class MemoryCardComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  public get displayBack(): boolean {
+    // return false;
+    return this.card.state === MemoryCardState.COVERED;
+  }
+  
+  public get displayFront(): boolean {
+    // return true;
+    return this.card.state === MemoryCardState.OPEN;
+  }
+
 
   public imageUrl(partnerId: number): string {
     return this.imageService.getUrl(partnerId);

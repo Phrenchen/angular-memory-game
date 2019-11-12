@@ -1,8 +1,8 @@
 :root {
-    --main-background-color: #7fd1e6;
+    --main-background-color: #cc7e3e;
     --main-border-color: #792121;
     
-    --main-primary-color: #46d2f5;
+    --main-primary-color: #1a3941;
     --main-secondary-color: #0a5a6e;
     
     --main-text-color: #ffffff;
@@ -19,21 +19,24 @@
     --main-third-place-color: coral;
 
 
-    --card-width: 100px;
-    --card-height: 100px;
-
+    /* --card-width: 100px;
+    --card-height: 100px; */
+    
     --card-count-x: 4;
     --card-count-y: 4;
-
+    
     /* card */
     /* TODO: check */
     --card-hover-fontsize: 18;
     /* card end */
-
-    --board-column-count: 4;
-    --board-row-count: 1;
-
+    
+    --board-column-count: 3;
+    --board-row-count: 3;
+    
     --background-blur: 2px;
     --background-opacity: .3;
+    
+    --card-width: calc(100vw / var(--board-column-count));
+    --card-height: calc(100vw / var(--board-row-count));
   }
   

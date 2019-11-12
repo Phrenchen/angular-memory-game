@@ -1,4 +1,8 @@
 <div *ngIf="card" class="card-container">
-  <img [src]="imageUrl(card.partnerId)" alt="card.partnerId">
+
+  <!-- <div *ngIf="displayBack" class="card-back"></div> -->
+  <div [hidden]="!displayBack" class="card-back"></div>
+  <!-- <img *ngIf="displayFront" [src]="imageUrl(card.partnerId)" alt="card.partnerId"> -->
+  <img [hidden]="!displayFront" class="card-front" [src]="imageUrl(card.partnerId)" alt="card.partnerId">
   <!-- {{card.partnerId}} -->
 </div>
