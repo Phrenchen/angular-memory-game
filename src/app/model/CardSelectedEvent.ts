@@ -6,7 +6,8 @@ import { MemoryCard } from './MemoryCard';
  */
 export interface CardSelectedEvent {
     occuredAt: Date;        // time into the match. format: mm:ss:sssZ
-    selectedCard: MemoryCard;
+    actorId: any;
+    partnerId: any;
     isFirstSelectedCard: boolean;
     isSelected: boolean;    // false if turned back to covered state
     isMatch: boolean;

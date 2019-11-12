@@ -67,11 +67,13 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
 
             const choice: CardSelectedEvent = {
                 occuredAt: new Date(),
-                selectedCard: selectedCard,
+                actorId: currentPlayer.id,
+                partnerId: selectedCard.partnerId,
                 isFirstSelectedCard: false,     // override later
                 isSelected: selectedCard.isSelected,
                 isMatch: false,
                 isGameOver: false
+
             };
             
             const choices: CardSelectedEvent[] = currentPlayer.choices.slice();

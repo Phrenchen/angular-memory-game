@@ -9,6 +9,7 @@ import { CardSelectedEvent } from 'src/app/model/CardSelectedEvent';
 import { FakeDataProvider } from 'src/app/helper/model/FakeDataProvider';
 import { MathHelper } from 'src/app/helper/MathHelper';
 import { SortHelper } from 'src/app/helper/model/SortHelper';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-gameover',
@@ -22,8 +23,9 @@ export class GameoverComponent implements OnInit, OnDestroy {
   private sortedPlayers: Player[];
   private storeSubscription: any;
 
+  private _allChoices: CardSelectedEvent[] = [];
 
-  constructor(private router: Router, private store: Store<AppState>) { }
+  constructor(private router: Router, private store: Store<AppState>, private imageService: ImageService) { }
 
   ngOnInit() {
     this.storeSubscription = this.store.select('match')
@@ -33,12 +35,16 @@ export class GameoverComponent implements OnInit, OnDestroy {
         // add fake events to players if empty
         this.matchConfig.players.forEach(player => {
           if(!player.choices || player.choices.length === 0) {
-            player.choices = SortHelper.sortChoices(FakeDataProvider.createChoices(MathHelper.getRandomInt(2, 10)));
+            // player.choices = SortHelper.sortChoices(FakeDataProvider.createRandomChoices(MathHelper.getRandomInt(2, 10)));
+            this._allChoices = this._allChoices.concat(SortHelper.sortChoices(FakeDataProvider.getRealMatch()));
           }
-
-          console.log(player.choices);
+          else {
+            // use real data
+            this._allChoices = this.allChoices.concat(player.choices);
+          }
         });
-
+        
+        console.log(this._allChoices);
         // this.printPlayerActions(this.matchConfig.players);
         // console.log('game over: store update ', this.matchConfig);
 
@@ -83,6 +89,14 @@ export class GameoverComponent implements OnInit, OnDestroy {
       // console.log('intro complete');
       this.router.navigate(['/start']);
     });
+  }
+
+  public get allChoices(): CardSelectedEvent[] {
+    return this._allChoices;
+  }
+
+  public imageUrl(partnerId: number): string {
+    return this.imageService.getUrl(partnerId);
   }
 
   public get winnerPlayer(): Player {

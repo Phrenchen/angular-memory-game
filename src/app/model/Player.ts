@@ -5,8 +5,8 @@ import { MemoryCard } from './MemoryCard';
 import { MatchConfig } from './MatchConfig';
 import { CardSelectedEvent } from './CardSelectedEvent';
 
-export class Player {
-    public id: number;
+export class Player { 
+    public id: number;      // starts with 1
     public static playerCounter = 0;
 
     public name = '';

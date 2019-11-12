@@ -11,25 +11,30 @@
   </ol>
 
   <ol>
-    <li *ngFor="let player of matchConfig.players; index as i;">
-      <ol>
-        <li *ngFor="let cardEvent of player.choices" >
-          <div class="choices-container">
-            <span>At {{cardEvent.occuredAt | date: 'mm.ss.SSS'}}
-            </span>
-  
-            <span *ngIf="cardEvent.isMatch">
-              <span>a matching card was selected</span>
-              <div class="matched-marker"></div>
-            </span>
-  
-            <span *ngIf="cardEvent.isGameOver">
-              <span>::: GAME OVER! ::::</span>
-              <div class="game-over-marker"></div>
-            </span>
-          </div>
-        </li>
-      </ol>
+    <li *ngFor="let cardEvent of allChoices">
+      <div class="choices-container">
+        <span *ngIf=""></span>
+        <span>At {{cardEvent.occuredAt | date: 'mm.ss.SSS'}}
+        </span>
+
+        <span *ngIf="cardEvent.isFirstSelectedCard">
+          <span>first card selected</span>
+          <img class="card-image" [src]="imageUrl(cardEvent.partnerId)" alt="Zelda 1">
+          <!-- <div class="matched-marker"></div> -->
+        </span>
+
+        <span *ngIf="cardEvent.isMatch">
+          <span>a matching card was selected</span>
+          <img class="card-image" [src]="imageUrl(cardEvent.partnerId)" alt="Zelda 1">
+          <img class="card-image" [src]="imageUrl(cardEvent.partnerId)" alt="Zelda 2">
+          <!-- <div class="matched-marker"></div> -->
+        </span>
+
+        <span *ngIf="cardEvent.isGameOver">
+          <span>::: GAME OVER! ::::</span>
+          <div class="game-over-marker"></div>
+        </span>
+      </div>
     </li>
   </ol>
 
