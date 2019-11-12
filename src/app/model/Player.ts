@@ -3,6 +3,7 @@ import { AppState } from '../app.state';
 import { Store } from '@ngrx/store';
 import { MemoryCard } from './MemoryCard';
 import { MatchConfig } from './MatchConfig';
+import { CardSelectedEvent } from './CardSelectedEvent';
 
 export class Player {
     public id: number;
@@ -13,6 +14,8 @@ export class Player {
     public pairsWon = 0;
     public matchActiveTime = 0;
     public avatarUrl = '';
+
+    public choices: CardSelectedEvent[] = [];
 
     constructor() {
         this.id = ++Player.playerCounter;

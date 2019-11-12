@@ -6,12 +6,13 @@ import { GameConsts } from '../model/GameConsts';
 import { MemoryCard, MemoryCardState } from '../model/MemoryCard';
 import { MathHelper } from '../helper/MathHelper';
 import { Player } from '../model/Player';
+import { CardSelectedEvent } from '../model/CardSelectedEvent';
 
 const gridX = 4;
 const gridY = 3;
 
 const initialState: MatchConfig = {
-    
+    matchStartedTime: new Date(),
     gridDimensionX: gridX,
     gridDimensionY: gridY,
     humanPlayerCount: 2,
@@ -41,6 +42,7 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
 
             return {
                 ...state,
+                matchStartedTime: new Date(),
                 activePlayer: 0,
                 cards: resetCards,
                 humanPlayerCount: action.payload,
@@ -61,25 +63,50 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
             const selectedCard: MemoryCard = action.payload;
             const newState2 = { ...state };
             selectedCard.toggleSelected();
+            currentPlayer = GameService.activePlayer(newState2.players, newState2.activePlayer);
 
+            const choice: CardSelectedEvent = {
+                occuredAt: new Date(),
+                selectedCard: selectedCard,
+                isFirstSelectedCard: false,     // override later
+                isSelected: selectedCard.isSelected,
+                isMatch: false,
+                isGameOver: false
+            }
+            const choices: CardSelectedEvent[] = currentPlayer.choices.slice();
+            const lastChoice: CardSelectedEvent = choices.length > 1 ? choices[choices.length - 2] : null;
+            choices.push(choice);
+            currentPlayer.choices = choices;
+
+            
             if (selectedCard.isSelected) {
                 if (!newState2.firstSelectedCard) {
                     newState2.firstSelectedCard = selectedCard;
+                    // compare current card with actor of last action
+                    if(!lastChoice) {           
+                        choice.isFirstSelectedCard = true;  // first choice of the match is always first card :) looks fishy...
+                    }
+                    else {
+                        choice.isFirstSelectedCard = !newState2.firstSelectedCard || newState2.firstSelectedCard.id === selectedCard.id;
+
+                    }
                 }
                 else {
                     // 2 cards selected
                     if (newState2.firstSelectedCard.matches(selectedCard)) {
                         // is a match!
                         console.log('is a match!');
-                        currentPlayer = GameService.activePlayer(newState2.players, newState2.activePlayer);
+                        
                         currentPlayer.pairsWon++;
-
+                        choice.isMatch = true;
                         newState2.firstSelectedCard = null;
 
                         const isGameOver = (newState2.players[0].pairsWon + newState2.players[1].pairsWon) >= newState2.cards.length / 2;
                         if (isGameOver) {
                             currentPlayer.playTime.turnEnd = new Date();
                             newState2.isGameOver = isGameOver;
+                            choice.isGameOver = isGameOver;
+                            // console.log('all choice: ', choices);
                         }
                         else {
                             // continue with same player
@@ -105,6 +132,8 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                 newState2.firstSelectedCard = null;
             }
 
+            // console.log('choice: ', choice);
+            // console.log('choices: ', choices.length);
             return newState2;
         default:
             // console.log(state, action);

@@ -8,7 +8,7 @@ export enum MemoryCardState {
 
 export class MemoryCard {
     private static cardCounter = 0;
-    private id: number;
+    public id: number;
 
     private colors: Map<MemoryCardState, string> = new Map<MemoryCardState, string>();
 
