@@ -8,11 +8,12 @@ import { MathHelper } from '../helper/MathHelper';
 import { Player } from '../model/Player';
 import { CardSelectedEvent } from '../model/CardSelectedEvent';
 
-const gridX = 4;
-const gridY = 3;
+const gridX = 2;
+const gridY = 2;
 
 const initialState: MatchConfig = {
-    matchStartedTime: new Date(),
+    matchStartTime: new Date(),
+    matchEndTime: new Date(new Date().getTime() + 60000),
     gridDimensionX: gridX,
     gridDimensionY: gridY,
     humanPlayerCount: 2,
@@ -109,6 +110,7 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                             currentPlayer.playTime.turnEnd = new Date();
                             newState2.isGameOver = isGameOver;
                             choice.isGameOver = isGameOver;
+                            newState2.matchEndTime = new Date();
                             // console.log('all choice: ', choices);
                         }
                         else {

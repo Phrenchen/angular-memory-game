@@ -12,47 +12,99 @@ ol li:first-child {
     justify-content: center;
     align-items: center;
 
-
-    .choices-container {
-        // display: flex;
-        // flex-direction: column;
-        // justify-content: center;
-        // align-items: center;
-        // min-width: 30vw;
-
-        margin: 20px;
+    // position: fixed;
+    // top: 0;
+    // left: 0;
 
 
-        .matched-marker {
-            // border: 2px solid red;
-            display: inline-block;
-            border-radius: 50%;
-            background-color: var(--main-secondary-color);
-            
-            width: 10px;
-            height: 10px;
-
-            margin: 0 20px 0 5px;
-        }
+    .timeline {
         
+        .event-container {
+            //  border: 1px solid lightpink;
+            width: min-content;
+            // margin: 15px;
+        }
+
+        .player-1 {
+            border: 3px solid blue;
+        }
+
+        .player-2 {
+            border: 3px solid red;
+        }
+
         .game-over-marker {
-            // border: 2px solid red;
             display: inline-block;
             border-radius: 50%;
             background-color: var(--main-primary-color);
-            
             width: 10px;
             height: 10px;
-            
             margin: 0 20px 0 5px;
         }
 
-        img {
-            max-width: 20px;
-            max-height: 20px;
-            border-radius: 50%;
+
+
+        .state {
+            // position: absolute;
+            // left: 0;    // set by script along the time line
+            // top: 0;     // set by script along the time line
+
+            img {
+                max-width: 70px;
+                max-height: 70px;
+            }
+        }
+
+
+        .line {
+            width: 60vw;
+            max-width: 600px;
+            
+            height: 1px;
+    
+            background-color: #000;
+    
+            // margin: 10px;
         }
     }
+
+
+    // .full-choices-list-verbose {
+        .choice-verbose {
+            margin: 20px;
+    
+            max-height: 100px;
+            overflow-y: auto;
+    
+    
+            // deprecated 
+            .matched-marker {
+                display: inline-block;
+                border-radius: 50%;
+                background-color: var(--main-secondary-color);
+                width: 10px;
+                height: 10px;
+                margin: 0 20px 0 5px;
+            }
+            
+            .game-over-marker {
+                display: inline-block;
+                border-radius: 50%;
+                background-color: var(--main-primary-color);
+                width: 10px;
+                height: 10px;
+                margin: 0 20px 0 5px;
+            }
+            // deprecated end
+    
+            img {
+                max-width: 20px;
+                max-height: 20px;
+                border-radius: 50%;
+            }
+        }
+    // }
+
     
     p {
         padding: 0;

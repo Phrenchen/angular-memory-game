@@ -37,6 +37,8 @@ export class TimeHelper {
         return dateStr;
     }
 
+    
+
     private static addLeadingZero(value: number): string {
         let result = value.toString();
         if(value < 10) {

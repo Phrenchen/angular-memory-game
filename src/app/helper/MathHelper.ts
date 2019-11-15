@@ -24,6 +24,16 @@ export class MathHelper {
         return candidate;
     }
 
+    /**
+     * calculates the distance travelled from 0 to total.
+     * clamped to: 0 - 100
+     * @param position 
+     * @param total 
+     */
+    public static distanceTravelledPercent(position: number, total: number): number {
+        return (position / total * 100);
+    }
+
     public static shuffleArray(array: any[]): any[] {
         const shuffleCount = 20;
 
