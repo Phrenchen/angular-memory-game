@@ -1,42 +1,24 @@
 <div id="game-over-container" *ngIf="matchConfig">
+  
   <h2>Game over!</h2>
+  
   <ol>
     <li *ngFor="let player of matchConfig.players;">
       <p>
         {{player.name}} has won with {{player.pairsWon}} pairs in {{player.totalTime()}} seconds!
       </p>
-
-
     </li>
   </ol>
 
-  <div class="timeline">
-    <!-- 
-      1. draw a dot for each choice
-      2. position above or below the actual time-line depending on player
-    -->
-    <!-- <div *ngFor="let cardEvent of allChoices">
-    </div> -->
-    
-    <div class="line" id="the-time-line"></div>
 
-    <div *ngFor="let cardEvent of allChoices; let i = index;" class="event-container" [id]="'event-' + i">
-        <span *ngIf="showCardEvent(cardEvent)" class="state " [ngClass]="{'player-1': cardEvent.actorId === 1, 'player-2': cardEvent.actorId === 2}">
-          <img *ngIf="hasImage(cardEvent.partnerId)" [src]="imageUrl(cardEvent.partnerId)" class="card-image" alt="Zelda 1">
-        </span>
-        <div *ngIf="cardEvent.isGameOver" class="game-over-marker"></div>
-      <!-- </div> -->
-    </div>
-    
-    
+  <app-time-line [matchConfig]="matchConfig"></app-time-line>
 
-  </div>
 
   <ol *ngIf="false" class="full-choices-list-verbose">
     <li *ngFor="let cardEvent of allChoices">
 
       <div class="choice-verbose">
-        
+
         <span>At {{cardEvent.occuredAt | date: 'mm.ss.SSS'}}
         </span>
 

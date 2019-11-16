@@ -27,6 +27,7 @@ import { TutGameRulesComponent } from './tutorial/tut-game-rules/tut-game-rules.
 import { MemoryCardComponent } from './components/ingame/memory-card/memory-card.component';
 import { AnimatedBackgroundComponent } from './components/animated-background/animated-background.component';
 import { CardSelectionComponent } from './components/card-selection/card-selection.component';
+import { TimeLineComponent } from './components/time-line/time-line.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { CardSelectionComponent } from './components/card-selection/card-selecti
     TutGameRulesComponent,
     MemoryCardComponent,
     AnimatedBackgroundComponent,
-    CardSelectionComponent
+    CardSelectionComponent,
+    TimeLineComponent
   ],
   imports: [
     BrowserModule,

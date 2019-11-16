@@ -28,13 +28,25 @@ export class CSSHelper {
             console.log('ERROR: Missing Element? calculating fixed position: no element ');
             return position;
         }
+
+
+
+
+
         const bodyRect: ClientRect = document.body.getBoundingClientRect();
         const coords: ClientRect = element.getBoundingClientRect();
+
+        position.top = coords.top;  // implicit cast to custom 'Rectangle' class
+        position.left = coords.left;  // implicit cast to custom 'Rectangle' class
+        position.bottom = coords.bottom;  // implicit cast to custom 'Rectangle' class
+        position.right = coords.right;  // implicit cast to custom 'Rectangle' class
+
+
         // console.log('1 position: ', position);
-        position.top = coords.top - bodyRect.top;  // implicit cast to custom 'Rectangle' class
-        position.left = coords.left - bodyRect.left;  // implicit cast to custom 'Rectangle' class
-        position.bottom = coords.bottom - bodyRect.bottom;  // implicit cast to custom 'Rectangle' class
-        position.right = coords.right - bodyRect.right;  // implicit cast to custom 'Rectangle' class
+        // position.top = coords.top - bodyRect.top;  // implicit cast to custom 'Rectangle' class
+        // position.left = coords.left - bodyRect.left;  // implicit cast to custom 'Rectangle' class
+        // position.bottom = coords.bottom - bodyRect.bottom;  // implicit cast to custom 'Rectangle' class
+        // position.right = coords.right - bodyRect.right;  // implicit cast to custom 'Rectangle' class
         // console.log('2 position: ', position);
 
         return position;

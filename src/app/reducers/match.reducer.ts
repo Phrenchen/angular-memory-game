@@ -13,7 +13,7 @@ const gridY = 2;
 
 const initialState: MatchConfig = {
     matchStartTime: new Date(),
-    matchEndTime: new Date(new Date().getTime() + 60000),
+    matchEndTime: new Date(new Date().getTime() + GameConsts.DEFAULT_MATCH_DURATION_MS),
     gridDimensionX: gridX,
     gridDimensionY: gridY,
     humanPlayerCount: 2,
