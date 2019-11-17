@@ -142,9 +142,9 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
     let timePassed: number;
     let percentTimePassed: number;
     // const t0: Date = new Date(0);
-    const matchStartTime: number = this.matchStartTime; // 0% match time
+    let matchStartTime: number = this.matchStartTime; // 0% match time
     const matchEndTime: number = this.matchEndTime;     // 100% match time
-    const matchDuration = matchEndTime - matchStartTime;
+    let matchDuration = matchEndTime - matchStartTime;
     let lineMargin = 20;
 
     // console.log('**********************************');
@@ -160,13 +160,28 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
 
     let htmlElement: HTMLElement;
     let elementWidthStr: string;
+    let delayMatchStartFirstAction: number;
 
     // for each event element:
     eventMarkerPlayer.forEach((element, index) => {
       htmlElement = element as HTMLElement;
       cardEvent = cardEvents[index];
+
+      // first element
+      if(index === 0) {
+        const firstEventTime = cardEvent.occuredAt.getTime();
+        
+        delayMatchStartFirstAction = firstEventTime - matchStartTime;
+        
+        // remove initial delay between match start and first event
+        matchDuration -= delayMatchStartFirstAction;
+        
+        matchStartTime = firstEventTime;
+      }
+
       eventTime = cardEvent.occuredAt.getTime();
       timePassed = eventTime - matchStartTime;
+      // timePassed = eventTime - (matchStartTime + delayMatchStartFirstAction);
       percentTimePassed = MathHelper.distanceTravelledPercent(timePassed, matchDuration);
       elementWidth = htmlElement.getBoundingClientRect().width;
       elementHeight = htmlElement.getBoundingClientRect().height;
@@ -185,7 +200,8 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
       // console.log('lineWidth: ', lineWidth);
       // console.log('endX: ', endX);
       // console.log('timePassed: ', timePassed);
-      // console.log('percent time passed: ', percentTimePassed);
+      console.log('percent time passed: ', percentTimePassed);
+      console.log('match duration: ', matchDuration);
       // console.log('wayTravelled: ', wayTravelled);
 
 
