@@ -14,12 +14,19 @@ import { ImageService } from 'src/app/services/image.service';
   styleUrls: ['./time-line.component.scss']
 })
 export class TimeLineComponent implements OnInit, AfterViewInit {
-
   @Input() matchConfig: MatchConfig;
+
+  public uniqueId: string = 'unique_id_';
+  private static timeLineCounter = 0;
+  private id: number;
 
   private _allChoices: CardSelectedEvent[] = [];
 
-  constructor(private imageService: ImageService) { }
+
+  constructor(private imageService: ImageService) { 
+    this.id = TimeLineComponent.timeLineCounter++;
+    this.uniqueId += this.id + '_';
+  }
 
   ngOnInit() {
   }
@@ -38,7 +45,6 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
   private async setupEvents() {
     await setTimeout(() => {
       this._allChoices = this.prepareChoices(this.matchConfig);
-      console.log('*** this._allChoices.  ', this._allChoices.length);
     }, 0);
 
     await setTimeout(() => {
@@ -59,12 +65,9 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
 
     if (choices.length === 0) {
       console.log('using static event data');
-      // choices = this._allChoices.concat(SortHelper.sortChoices(FakeDataProvider.getRealMatch()));
       choices = choices.concat(SortHelper.sortChoices(FakeDataProvider.createRandomChoices()));
     }
 
-    console.log(choices);
-    // console.log(JSON.stringify(this._allChoices));
     return choices;
   }
   // LIFE CYCLE end
@@ -90,14 +93,14 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
    * @param cardEvents 
    */
   private positionEvents(cardEvents: CardSelectedEvent[]): void {
-    const eventMarkerPlayer = document.querySelectorAll('.event-container');
-    console.log('event elements: ', eventMarkerPlayer.length);
+    const eventMarkerPlayer = document.querySelectorAll('.' + this.uniqueId);
+    // console.log('event elements: ', eventMarkerPlayer.length);
 
     if (eventMarkerPlayer.length === 0) {
       console.log('WARNING: no events for time line!');
     }
 
-    const line: HTMLElement = document.querySelector('#the-time-line') as HTMLElement;
+    const line: HTMLElement = document.querySelector('#the-time-line-' + this.uniqueId) as HTMLElement;
 
     if (!line) {
       console.log('ERROR: need #the-time-line to position event elements');
@@ -144,16 +147,16 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
     const matchDuration = matchEndTime - matchStartTime;
     let lineMargin = 20;
 
-    console.log('**********************************');
-    console.log('last event:', lastEvent);
-    console.log('line position testing CSSHelper.getFixedPositionOf(line):', linePositionTest);
-    console.log('lineWidth: ', lineWidth);
-    console.log('match duration: ', matchDuration);
+    // console.log('**********************************');
+    // console.log('last event:', lastEvent);
+    // console.log('line position testing CSSHelper.getFixedPositionOf(line):', linePositionTest);
+    // console.log('lineWidth: ', lineWidth);
+    // console.log('match duration: ', matchDuration);
     // console.log('matchStartTime: ', matchStartTime);
     // console.log('matchStart date: ', new Date(matchStartTime));
     // console.log('matchEndTime: ', matchEndTime);
     // console.log('matchEnd date: ', new Date(matchEndTime));
-    console.log('------');
+    // console.log('------');
 
     let htmlElement: HTMLElement;
     let elementWidthStr: string;
@@ -169,19 +172,21 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
       elementHeight = htmlElement.getBoundingClientRect().height;
       wayTravelled = lineWidth * (percentTimePassed / 100);
 
-      elementWidth = cardEvent.isGameOver ? 50 : 30;
-      elementHeight = cardEvent.isGameOver ? 50 : 30;
+      elementWidth = 30;
+      elementHeight = 30;
+      // elementWidth = cardEvent.isGameOver ? 50 : 30;
+      // elementHeight = cardEvent.isGameOver ? 50 : 30;
       lineMargin = 0;
 
-      console.log('startX: ', startX);
-      console.log('startY: ', startY);
-      console.log('elementWidth: ', elementWidth);
-      console.log('elementHeight: ', elementHeight);
-      console.log('lineWidth: ', lineWidth);
-      console.log('endX: ', endX);
-      console.log('timePassed: ', timePassed);
-      console.log('percent time passed: ', percentTimePassed);
-      console.log('wayTravelled: ', wayTravelled);
+      // console.log('startX: ', startX);
+      // console.log('startY: ', startY);
+      // console.log('elementWidth: ', elementWidth);
+      // console.log('elementHeight: ', elementHeight);
+      // console.log('lineWidth: ', lineWidth);
+      // console.log('endX: ', endX);
+      // console.log('timePassed: ', timePassed);
+      // console.log('percent time passed: ', percentTimePassed);
+      // console.log('wayTravelled: ', wayTravelled);
 
 
       posX = startX + wayTravelled - elementWidth * .5;
@@ -192,23 +197,29 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
       posY = startY;
       posY -= elementHeight * .5;
 
-      console.log('posX: ', posX);
-      
+      // console.log('posX: ', posX);
+
       // write CSS
-      
-      
-      htmlElement.style.width = elementWidth.toString();
-      htmlElement.style.height = elementHeight.toString();
+
+      // let scale = cardEvent.isGameOver ? '2' : '1';
+      // htmlElement.style.transform = 'scale(' + scale + ', ' + scale + ')';
+
+      if (cardEvent.isGameOver) {
+        htmlElement.style.border = '3px solid red';
+        htmlElement.style.borderRadius = '50%';
+      }
+
+
       htmlElement.style.position = 'fixed';
       // htmlElement.style.position = 'relative';
       htmlElement.style.left = posX + 'px';
       htmlElement.style.top = posY + 'px';
       htmlElement.style.zIndex = (index + 1).toString();
 
-      console.log('cardEvent.isGameOver: ', cardEvent.isGameOver);
-      console.log(linePosition);
-      console.log(element);
-      console.log('**********************');
+      // console.log('cardEvent.isGameOver: ', cardEvent.isGameOver);
+      // console.log(linePosition);
+      // console.log(element);
+      // console.log('**********************');
     });
 
   }
