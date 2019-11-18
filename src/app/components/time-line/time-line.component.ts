@@ -45,6 +45,11 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
   private async setupEvents() {
     await setTimeout(() => {
       this._allChoices = this.prepareChoices(this.matchConfig);
+
+      // assuming there is always an event with game over is set
+      this.matchConfig.matchEndTime = this._allChoices.find(choice => {
+        return choice.isGameOver;
+      }).occuredAt;
     }, 0);
 
     await setTimeout(() => {
@@ -65,9 +70,11 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
 
     if (choices.length === 0) {
       console.log('using static event data');
-      choices = choices.concat(SortHelper.sortChoices(FakeDataProvider.createRandomChoices()));
+      choices = FakeDataProvider.createRandomChoices();
     }
+    choices = SortHelper.sortChoices(choices);
 
+    console.log('choices: ', choices);
     return choices;
   }
   // LIFE CYCLE end
@@ -134,9 +141,9 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
     let elementHeight: number;
     let elementWidth: number;
 
-    const lastEvent: CardSelectedEvent = cardEvents.find(event => {
-      return event.isGameOver;
-    });
+    // const lastEvent: CardSelectedEvent = cardEvents.find(event => {
+    //   return event.isGameOver;
+    // });
 
     let eventTime: number;
     let timePassed: number;
@@ -151,7 +158,8 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
     // console.log('last event:', lastEvent);
     // console.log('line position testing CSSHelper.getFixedPositionOf(line):', linePositionTest);
     // console.log('lineWidth: ', lineWidth);
-    // console.log('match duration: ', matchDuration);
+    console.log('matchStartTime: ', matchStartTime);
+    console.log('total match duration: ', matchDuration);
     // console.log('matchStartTime: ', matchStartTime);
     // console.log('matchStart date: ', new Date(matchStartTime));
     // console.log('matchEndTime: ', matchEndTime);
@@ -160,7 +168,6 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
 
     let htmlElement: HTMLElement;
     let elementWidthStr: string;
-    let delayMatchStartFirstAction: number;
 
     // for each event element:
     eventMarkerPlayer.forEach((element, index) => {
@@ -169,40 +176,33 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
 
       // first element
       if(index === 0) {
-        const firstEventTime = cardEvent.occuredAt.getTime();
-        
-        delayMatchStartFirstAction = firstEventTime - matchStartTime;
-        
         // remove initial delay between match start and first event
-        matchDuration -= delayMatchStartFirstAction;
+        const firstEventTime = cardEvent.occuredAt.getTime();
+        // console.log('before matchStartTime: ', matchStartTime);
         
-        matchStartTime = firstEventTime;
+        // matchStartTime = firstEventTime;
+        
       }
-
+      
       eventTime = cardEvent.occuredAt.getTime();
       timePassed = eventTime - matchStartTime;
-      // timePassed = eventTime - (matchStartTime + delayMatchStartFirstAction);
       percentTimePassed = MathHelper.distanceTravelledPercent(timePassed, matchDuration);
       elementWidth = htmlElement.getBoundingClientRect().width;
       elementHeight = htmlElement.getBoundingClientRect().height;
       wayTravelled = lineWidth * (percentTimePassed / 100);
-
+      
       elementWidth = 30;
       elementHeight = 30;
-      // elementWidth = cardEvent.isGameOver ? 50 : 30;
-      // elementHeight = cardEvent.isGameOver ? 50 : 30;
       lineMargin = 0;
+      
+      console.log('matchStartTime: ', matchStartTime);
+      
+      console.log('eventTime: ', eventTime);
+      console.log('timePassed: ', (eventTime - matchStartTime));
+      console.log('eventTime: ', eventTime);
 
-      // console.log('startX: ', startX);
-      // console.log('startY: ', startY);
-      // console.log('elementWidth: ', elementWidth);
-      // console.log('elementHeight: ', elementHeight);
-      // console.log('lineWidth: ', lineWidth);
-      // console.log('endX: ', endX);
-      // console.log('timePassed: ', timePassed);
       console.log('percent time passed: ', percentTimePassed);
       console.log('match duration: ', matchDuration);
-      // console.log('wayTravelled: ', wayTravelled);
 
 
       posX = startX + wayTravelled - elementWidth * .5;
@@ -213,18 +213,11 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
       posY = startY;
       posY -= elementHeight * .5;
 
-      // console.log('posX: ', posX);
-
       // write CSS
-
-      // let scale = cardEvent.isGameOver ? '2' : '1';
-      // htmlElement.style.transform = 'scale(' + scale + ', ' + scale + ')';
-
       if (cardEvent.isGameOver) {
         htmlElement.style.border = '3px solid red';
         htmlElement.style.borderRadius = '50%';
       }
-
 
       htmlElement.style.position = 'fixed';
       // htmlElement.style.position = 'relative';

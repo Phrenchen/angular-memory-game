@@ -8,8 +8,8 @@ import { MathHelper } from '../helper/MathHelper';
 import { Player } from '../model/Player';
 import { CardSelectedEvent } from '../model/CardSelectedEvent';
 
-const gridX = 2;
-const gridY = 2;
+const gridX = 3;
+const gridY = 4;
 
 const initialState: MatchConfig = {
     matchStartTime: new Date(),
@@ -32,7 +32,7 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
 
     switch (action.type) {
         case MatchActions.SET_PLAYER_COUNT:
-            return {...state, humanPlayerCount: action.payload};
+            return { ...state, humanPlayerCount: action.payload };
         case MatchActions.CREATE_MATCH:
             let resetCards: MemoryCard[] = state.cards.slice();
             resetCards.forEach(card => {
@@ -76,18 +76,23 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                 isGameOver: false
 
             };
-            
+
             const choices: CardSelectedEvent[] = currentPlayer.choices.slice();
             const lastChoice: CardSelectedEvent = choices.length > 1 ? choices[choices.length - 2] : null;
-            choices.push(choice);
             currentPlayer.choices = choices;
-
+            console.log(currentPlayer.id + ' has made: ', choices.length + ' choices');
             
+            // total event count === 0 => first event => set match start time // TODO: rethink this. overwrite start time? is set in CREATE_MATCH
+            if (!GameService.hasEvents(newState2)) {
+                newState2.matchStartTime = new Date();
+            }
+
+
             if (selectedCard.isSelected) {
                 if (!newState2.firstSelectedCard) {
                     newState2.firstSelectedCard = selectedCard;
                     // compare current card with actor of last action
-                    if(!lastChoice) {           
+                    if (!lastChoice) {
                         choice.isFirstSelectedCard = true;  // first choice of the match is always first card :) looks fishy...
                     }
                     else {
@@ -100,12 +105,14 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                     if (newState2.firstSelectedCard.matches(selectedCard)) {
                         // is a match!
                         console.log('is a match!');
-                        
+
                         currentPlayer.pairsWon++;
                         choice.isMatch = true;
                         newState2.firstSelectedCard = null;
 
                         const isGameOver = (newState2.players[0].pairsWon + newState2.players[1].pairsWon) >= newState2.cards.length / 2;
+                        
+                        // GAME OVER!
                         if (isGameOver) {
                             currentPlayer.playTime.turnEnd = new Date();
                             newState2.isGameOver = isGameOver;
@@ -121,6 +128,9 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                     else {
                         // no match :(
                         console.log('no match :(');
+
+                        // TODO: add delay between player switch to be able to view the result of the second card.
+
                         newState2.firstSelectedCard.state = MemoryCardState.COVERED;
                         selectedCard.state = MemoryCardState.COVERED;
 
@@ -137,8 +147,8 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                 newState2.firstSelectedCard = null;
             }
 
-            // console.log('choice: ', choice);
-            // console.log('choices: ', choices.length);
+            console.log('choice: ', choice);
+
             return newState2;
         default:
             // console.log(state, action);

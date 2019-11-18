@@ -3,11 +3,28 @@ import { MemoryCard, MemoryCardState } from '../model/MemoryCard';
 import { MathHelper } from '../helper/MathHelper';
 import { Player } from '../model/Player';
 import { AiPlayer } from '../model/AiPlayer';
+import { MatchConfig } from '../model/MatchConfig';
 
 // Static service class / helper
 export class GameService {
-
   constructor() { }
+
+
+
+  public static hasEvents(matchConfig: MatchConfig): boolean {
+    return GameService.totalEventCount(matchConfig) > 0;
+  }
+
+  public static totalEventCount(matchConfig: MatchConfig): number {
+    let eventCount = 0;
+
+    matchConfig.players.forEach(player => {
+      eventCount += player.choices.length;
+    });
+    
+    return eventCount;
+  }
+
 
   public static getCoveredCardIds(cards: MemoryCard[]): number[] {
     const cardIds: number[] = [];
