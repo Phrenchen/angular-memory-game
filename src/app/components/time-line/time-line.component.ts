@@ -72,6 +72,9 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
       console.log('using static event data');
       choices = FakeDataProvider.createRandomChoices();
     }
+    else {
+      console.log('using game event data');
+    }
     choices = SortHelper.sortChoices(choices);
 
     console.log('choices: ', choices);
