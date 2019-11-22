@@ -15,7 +15,7 @@ export class AnimationHelper {
     }
 
     public static get enableBackgroundAnimations() {
-        return false;
+        return true;
     }
 
     public static get enableAnimations(): boolean {

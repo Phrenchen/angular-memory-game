@@ -39,10 +39,10 @@ export class AnimatedBackgroundComponent implements OnInit {
     let bottom = CSSHelper.stageCenterY() + rangeY;
 
     // size
-    let minWidth = 100;
-    let maxWidth = 800;
+    let minWidth = 50;
+    let maxWidth = 300;
     let minHeight = 100;
-    let maxHeight = 600;
+    let maxHeight = 400;
     let svgWidth: number;
     let svgHeight: number;
     const backgroundContainer: HTMLElement = document.getElementById('animated-background-container');
