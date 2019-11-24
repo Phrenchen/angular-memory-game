@@ -26,7 +26,10 @@ export class AppComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.inputService.addInput('control', (isKeyDown: boolean) => {
+    // const key = 'control';
+    const key = 'b';
+
+    this.inputService.addInput(key, (isKeyDown: boolean) => {
       console.log('input service updating...', isKeyDown);
       if(isKeyDown) {
         this.isCtrlKeyDown = !this.isCtrlKeyDown;

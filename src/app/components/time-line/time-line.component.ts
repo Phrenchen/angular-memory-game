@@ -87,7 +87,8 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
   }
 
   public showCardEvent(cardEvent: CardSelectedEvent) {
-    return cardEvent.isMatch;
+    return true;
+    // return cardEvent.isMatch;
   }
 
   public imageUrl(partnerId: number): string {
@@ -122,52 +123,28 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
 
     let linePosition: Rectangle = CSSHelper.convertToRectangle(line.getBoundingClientRect());
     let startX: number = Math.round(linePosition.left - bodyRect.left);
-    // let startX: number = Math.round(linePosition.left);
     let startY: number = Math.round(linePosition.top - bodyRect.top);
-    // let startY: number = Math.round(linePosition.top);
 
-    // startX = 0;
-    // startY = 0;
 
     linePosition = linePositionTest;    // test line position
 
     const endX = linePosition.right;
-    // const endY = linePosition.top;
 
     const lineWidth: number = endX - startX;
-    // const eventYplayer1 = startY;// - 50;  // aligning all events of player 1 ABOVE the line
-    // const eventYplayer2 = startY;// + 50;  // aligning all events of player 2 BELOW the line
     let cardEvent: CardSelectedEvent;
     let posY: number;
     let posX: number;
     let wayTravelled: number;
     let elementHeight: number;
     let elementWidth: number;
-
-    // const lastEvent: CardSelectedEvent = cardEvents.find(event => {
-    //   return event.isGameOver;
-    // });
-
     let eventTime: number;
     let timePassed: number;
     let percentTimePassed: number;
-    // const t0: Date = new Date(0);
     let matchStartTime: number = this.matchStartTime; // 0% match time
     const matchEndTime: number = this.matchEndTime;     // 100% match time
     let matchDuration = matchEndTime - matchStartTime;
     let lineMargin = 20;
 
-    // console.log('**********************************');
-    // console.log('last event:', lastEvent);
-    // console.log('line position testing CSSHelper.getFixedPositionOf(line):', linePositionTest);
-    // console.log('lineWidth: ', lineWidth);
-    console.log('matchStartTime: ', matchStartTime);
-    console.log('total match duration: ', matchDuration);
-    // console.log('matchStartTime: ', matchStartTime);
-    // console.log('matchStart date: ', new Date(matchStartTime));
-    // console.log('matchEndTime: ', matchEndTime);
-    // console.log('matchEnd date: ', new Date(matchEndTime));
-    // console.log('------');
 
     let htmlElement: HTMLElement;
     let elementWidthStr: string;
@@ -177,16 +154,6 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
       htmlElement = element as HTMLElement;
       cardEvent = cardEvents[index];
 
-      // first element
-      if(index === 0) {
-        // remove initial delay between match start and first event
-        const firstEventTime = cardEvent.occuredAt.getTime();
-        // console.log('before matchStartTime: ', matchStartTime);
-        
-        // matchStartTime = firstEventTime;
-        
-      }
-      
       eventTime = cardEvent.occuredAt.getTime();
       timePassed = eventTime - matchStartTime;
       percentTimePassed = MathHelper.distanceTravelledPercent(timePassed, matchDuration);
@@ -198,15 +165,6 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
       elementHeight = 30;
       lineMargin = 0;
       
-      console.log('matchStartTime: ', matchStartTime);
-      
-      console.log('eventTime: ', eventTime);
-      console.log('timePassed: ', (eventTime - matchStartTime));
-      console.log('eventTime: ', eventTime);
-
-      console.log('percent time passed: ', percentTimePassed);
-      console.log('match duration: ', matchDuration);
-
 
       posX = startX + wayTravelled - elementWidth * .5;
       posY = cardEvent.actorId === 1 ?
@@ -223,15 +181,9 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
       }
 
       htmlElement.style.position = 'fixed';
-      // htmlElement.style.position = 'relative';
       htmlElement.style.left = posX + 'px';
       htmlElement.style.top = posY + 'px';
       htmlElement.style.zIndex = (index + 1).toString();
-
-      // console.log('cardEvent.isGameOver: ', cardEvent.isGameOver);
-      // console.log(linePosition);
-      // console.log(element);
-      // console.log('**********************');
     });
 
   }
@@ -243,6 +195,4 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
   private get matchEndTime(): number {
     return this.matchConfig.matchEndTime.getTime();
   }
-
-
 }

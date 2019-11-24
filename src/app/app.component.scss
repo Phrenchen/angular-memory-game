@@ -10,8 +10,24 @@
     width: 100vw;
     height: 100vh;
     
-    // background: var(--main-background-color);
-    // border: 1px solid black;
+}
+
+.background-image-container {
+    background: url('./../assets/silhouette-cat.jpg') no-repeat top right fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    width: 100vw;
+    height: 100vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    filter: blur(2px) grayscale(80%);
 }
 
 .content-wrapper {

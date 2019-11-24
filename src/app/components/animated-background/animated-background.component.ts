@@ -39,10 +39,10 @@ export class AnimatedBackgroundComponent implements OnInit {
     let bottom = CSSHelper.stageCenterY() + rangeY;
 
     // size
-    let minWidth = 50;
-    let maxWidth = 300;
-    let minHeight = 100;
-    let maxHeight = 400;
+    let minWidth = 150;
+    let maxWidth = 500;
+    let minHeight = 150;
+    let maxHeight = 700;
     let svgWidth: number;
     let svgHeight: number;
     const backgroundContainer: HTMLElement = document.getElementById('animated-background-container');
@@ -57,6 +57,7 @@ export class AnimatedBackgroundComponent implements OnInit {
 
       svg.style.left = MathHelper.getRandomInt(left, right) - svgWidth * .5 + 'px';
       svg.style.top = MathHelper.getRandomInt(top, bottom) - svgHeight * .5 + 'px';
+      // svg.style.zIndex = '1000';
 
       this.fancySVGs.push(svg);
       backgroundContainer.appendChild(svg);
