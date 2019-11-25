@@ -1,77 +1,48 @@
 @import url('./../../../../variables.css');
 
 
+.full-height-card {
+    // height: 100%;
+}
+
+.disabled-card {
+    border: 3px solid red;
+    // pointer-events: none;
+}
 
 .card-container {
     // border: 3px dashed pink;
-    
+    border: 1px solid rgba(255, 255, 255, 0.8);
 
-    display: flex;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
 
-    width: var(--card-width);
-    height: var(--card-height);
-    max-width: 150px;
-    max-height: 150px;
+    height: 100%;
 
     opacity: 1;
 
-    // full board spans full screen
-    // 
-    // width: calc(100% / var(--board-column-count) * 100);
-    // height: calc(100% / var(--board-row-count) * 100);
-    // height: 50px;
-
-    // width: 150px;
-    // height: 150px;
-    // width: 100%;
-    // height: 100%;
-    // min-width: 100px;
-    // min-height: 50px;
-    // background: transparent;
-
-    pointer-events: none;
-
     color: var(--main-text-color-dark);
-    // background-color: var(--main-primary-color);
     cursor: pointer;
 
-    // text-align: center;
-
-    .card-front {
-        // border: 1px solid pink;
-
-        // width: 150px;
-        height: 100%;
-
-        background-color: var(--main-background-color);
-    }
 
     .card-back {
-        // border: 1px solid pink;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-        // width: 150px;
         width: 100%;
-        // height: 100%;
         height: 100%;
-        // min-width: 100px;
-        // height: 150px;
-        // border-radius: 50%;
+        border-color: 1px solid blue;
         
-        background-color: var(--main-background-color);
+        background-color: rgba(255, 255, 255, 0.5);
+        // background-color: var(--main-background-color);
     }
 
     img {
-        // width: 100%;
-        // height: 100%;
-        max-width: 100%;
-        max-height: 100%;
-        // object-fit: contain;
+        // max-width: 100%;
+        // max-height: 100%;
         object-fit: cover;
-        // border-radius: 50%;
-        // border: 1px solid var(--main-border-color);
     }
-
-
-
 
 }

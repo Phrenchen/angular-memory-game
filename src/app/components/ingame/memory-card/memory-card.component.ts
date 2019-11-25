@@ -22,8 +22,9 @@ export class MemoryCardComponent implements OnInit {
   }
   
   public get displayFront(): boolean {
-    return true;
-    // return this.card.state === MemoryCardState.OPEN;
+    // return true;
+    return this.card.state === MemoryCardState.OPEN ||
+      this.card.state === MemoryCardState.REMOVED;
   }
 
 

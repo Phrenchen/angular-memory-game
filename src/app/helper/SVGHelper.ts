@@ -93,7 +93,7 @@ export class SVGHelper {
     
         const path = document.createElementNS(xmlns, "path");
         path.setAttributeNS(null, 'stroke', "#000000");
-        path.setAttributeNS(null, 'stroke-width', "3");
+        path.setAttributeNS(null, 'stroke-width', "0");
         path.setAttributeNS(null, 'stroke-linejoin', "round");
         path.setAttributeNS(null, 'd', coords);
         path.setAttributeNS(null, 'fill', "url(#gradient)");

@@ -21,11 +21,11 @@ export class HumanPlayer extends Player {
     }
 
     public play(store: Store<AppState>, matchConfig: MatchConfig): void {
-        console.log('play human turn');
+        // console.log('play human turn');
         super.play(store, matchConfig);
     }
 
     public stop(): void {
-        console.log('stopping human turn');
+        // console.log('stopping human turn');
     }
 }

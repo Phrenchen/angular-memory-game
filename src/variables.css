@@ -2,8 +2,8 @@
     --main-background-color: #cc7e3e;
     --main-border-color: #3fdb31;
     
-    --main-primary-color: #daa519;
-    --main-secondary-color: #ba650a;
+    --main-primary-color: rgba(138, 138, 138, 0.5);
+    --main-secondary-color: rgba(34, 34, 34, 0.5);
     
     --main-text-color: #ffffff;
     --main-text-color-dark: #000000;

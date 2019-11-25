@@ -4,6 +4,11 @@
 
 
 
+.padded-oval-background {
+    padding: 4  0px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+}
 
 
 body {
@@ -19,3 +24,7 @@ body {
 
     // color: var(--main-text-color);
 } 
+
+img {
+    filter: grayscale(100%);
+}

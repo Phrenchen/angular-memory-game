@@ -1,14 +1,15 @@
 <div id="game-over-container" *ngIf="matchConfig">
   
-  <h2>Game over!</h2>
-  
-  <ol>
-    <li *ngFor="let player of matchConfig.players;">
-      <p>
-        {{player.name}} has won with {{player.pairsWon}} pairs in {{player.totalTime()}} seconds!
-      </p>
-    </li>
-  </ol>
+  <div>
+    <h2>Game over!</h2>
+    <ol>
+      <li *ngFor="let player of matchConfig.players;">
+        <p>
+          {{player.name}} has won with {{player.pairsWon}} pairs in {{player.totalTime()}} seconds!
+        </p>
+      </li>
+    </ol>
+  </div>
 
 
   <app-time-line [matchConfig]="matchConfig"></app-time-line>

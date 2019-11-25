@@ -7,6 +7,7 @@ import { CSSHelper } from 'src/app/helper/CSSHelper';
 import { SortHelper } from 'src/app/helper/model/SortHelper';
 import { FakeDataProvider } from 'src/app/helper/model/FakeDataProvider';
 import { ImageService } from 'src/app/services/image.service';
+import { GameConsts } from 'src/app/model/GameConsts';
 
 @Component({
   selector: 'app-time-line',
@@ -161,8 +162,8 @@ export class TimeLineComponent implements OnInit, AfterViewInit {
       elementHeight = htmlElement.getBoundingClientRect().height;
       wayTravelled = lineWidth * (percentTimePassed / 100);
       
-      elementWidth = 30;
-      elementHeight = 30;
+      elementWidth = GameConsts.TIME_LINE_EVENT_WIDTH;
+      elementHeight = GameConsts.TIME_LINE_EVENT_HEIGHT;
       lineMargin = 0;
       
 

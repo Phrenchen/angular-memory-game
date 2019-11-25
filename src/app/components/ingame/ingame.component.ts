@@ -225,6 +225,10 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
     }, delay);
   }
 
+  public isEnabled(cardId: number): boolean {
+    return this.matchConfig.cards[cardId].state !== MemoryCardState.REMOVED;
+  }
+
   public getPlayer(id: number): Player {
     return this.matchConfig.players[id];
   }

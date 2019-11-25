@@ -1,8 +1,9 @@
-<div *ngIf="card" class="card-container">
+<div *ngIf="card" class="card-container" [ngClass]="{'full-height-card': displayBack, 'disabled-card': true}">
 
   <!-- <div *ngIf="displayBack" class="card-back"></div> -->
-  <div [hidden]="!displayBack" class="card-back"></div>
-  <!-- <img *ngIf="displayFront" [src]="imageUrl(card.partnerId)" alt="card.partnerId"> -->
-  <img [hidden]="!displayFront" class="card-front" [src]="imageUrl(card.partnerId)" alt="card.partnerId">
+  <div class="card-back">
+    <!-- <img *ngIf="displayFront" [src]="imageUrl(card.partnerId)" alt="card.partnerId"> -->
+    <img [hidden]="!displayFront" class="card-front" [src]="imageUrl(card.partnerId)" alt="card.partnerId">
+  </div>
   <!-- {{card.partnerId}} -->
 </div>

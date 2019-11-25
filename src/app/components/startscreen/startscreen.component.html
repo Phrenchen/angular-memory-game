@@ -1,4 +1,4 @@
-<div class="container" id="container-startscreen">
+<div class="container padded-oval-background" id="container-startscreen">
     <!-- generated SVG is added here. DO NOT REMOVE, smartass :) -->
     <!-- <div id="background-container">
     </div> -->
@@ -9,7 +9,7 @@
         <p-radioButton 
             name="boardSize" 
             value="1" 
-            label="1P vs masterbrain" 
+            label="1P vs AI" 
             [(ngModel)]="selectedPlayerCount" 
             (onClick)="playerCount(1)"
             
@@ -17,13 +17,13 @@
         </p-radioButton>
 
         <p-radioButton name="boardSize" value="2" label="2 Players" [(ngModel)]="selectedPlayerCount" (onClick)="playerCount(2)"></p-radioButton>
-        <p-radioButton name="boardSize" value="0" label="masterbrain vs masterbrain" [(ngModel)]="selectedPlayerCount" (onClick)="playerCount(0)"></p-radioButton>
+        <p-radioButton name="boardSize" value="0" label="AI vs AI" [(ngModel)]="selectedPlayerCount" (onClick)="playerCount(0)"></p-radioButton>
     </div>
     <button name="start-match" (click)="startMatch()">start match</button>
 
-    <app-card-selection
+    <!-- <app-card-selection
         [cardUrls]="cardUrls"
-    ></app-card-selection>
+    ></app-card-selection> -->
 
 </div>
 

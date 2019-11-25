@@ -80,7 +80,7 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
             const choices: CardSelectedEvent[] = currentPlayer.choices.slice();
             const lastChoice: CardSelectedEvent = choices.length > 1 ? choices[choices.length - 2] : null;
             currentPlayer.choices = choices;
-            console.log(currentPlayer.id + ' has made: ', choices.length + ' choices');
+            // console.log(currentPlayer.id + ' has made: ', choices.length + ' choices');
             
             // total event count === 0 => first event => set match start time // TODO: rethink this. overwrite start time? is set in CREATE_MATCH
             if (!GameService.hasEvents(newState2)) {
@@ -104,7 +104,10 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                     // 2 cards selected
                     if (newState2.firstSelectedCard.matches(selectedCard)) {
                         // is a match!
-                        console.log('is a match!');
+                        // console.log('is a match!');
+
+                        selectedCard.state = MemoryCardState.REMOVED;
+                        newState2.firstSelectedCard.state = MemoryCardState.REMOVED;
 
                         currentPlayer.pairsWon++;
                         choice.isMatch = true;
@@ -127,7 +130,7 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                     }
                     else {
                         // no match :(
-                        console.log('no match :(');
+                        // console.log('no match :(');
 
                         // TODO: add delay between player switch to be able to view the result of the second card.
 
@@ -147,7 +150,7 @@ export function reducer(state: MatchConfig = initialState, action: MatchActions.
                 newState2.firstSelectedCard = null;
             }
 
-            console.log('choice: ', choice);
+            // console.log('choice: ', choice);
 
             return newState2;
         default:
