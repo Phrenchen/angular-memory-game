@@ -1,23 +1,37 @@
 @import url('./../../../variables.css');
 
 
-.board {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+// .board {
+//     display: grid;
+//     justify-content: center;
+//     align-items: center;
+//     gap: 10px;
 
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+//     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 
-    width: 70vmin;
-    height: 70vmin;
+//     width: 70vmin;
+//     height: 70vmin;
 
-    max-width: 700px;
-    // min-height: 400px;
+//     max-width: 700px;
 
-    margin: 0 auto;
+//     margin: 0 auto;
+
+//     margin-top: 20px;
+// }
+
+.app-board {
+    // width: 70vmin;
+    // height: 70vmin;
+    
+    border: 3px solid red;
+
+    position: absolute;
+    left: 0px;
+    top: 0px;
+
+    width: 90vw;
+    height: 80vh;
 }
-
 
 .top-bar {
     display: flex;

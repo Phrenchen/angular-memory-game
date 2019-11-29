@@ -6,6 +6,10 @@ import { Rectangle } from './model/Rectangle';
 export class CSSHelper {
 
     private static bodyStyle: any;
+    
+    public static get isPortraitMode(): boolean {
+        return CSSHelper.stageWidth < CSSHelper.stageHeight;
+    }
 
     public static convertToRectangle(clientRect: ClientRect): Rectangle {
         return {
@@ -29,10 +33,6 @@ export class CSSHelper {
             return position;
         }
 
-
-
-
-
         const bodyRect: ClientRect = document.body.getBoundingClientRect();
         const coords: ClientRect = element.getBoundingClientRect();
 
@@ -41,31 +41,23 @@ export class CSSHelper {
         position.bottom = coords.bottom;  // implicit cast to custom 'Rectangle' class
         position.right = coords.right;  // implicit cast to custom 'Rectangle' class
 
-
-        // console.log('1 position: ', position);
-        // position.top = coords.top - bodyRect.top;  // implicit cast to custom 'Rectangle' class
-        // position.left = coords.left - bodyRect.left;  // implicit cast to custom 'Rectangle' class
-        // position.bottom = coords.bottom - bodyRect.bottom;  // implicit cast to custom 'Rectangle' class
-        // position.right = coords.right - bodyRect.right;  // implicit cast to custom 'Rectangle' class
-        // console.log('2 position: ', position);
-
         return position;
     }
 
 
-    public static stageWidth(): number {
+    public static get stageWidth(): number {
         return document.body.clientWidth as number;
     }
 
-    public static stageHeight(): number {
+    public static get stageHeight(): number {
         return document.body.clientHeight as number;
     }
 
-    public static stageCenterX(): number {
+    public static get stageCenterX(): number {
         return document.body.clientWidth * .5 as number;
     }
 
-    public static stageCenterY(): number {
+    public static get stageCenterY(): number {
         return document.body.clientHeight * .5 as number;
     }
 

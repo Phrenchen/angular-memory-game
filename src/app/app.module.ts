@@ -28,6 +28,7 @@ import { MemoryCardComponent } from './components/ingame/memory-card/memory-card
 import { AnimatedBackgroundComponent } from './components/animated-background/animated-background.component';
 import { CardSelectionComponent } from './components/card-selection/card-selection.component';
 import { TimeLineComponent } from './components/time-line/time-line.component';
+import { BoardComponent } from './components/ingame/board/board.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { TimeLineComponent } from './components/time-line/time-line.component';
     MemoryCardComponent,
     AnimatedBackgroundComponent,
     CardSelectionComponent,
-    TimeLineComponent
+    TimeLineComponent,
+    BoardComponent
   ],
   imports: [
     BrowserModule,

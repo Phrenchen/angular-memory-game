@@ -177,32 +177,32 @@ export class IngameComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 0);
   }
 
-  public cardMouseOver(event: MouseEvent, card: MemoryCard) {
-    event.stopImmediatePropagation();
+  // public cardMouseOver(event: MouseEvent, card: MemoryCard) {
+  //   event.stopImmediatePropagation();
 
-    if (card.state === MemoryCardState.COVERED) {
-      AnimationHelper.tween(card.htmlElement, AnimationEnum.FADE_OUT, () => {
-        // console.log('card out complete');
-      });
-    }
-  }
+  //   if (card.state === MemoryCardState.COVERED) {
+  //     AnimationHelper.tween(card.htmlElement, AnimationEnum.FADE_OUT, () => {
+  //       // console.log('card out complete');
+  //     });
+  //   }
+  // }
 
-  public cardMouseOut(event: MouseEvent, card: MemoryCard) {
-    // if (card.state === MemoryCardState.COVERED) {
-    //   AnimationHelper.tween(card.htmlElement, AnimationEnum.FADE_IN, () => {
-    //     console.log('card in complete');
-    //   });
-    // }
-  }
+  // public cardMouseOut(event: MouseEvent, card: MemoryCard) {
+  //   // if (card.state === MemoryCardState.COVERED) {
+  //   //   AnimationHelper.tween(card.htmlElement, AnimationEnum.FADE_IN, () => {
+  //   //     console.log('card in complete');
+  //   //   });
+  //   // }
+  // }
 
-  // *** CARD CLICKED ***
-  public cardClicked(event: MouseEvent, card: MemoryCard) {
-    if (card.state === MemoryCardState.REMOVED) {
-      return;
-    }
+  // // *** CARD CLICKED ***
+  // public cardClicked(event: MouseEvent, card: MemoryCard) {
+  //   if (card.state === MemoryCardState.REMOVED) {
+  //     return;
+  //   }
 
-    this.store.dispatch(new Actions.SelectedCard(card));  // de-select card
-  }
+  //   this.store.dispatch(new Actions.SelectedCard(card));  // de-select card
+  // }
 
   public get showGameOver(): boolean {
     return this.matchConfig.isGameOver && this.outroComplete;

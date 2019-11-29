@@ -29,14 +29,14 @@ export class AnimatedBackgroundComponent implements OnInit {
     let svgCount = 40;
     let svg: SVGSVGElement;
 
-    let rangeX = CSSHelper.stageWidth() * .4;
-    let rangeY = CSSHelper.stageHeight() * .4;
+    let rangeX = CSSHelper.stageWidth * .4;
+    let rangeY = CSSHelper.stageHeight * .4;
 
-    let left = CSSHelper.stageCenterX() - rangeX;
-    let right = CSSHelper.stageCenterX() + rangeX;
+    let left = CSSHelper.stageCenterX - rangeX;
+    let right = CSSHelper.stageCenterX + rangeX;
 
-    let top = CSSHelper.stageCenterY() - rangeY;
-    let bottom = CSSHelper.stageCenterY() + rangeY;
+    let top = CSSHelper.stageCenterY - rangeY;
+    let bottom = CSSHelper.stageCenterY + rangeY;
 
     // size
     let minWidth = 150;
@@ -66,8 +66,8 @@ export class AnimatedBackgroundComponent implements OnInit {
       this.animateSVG(svg, {
         left: 0,
         top: 0,
-        right: CSSHelper.stageWidth(),
-        bottom: CSSHelper.stageHeight()
+        right: CSSHelper.stageWidth,
+        bottom: CSSHelper.stageHeight
       });
     }
   }

@@ -1,0 +1,24 @@
+.board {
+    // display: grid;
+    // justify-content: center;
+    // align-items: center;
+    // gap: 10px;
+
+    // grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
+    width: 70vmin;
+    height: 70vmin;
+
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    margin-top: 20px;
+
+    .card {
+        border: 3px dashed deeppink;
+
+        height: 50px;
+        position: absolute;
+    }
+}

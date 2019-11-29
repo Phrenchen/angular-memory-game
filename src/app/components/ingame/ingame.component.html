@@ -13,22 +13,16 @@
 </div>
 <!-- <div class="game-over-container" id="game-over-notice" *ngIf="showGameOver"> -->
 
+  <app-board [cards]="cards" class="app-board"></app-board>
+
+
 <!-- grid with cards -> the 'board' -->
-<div class="board" id="board" *ngIf="matchConfig">
+<div class="board" id="board" *ngIf="false">
   <!-- [ngStyle]="{'background': card.color}" -->
   <app-memory-card *ngFor="let card of cards; index as i;" class="card" 
     [id]="'card-' + i" [card]="card" (mouseover)="cardMouseOver($event, card)" (mouseout)="cardMouseOut($event, card)"
     (click)="cardClicked($event, card)">
   </app-memory-card>
-
-
-  <!-- <div *ngFor="let card of cards; index as i;" class="card" [ngStyle]="{'background': card.color}" [id]="'card-' + i"
-    (mouseover)="cardMouseOver($event, card)" (mouseout)="cardMouseOut($event, card)"
-    (click)="cardClicked($event, card)">
-    <p>{{card.partnerId}}</p>
-  </div> -->
-
-
 </div>
 
 <div class="game-over-container padded-oval-background" id="game-over-notice">
