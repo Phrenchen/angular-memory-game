@@ -4,6 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o",
+    "start-server": "nodemon ./backend/server",
+
+
     "build": "ng build --prod=true",
     "build2": "ng build --prod=true --aot=true --buildOptimizer=true",
     "test": "ng test",
